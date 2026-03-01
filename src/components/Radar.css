@@ -1,0 +1,8 @@
+.radar-wrap { width:100%; max-width:880px; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 60%, transparent 100%); border-radius:12px; box-shadow: 0 6px 30px rgba(2,6,23,0.6); position:relative; }
+.radar-svg { width:90%; height:90%; }
+.trace { stroke:var(--accent); stroke-width:2; fill:none; stroke-linejoin:round; stroke-linecap:round; }
+.ring { stroke:rgba(255,255,255,0.06); stroke-width:1; fill:none; }
+.sweep { stroke:rgba(50,180,120,0.12); stroke-width:28; stroke-linecap:butt; filter: blur(6px); }
+.center-dot { fill:#2ee6a6; }
+.compass-label { font-size:11px; fill:rgba(230,238,248,0.8); }
+.target { fill:#ffd24a; stroke:#b58900; stroke-width:0.5; }
