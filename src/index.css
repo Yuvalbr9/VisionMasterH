@@ -1,15 +1,88 @@
-:root {
-  --bg: #0f172a;
-  --fg: #e6eef8;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root{
+  --bg: #020617;
+  --glass: rgba(255,255,255,0.06);
+  --accent-green: #3ee27a;
+  --accent-amber: #ffb84d;
+  --accent-ruby: #b91c1c;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
 }
-html,body,#root { height: 100%; }
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
-  background: var(--bg);
-  color: var(--fg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.vmh-root{display:flex;flex-direction:column;height:100vh;padding:18px;box-sizing:border-box}
+.vmh-grid{display:grid;grid-template-columns:260px 180px 1fr 320px;gap:18px;align-items:stretch;height:calc(100vh - 72px)}
+
+/* prevent page scrolling and ensure panels fill available height */
+html,body,#root{height:100%}
+body{margin:0;font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background: var(--bg);color: #e6eef8;overflow:hidden}
+
+/* make panels fill the grid height and avoid internal page scroll */
+.vmh-left,.vmh-right,.vmh-summary-column,.vmh-main{height:100%;display:flex;flex-direction:column;overflow:hidden}
+.vmh-left,.vmh-right{background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px;display:flex;flex-direction:column}
+.vmh-summary-column{display:flex;align-items:flex-start;}
+.vmh-main{display:flex;align-items:center;justify-content:center;min-height:0}
+
+.radar-wrap{width:100%;max-width:880px;aspect-ratio:1/1;position:relative;margin:auto}
+.radar-meta{position:absolute;left:12px;top:12px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;font-family:var(--mono);font-size:12px;opacity:0.85}
+.radar-canvas{width:100%;height:100%;border-radius:999px;overflow:hidden;position:relative;box-shadow:0 6px 30px rgba(0,0,0,0.6);}
+.radar-canvas canvas{display:block;width:100%;height:100%}
+.radar-svg{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+
+.data-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);padding:10px;border-radius:8px;margin-bottom:10px}
+.card-label{font-size:11px;color:rgba(255,255,255,0.6);font-family:var(--mono)}
+.card-value{font-family:var(--mono);font-size:20px;font-weight:600}
+.small{font-size:12px;opacity:0.7;margin-left:6px}
+.pos-line{font-family:var(--mono);font-size:12px}
+.manual-offset{margin-top:8px}
+.manual-offset input{width:100%;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+
+.right-stack .mob-block{border:1px solid rgba(255,0,0,0.12);padding:10px;border-radius:8px;background:rgba(255,0,0,0.02);margin-bottom:12px}
+.mob-header{font-weight:700;color:var(--accent-ruby);font-family:var(--mono)}
+.mob-timer{font-family:var(--mono);font-size:18px;margin:8px 0}
+.mob-start{background:var(--accent-ruby);color:white;padding:8px;border-radius:8px;border:none;width:100%;font-weight:700}
+
+.mob-mode-buttons{display:flex;gap:8px;margin:8px 0}
+.mob-mode-btn{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);font-family:var(--mono);font-size:13px;color:white}
+.mob-mode-btn.active{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);color:white}
+.mob-manual-form{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.mob-manual-form label{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,0.7)}
+.mob-manual-form input{padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-family:var(--mono)}
+.mob-manual-form input:disabled{color:rgba(255,255,255,0.85);opacity:1}
+.mob-manual-form input::placeholder{color:rgba(255,200,80,0.9);font-weight:700}
+.range-input{display:flex;gap:8px;align-items:center}
+.range-input .unit{opacity:0.8;font-family:var(--mono)}
+.elapsed-input{display:flex;gap:8px;align-items:center}
+.elapsed-input .hint{opacity:0.7;font-family:var(--mono)}
+.hhmmss{font-family:var(--mono);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+.timer-seg{width:38px;text-align:center;font-family:var(--mono);padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+.timer-save{background:#6b7280;color:white;border:1px solid rgba(0,0,0,0.12);padding:6px 10px;border-radius:8px;font-family:var(--mono);opacity:0.95}
+.timer-cancel{background:transparent;color:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;font-family:var(--mono)}
+
+.sliders label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px}
+.sliders input[type=range]{width:100%;margin:6px 0}
+
+.ebl-vrm{margin-top:12px}
+.ebl-header{font-family:var(--mono);font-size:12px;margin-bottom:6px}
+.ebl-vrm table{width:100%;font-size:12px;border-collapse:collapse}
+.ebl-vrm td,.ebl-vrm th{padding:6px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.edit{opacity:0.7}
+
+.vmh-status{height:36px;margin-top:12px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;padding:6px 12px;border-radius:8px;font-family:var(--mono);font-size:12px}
+
+.mob-overlay{position:fixed;left:18px;right:18px;top:18px;bottom:60px;background:rgba(185,28,28,0.06);border:1px solid rgba(185,28,28,0.25);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:var(--accent-ruby);font-family:var(--mono);font-weight:700;border-radius:12px;pointer-events:auto;z-index:40}
+.vmh-root.mob-locked .vmh-grid{pointer-events:none;opacity:0.96}
+
+/* responsive */
+@media (max-width:1000px){.vmh-grid{grid-template-columns:200px 1fr 220px}}
+@media (max-width:800px){.vmh-grid{grid-template-columns:1fr;grid-template-rows:auto;}}
+
+/* Hide scrollbars across browsers but keep scrolling functional */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-.app { text-align: center; }
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
+}

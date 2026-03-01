@@ -1,0 +1,7 @@
+[
+  { "id": "main", "name": "Main", "component": "LeftTelemetryPage" },
+  { "id": "docking", "name": "Docking", "component": "DockingPage" },
+  { "id": "environment", "name": "Environment", "component": "EnvironmentPage" },
+  { "id": "route", "name": "Route", "component": "RoutePage" },
+  { "id": "sea", "name": "Sea", "component": "SeaPage" }
+]
