@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import type { Telemetry } from '../hooks/useNavigationData'
-import './leftSidebar.css'
+import '../style/leftSidebar.css'
 
 type TabDef = { id: string; name: string; component: string }
 

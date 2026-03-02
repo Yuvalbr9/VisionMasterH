@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import type { Telemetry, UnitNumber } from '../hooks/useNavigationData'
+import '../style/leftTelemetry.css';
 
 type Props = { telemetry: Telemetry; setTelemetry: (t:any)=>void }
 
