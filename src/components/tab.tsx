@@ -1,6 +1,5 @@
 import React from 'react';
-import type { Telemetry } from '../hooks/useNavigationData';
-import '../../style/tab.css';
+import '../style/tab.css';
 
 interface TabProps {
   title: string;
