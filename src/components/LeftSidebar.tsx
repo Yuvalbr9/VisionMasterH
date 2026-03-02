@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import type { Telemetry } from '../hooks/useNavigationData'
 import '../style/leftSidebar.css'
+import TabPage from './tab';
 
 type TabDef = { id: string; name: string; component: string }
 
@@ -38,7 +39,7 @@ const LeftSidebar: React.FC<{ telemetry: Telemetry; setTelemetry: (t:any)=>void 
       <div className="tab-content">
         {PageComp ? (
           <Suspense fallback={<div className="loading">Loading…</div>}>
-            <PageComp telemetry={telemetry} setTelemetry={setTelemetry} />
+            <TabPage title={tabs.find(t => t.id === active)?.name || 'Unknown'} />
           </Suspense>
         ) : <div className="loading">Loading tabs…</div> }
       </div>
