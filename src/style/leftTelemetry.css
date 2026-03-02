@@ -1,0 +1,67 @@
+/* Styles extracted from LeftTelemetry.tsx */
+.left-telemetry {
+  padding: 8px;
+  font-family: 'JetBrains Mono';
+}
+
+.left-telemetry-section {
+  margin-bottom: 12px;
+}
+
+.lt-row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lt-value-large {
+  font-size: 14px;
+}
+
+.lt-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.lt-stw-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.lt-unit {
+  align-self: center;
+  opacity: 0.7;
+}
+
+.lt-pos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.lt-sog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.lt-sog-subtitle {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.lt-date-title {
+  margin-top: 12px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.lt-date-value {
+  font-family: 'JetBrains Mono';
+  font-size: 14px;
+}
