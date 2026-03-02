@@ -1,0 +1,191 @@
+/* Right controls styles */
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ── MOB block ────────────────────────────────────── */
+
+.mobBlock {
+    border: 1px solid rgba(255, 0, 0, 0.12);
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255, 0, 0, 0.02);
+}
+
+.mobHeader {
+    font-weight: 700;
+    color: var(--accent-ruby);
+    font-family: var(--mono);
+}
+
+.mobTimer {
+    font-family: var(--mono);
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.mobStart {
+    background: var(--accent-ruby);
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mobModeButtons {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.mobModeBtn {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.02);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: white;
+    cursor: pointer;
+}
+
+.mobModeBtnActive {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.mobManualForm {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobManualForm label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.mobManualForm input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: transparent;
+    color: inherit;
+    font-family: var(--mono);
+}
+
+.mobManualForm input:disabled {
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 1;
+}
+
+.mobManualForm input::placeholder {
+    color: rgba(255, 200, 80, 0.9);
+    font-weight: 700;
+}
+
+.rangeInput {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.rangeInputUnit {
+    opacity: 0.8;
+    font-family: var(--mono);
+}
+
+.elapsedInput {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* ── Timer input ──────────────────────────────────── */
+
+.timerSeg {
+    width: 38px;
+    text-align: center;
+    font-family: var(--mono);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: transparent;
+    color: inherit;
+}
+
+.timerSave {
+    background: #6b7280;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: var(--mono);
+    opacity: 0.95;
+    cursor: pointer;
+}
+
+.timerCancel {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-family: var(--mono);
+    cursor: pointer;
+}
+
+/* ── Sliders ──────────────────────────────────────── */
+
+.sliders label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 12px;
+}
+
+.sliders input[type='range'] {
+    width: 100%;
+    margin: 6px 0;
+}
+
+.pct {
+    /* inline badge — no extra styles needed */
+}
+
+/* ── EBL / VRM table ──────────────────────────────── */
+
+.eblVrm {
+    margin-top: 12px;
+}
+
+.eblHeader {
+    font-family: var(--mono);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.eblVrm table {
+    width: 100%;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+.eblVrm td,
+.eblVrm th {
+    padding: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.edit {
+    opacity: 0.7;
+}

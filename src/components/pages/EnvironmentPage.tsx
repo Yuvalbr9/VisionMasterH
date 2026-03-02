@@ -1,13 +1,18 @@
 import React from 'react'
-import type { Telemetry } from '../../hooks/useNavigationData'
+import type { Telemetry } from '../../types/telemetry'
 
-const EnvironmentPage: React.FC<{telemetry: Telemetry; setTelemetry:(t:any)=>void}> = ()=>{
+type PageProps = {
+  telemetry: Telemetry
+  setTelemetry: (fn: any) => void
+}
+
+export default function EnvironmentPage(_props: PageProps) {
   return (
-    <div style={{padding:8,fontFamily:'JetBrains Mono'}}>
+    <div style={{ padding: 8, fontFamily: 'JetBrains Mono' }}>
       <h3>Environment</h3>
-      <p style={{opacity:0.8}}>Wind, tide and environmental data placeholder.</p>
+      <p style={{ opacity: 0.8 }}>
+        Wind, tide and environmental data placeholder.
+      </p>
     </div>
   )
 }
-
-export default EnvironmentPage

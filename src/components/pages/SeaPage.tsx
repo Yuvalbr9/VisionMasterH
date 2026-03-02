@@ -1,13 +1,16 @@
 import React from 'react'
-import type { Telemetry } from '../../hooks/useNavigationData'
+import type { Telemetry } from '../../types/telemetry'
 
-const SeaPage: React.FC<{telemetry: Telemetry; setTelemetry:(t:any)=>void}> = ()=>{
+type PageProps = {
+  telemetry: Telemetry
+  setTelemetry: (fn: any) => void
+}
+
+export default function SeaPage(_props: PageProps) {
   return (
-    <div style={{padding:8,fontFamily:'JetBrains Mono'}}>
+    <div style={{ padding: 8, fontFamily: 'JetBrains Mono' }}>
       <h3>Sea</h3>
-      <p style={{opacity:0.8}}>Sea clutter and models placeholder.</p>
+      <p style={{ opacity: 0.8 }}>Sea clutter and models placeholder.</p>
     </div>
   )
 }
-
-export default SeaPage

@@ -1,0 +1,61 @@
+/* Left sidebar styles */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tabBar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 120px;
+    margin-bottom: 8px;
+}
+
+.tabBtn {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--mono);
+    text-align: left;
+    cursor: pointer;
+}
+
+.tabBtnActive {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.tabContent {
+    overflow: auto;
+}
+
+.loading {
+    padding: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--mono);
+}
+
+/* Global input styling inside the left sidebar */
+.sidebar input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: transparent;
+    color: inherit;
+    font-family: var(--mono);
+}
+
+.sidebar input:disabled {
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 1;
+}
+
+.sidebar input::placeholder {
+    color: rgba(255, 200, 80, 0.9);
+    font-weight: 700;
+}
