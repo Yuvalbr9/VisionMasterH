@@ -1,4 +1,6 @@
 import React from 'react';
+import { DataButton } from './Buttons';
+import { DATA_COLORS } from '../constants';
 
 interface DataDisplayProps {
   label: string;
@@ -15,8 +17,8 @@ export const DataDisplay: React.FC<DataDisplayProps> = ({
   value,
   unit,
   status,
-  statusColor = '#00ff00',
-  valueColor = '#00ff00',
+  statusColor = DATA_COLORS.STATUS,
+  valueColor = DATA_COLORS.VALUE,
   showGraph = false,
 }) => {
   return (
@@ -55,7 +57,7 @@ export const DataDisplayWithButton: React.FC<DataDisplayWithButtonProps> = ({
   unit,
   buttonText,
   onButtonClick,
-  valueColor = '#00ff00',
+  valueColor = DATA_COLORS.VALUE,
 }) => {
   return (
     <div className="data-display">
@@ -67,9 +69,9 @@ export const DataDisplayWithButton: React.FC<DataDisplayWithButtonProps> = ({
           {value}
         </span>
         {unit && <span className="data-unit">{unit}</span>}
-        <button className="data-button" onClick={onButtonClick}>
+        <DataButton onClick={onButtonClick}>
           {buttonText}
-        </button>
+        </DataButton>
       </div>
     </div>
   );
@@ -91,8 +93,8 @@ export const DataDisplayDouble: React.FC<DataDisplayDoubleProps> = ({
   value2,
   unit,
   status,
-  statusColor = '#00ff00',
-  valueColor = '#00ff00',
+  statusColor = DATA_COLORS.STATUS,
+  valueColor = DATA_COLORS.VALUE,
 }) => {
   return (
     <div className="data-display">

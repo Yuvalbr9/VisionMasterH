@@ -1,0 +1,50 @@
+/* Left Panel Specific Styles */
+
+/* Panel Header */
+.panel-header {
+  margin-bottom: 0.2vh;
+}
+
+/* Panel Tabs */
+.panel-tabs {
+  display: flex;
+  gap: 0.3vw;
+  flex-wrap: wrap;
+}
+
+/* Data Display in Left Panel */
+.data-display {
+  background: var(--bg-control);
+  border: 1px solid var(--border-color);
+  padding: 0.5vh;
+  border-radius: 0.3vh;
+}
+
+/* DateTime Display */
+.datetime-display {
+  background: var(--bg-control);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.date {
+  font-size: var(--font-size-md);
+  color: var(--green);
+  margin-bottom: var(--spacing-xs);
+  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+}
+
+.time-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md-vw);
+  font-size: var(--font-size-base);
+  color: var(--green);
+  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+}
+
+.zone {
+  color: var(--text-secondary);
+}

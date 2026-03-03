@@ -1,35 +1,25 @@
 import React, { useState } from 'react';
+import { Angle, Speed, Length } from 'unitsnet-js';
+import { NavigationData, parseLatitude, parseLongitude } from './types';
 import { LeftPanel } from './components/LeftPanel';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
 
-interface NavigationData {
-  hdg: number;
-  stw: number;
-  sog: number;
-  cog: number;
-  posLat: string;
-  posLon: string;
-  ccrpPS: number;
-  ccrpFA: number;
-  stemPS: number;
-}
-
 const App: React.FC = () => {
   const [navData, setNavData] = useState<NavigationData>({
-    hdg: 289.0,
-    stw: 10.8,
-    sog: 10.8,
-    cog: 289.0,
-    posLat: "40°27.269'N",
-    posLon: "73°49.490'S",
-    ccrpPS: 0.0,
-    ccrpFA: 0.0,
-    stemPS: 0.0,
+    hdg: Angle.FromDegrees(289.0),
+    stw: Speed.FromKnots(10.8),
+    sog: Speed.FromKnots(10.8),
+    cog: Angle.FromDegrees(289.0),
+    posLat: parseLatitude("40°27.269'N"),
+    posLon: parseLongitude("73°49.490'W"),
+    ccrpPS: Length.FromMeters(0.0),
+    ccrpFA: Length.FromMeters(0.0),
+    stemPS: Length.FromMeters(0.0),
   });
 
-  const updateNavData = (field: keyof NavigationData, value: number | string) => {
-    setNavData(prev => ({ ...prev, [field]: value }));
+  const updateNavData = (updates: Partial<NavigationData>) => {
+    setNavData(prev => ({ ...prev, ...updates }));
   };
 
   return (

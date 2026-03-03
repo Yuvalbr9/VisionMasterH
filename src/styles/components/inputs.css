@@ -1,0 +1,194 @@
+/* Data Display and Status */
+.data-display {
+  background: var(--bg-control);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-md);
+}
+
+.data-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.data-label {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.data-status {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+}
+
+.data-value-container {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm-vw);
+  flex: 1;
+  min-width: 0;
+}
+
+.data-value {
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  font-family: var(--font-family-mono);
+  text-shadow: 0 0 0.5vh var(--green-glow-light);
+}
+
+.data-unit {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.data-graph {
+  height: 1.2vh;
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-sm);
+  background: linear-gradient(to right, transparent 0%, var(--green) 50%, transparent 100%);
+  opacity: 0.3;
+}
+
+.data-value-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm-vw);
+}
+
+/* Data Inputs */
+.data-input {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--green);
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-lg);
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-md);
+  text-align: center;
+  min-width: 3.5vw;
+  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+}
+
+.data-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0.6vh var(--green-glow-full);
+}
+
+.data-input-pos {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--green);
+  padding: var(--spacing-sm) var(--space-xs-vw);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-md);
+  text-align: center;
+  width: 100%;
+  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+}
+
+.data-input-pos:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0.6vh var(--green-glow-full);
+}
+
+.ccrp-input {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--green);
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-lg);
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-md);
+  text-align: center;
+  min-width: 2.5vw;
+  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+}
+
+.ccrp-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0.6vh var(--green-glow-full);
+}
+
+.control-input {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: var(--spacing-2xl) var(--space-lg-vw);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-md);
+}
+
+.control-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0.5vh var(--green-glow-medium);
+}
+
+/* Position Display */
+.position-display {
+  padding: var(--spacing-lg);
+}
+
+.position-inputs-row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-sm);
+}
+
+.position-inputs-row > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs-vw);
+  flex: 1;
+  min-width: 0;
+}
+
+.position-inputs-row .data-display {
+  background: transparent;
+  border: none;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.position-inputs-row .data-display .data-header {
+  display: none;
+}
+
+.position-inputs-row .data-display .data-value-container {
+  gap: var(--space-xs-vw);
+}
+
+.position-inputs-row .data-input {
+  min-width: 2.5vw;
+  font-size: var(--font-size-md);
+  padding: var(--spacing-sm) var(--space-xs-vw);
+}
+
+.position-inputs-row > div > span {
+  min-width: 1vw !important;
+  font-size: var(--font-size-base) !important;
+}
+
+.position-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs-vw);
+  flex: 1;
+}
+
+.position-direction-label {
+  color: var(--green);
+  min-width: 0.8vw;
+  font-weight: bold;
+  font-size: var(--font-size-base);
+  text-align: center;
+}
