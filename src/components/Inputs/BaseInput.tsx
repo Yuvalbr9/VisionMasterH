@@ -11,6 +11,7 @@ export interface BaseInputProps {
   type?: 'text' | 'number';
   step?: string;
   className?: string;
+  onWheel?: (event: React.WheelEvent<HTMLInputElement>) => void;
 }
 
 export const BaseInput: React.FC<BaseInputProps> = ({
@@ -24,6 +25,7 @@ export const BaseInput: React.FC<BaseInputProps> = ({
   type = 'text',
   step,
   className = 'data-display editable',
+  onWheel,
 }) => {
   return (
     <div className={className}>
@@ -41,6 +43,7 @@ export const BaseInput: React.FC<BaseInputProps> = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           step={step}
+          onWheel={onWheel}
         />
         {suffix && <span className="data-unit">{suffix}</span>}
       </div>

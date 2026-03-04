@@ -2,49 +2,92 @@
 
 /* Panel Header */
 .panel-header {
-  margin-bottom: 0.2vh;
+  margin-bottom: var(--spacing-xs);
 }
 
 /* Panel Tabs */
 .panel-tabs {
   display: flex;
-  gap: 0.3vw;
+  gap: var(--space-xs-vw);
   flex-wrap: wrap;
 }
 
 /* Data Display in Left Panel */
 .data-display {
   background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  padding: 0.5vh;
+  border: 1px solid #8a87a4;
+  padding: var(--spacing-md);
   border-radius: 0.3vh;
 }
 
 /* DateTime Display */
 .datetime-display {
   background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  padding: var(--spacing-xl);
+  border: 1px solid #8a87a4;
+  padding: var(--spacing-sm);
   border-radius: var(--radius-md);
   text-align: center;
 }
 
 .date {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-base);
   color: var(--green);
   margin-bottom: var(--spacing-xs);
-  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+  text-shadow: none;
 }
 
 .time-row {
   display: flex;
   justify-content: center;
-  gap: var(--space-md-vw);
-  font-size: var(--font-size-base);
+  gap: var(--space-sm-vw);
+  font-size: var(--font-size-sm);
   color: var(--green);
-  text-shadow: 0 0 0.5vh var(--green-glow-bright);
+  text-shadow: none;
 }
 
 .zone {
   color: var(--text-secondary);
+}
+
+.left-panel .data-label {
+  font-size: 1.14rem;
+}
+
+.left-panel .data-status {
+  font-size: 0.9rem;
+}
+
+.left-panel .data-value {
+  font-size: 1.26rem;
+}
+
+.left-panel .data-unit {
+  font-size: 0.95rem;
+}
+
+.left-panel .data-input,
+.left-panel .ccrp-input {
+  font-size: 1.04rem;
+  min-height: 3.1vh;
+}
+
+.left-panel .position-inputs-row .data-input,
+.left-panel .data-input-pos {
+  font-size: 0.85rem;
+}
+
+.left-panel .sog-label,
+.left-panel .sog-source,
+.left-panel .ccrp-label,
+.left-panel .ccrp-unit,
+.left-panel .position-direction-label {
+  font-size: 0.9rem;
+}
+
+.left-panel .date {
+  font-size: 1rem;
+}
+
+.left-panel .time-row {
+  font-size: 0.9rem;
 }

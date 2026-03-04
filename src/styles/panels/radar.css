@@ -6,36 +6,79 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: inset 0 0 3vh var(--overlay-dark-medium);
+  border: 1px solid #4a2a62;
+  box-shadow: none;
 }
 
 .radar-top-info-form {
   position: absolute;
-  top: var(--spacing-6xl);
-  left: var(--space-2xl-vw);
+  top: -4px;
+  left: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg-vw);
-  background: var(--bg-panel);
-  padding: var(--spacing-4xl);
-  border: 1px solid var(--border-color);
+  gap: 2px;
+  background: transparent;
+  padding: 0;
+  border: none;
   border-radius: var(--radius-lg);
-  box-shadow: 0 0.4vh 2vh var(--overlay-dark-medium);
   z-index: 10;
-  min-width: 12vw;
+  width: clamp(210px, 13.5vw, 270px);
+}
+
+.radar-top-info-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 7px;
+  min-height: 24px;
+}
+
+.radar-top-info-row-dark {
+  background: #2d1b4e;
+}
+
+.radar-top-info-row-light {
+  background: #4a3b67;
+}
+
+.radar-top-info-row-separator {
+  border-top: 1px solid #c2b0d6;
+}
+
+.radar-col {
+  color: #f2f1fa;
+  font-size: 0.72rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.radar-col-value,
+.radar-col-unit,
+.radar-col-meta {
+  text-align: right;
+}
+
+.radar-col-value-top {
+  color: #00ff00;
+}
+
+.radar-col-value-bottom {
+  color: #00ff00;
 }
 
 .radar-info-line {
   display: flex;
   align-items: center;
-  gap: var(--space-lg-vw);
-  font-size: var(--font-size-base);
+  gap: var(--space-sm-vw);
+  font-size: var(--font-size-xs);
 }
 
 .radar-label {
   color: var(--text-secondary);
-  font-weight: bold;
-  min-width: 3vw;
+  font-weight: normal;
+  min-width: 2vw;
 }
 
 .radar-label-small {
@@ -45,9 +88,9 @@
 
 .radar-value-small {
   color: var(--green);
-  font-weight: bold;
-  text-shadow: 0 0 0.5vh var(--green-glow-bright);
-  min-width: 4vw;
+  font-weight: normal;
+  text-shadow: 0 0 0.3vh var(--green-glow-bright);
+  min-width: 3.6vw;
 }
 
 .form-title {
@@ -66,7 +109,6 @@
   background: var(--bg-panel);
   padding: var(--spacing-3xl) var(--space-5xl-vw);
   border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 0.2vh 1vh var(--overlay-dark-light);
   z-index: 10;
 }
 
@@ -74,36 +116,114 @@
   display: block;
   background: transparent;
   margin: auto;
-  max-width: 90%;
-  max-height: 90%;
-  width: auto;
-  height: auto;
+  width: min(78vw, 86vh);
+  height: min(78vw, 86vh);
 }
 
 .radar-bottom-controls {
   position: absolute;
-  left: var(--space-2xl-vw);
-  bottom: var(--spacing-6xl);
+  left: -1px;
+  bottom: var(--spacing-md);
+  display: block;
+  background: transparent;
+  padding: 0;
+  border: none;
+  font-size: var(--font-size-xs);
+  z-index: 10;
+  width: 172px;
+  min-width: 172px;
+}
+
+.radar-console-main {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3xl);
-  background: var(--bg-panel);
-  padding: var(--spacing-4xl);
-  border: 1px solid var(--border-color);
-  font-size: var(--font-size-base);
-  box-shadow: 0 0.4vh 2vh var(--overlay-dark-medium);
-  z-index: 10;
-  border-radius: var(--radius-lg);
-  width: 12vw;
-  min-width: 180px;
+  gap: 2px;
+  padding: 2px;
+  width: 172px;
 }
 
-.radar-bottom-controls .control-btn {
+.radar-console-block {
+  background: var(--bg-control);
+  border-color: var(--win-mid);
+  border-top-color: var(--win-light);
+  border-left-color: var(--win-light);
+  border-right-color: var(--win-dark);
+  border-bottom-color: var(--win-shadow);
+}
+
+.radar-console-btn {
+  background: var(--bg-control);
+  border: 1px solid var(--win-mid);
+  border-top-color: var(--win-light);
+  border-left-color: var(--win-light);
+  border-right-color: var(--win-dark);
+  border-bottom-color: var(--win-shadow);
+  color: var(--text-primary);
+  font-family: var(--font-family-mono);
+  font-size: 0.68rem;
+  height: 28px;
+  line-height: 1;
+  padding: 0 6px;
+}
+
+.radar-console-btn-wide {
   width: 100%;
-  padding: var(--spacing-xl) var(--space-lg-vw);
-  font-size: var(--font-size-base);
 }
 
-.radar-bottom-controls .tune-btn {
+.radar-console-rows {
+  display: grid;
+  gap: 2px;
+}
+
+.radar-console-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 4px;
+}
+
+.radar-console-label {
+  color: var(--text-primary);
+  font-family: var(--font-family-mono);
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.radar-console-value-box {
+  height: 28px;
+  border: 1px solid var(--win-mid);
+  border-top-color: var(--win-shadow);
+  border-left-color: var(--win-shadow);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+  background: #2f2a49;
+  display: flex;
+  align-items: stretch;
+}
+
+.radar-console-fill {
+  width: 85%;
+  background: #5cb74b;
+  border-right: 1px solid #3f8134;
+}
+
+.radar-console-side-buttons {
+  position: absolute;
+  top: 59px;
+  left: 174px;
+  width: 58px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+}
+
+.radar-console-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 56px;
+  gap: 2px;
+}
+
+.radar-console-btn-grow,
+.radar-console-btn-small {
   width: 100%;
 }

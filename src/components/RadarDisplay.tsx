@@ -1,18 +1,22 @@
 import React from 'react';
-import { NavigationData } from '../types';
+import { ARPATarget, NavigationData, RadarControlState } from '../types';
 import { RadarTopInfo } from './RadarDisplay/RadarTopInfo';
 import { RadarCanvas } from './RadarDisplay/RadarCanvas';
 import { RadarBottomControls } from './RadarDisplay/RadarBottomControls';
 
 interface RadarDisplayProps {
   navData: NavigationData;
+  radarControls: RadarControlState;
+  arpaTargets: ARPATarget[];
+  velocity: { vn: number; ve: number };
+  leewayDeg: number;
 }
 
-export const RadarDisplay: React.FC<RadarDisplayProps> = ({ navData }) => {
+export const RadarDisplay: React.FC<RadarDisplayProps> = ({ navData, radarControls, arpaTargets, velocity, leewayDeg }) => {
   return (
     <div className="radar-display">
-      <RadarTopInfo navData={navData} />
-      <RadarCanvas />
+      <RadarTopInfo navData={navData} controls={radarControls} velocity={velocity} leewayDeg={leewayDeg} />
+      <RadarCanvas navData={navData} controls={radarControls} arpaTargets={arpaTargets} />
       <RadarBottomControls />
     </div>
   );
