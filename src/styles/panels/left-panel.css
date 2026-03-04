@@ -72,6 +72,10 @@
   color: var(--text-primary);
 }
 
+.left-arrow {
+  transform: rotate(180deg);
+}
+
 /* ---- Section wrappers ---- */
 .lp-section {
   border-bottom: 2px solid var(--border-color);

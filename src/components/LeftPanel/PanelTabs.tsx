@@ -21,16 +21,18 @@ export const PanelTabs: React.FC<PanelTabsProps> = ({ tabs, activeTab = 0, onTab
         />
       ))}
       <button
-        className="lp-tab-nav-btn"
+        className="lp-tab-nav-btn left-arrow"
         onClick={() => onTabChange?.(Math.max(0, activeTab - 1))}
         title="Previous"
-      >◄</button>
+      >
+        ►
+      </button>
       <button
         className="lp-tab-nav-btn"
-        title={playing ? 'Pause' : 'Play'}
-        onClick={() => setPlaying(p => !p)}
+        onClick={() => onTabChange?.(Math.max(0, activeTab + 1))}
+        title="Next"
       >
-        {playing ? '⏸' : '►'}
+        ►
       </button>
     </div>
   );
