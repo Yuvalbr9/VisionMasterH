@@ -1,7 +1,7 @@
 /* Right Panel Specific Styles */
 
 .vm-right-panel {
-  background: #2f2947;
+  background: var(--bg-panel);
   border-left: 1px solid #8780ab;
   border-right: 1px solid #8780ab;
   border-top: none;
@@ -14,7 +14,7 @@
 
 .vm-upper-detached {
   border: 1px solid #7f78a6;
-  background: #2f2947;
+  background: var(--bg-panel);
   padding: 2px;
 }
 
@@ -23,7 +23,7 @@
   margin-left: 10px;
   width: calc(100% - 12px);
   border: 1px solid #7f78a6;
-  background: #2f2947;
+  background: var(--bg-panel);
   padding: 8px;
 }
 
@@ -41,7 +41,7 @@
 .vm-mob-header,
 .vm-wide-btn,
 .vm-start-btn {
-  background: #3b345f;
+  background: var(--bg-control);
   border: 1px solid #7d76a3;
   color: #ece9fb;
   font-family: var(--font-family-mono);
@@ -139,7 +139,7 @@
 
 .vm-mob-header button {
   border: 1px solid #7d76a3;
-  background: #3b345f;
+  background: var(--bg-control);
   color: #ece9fb;
   font-family: var(--font-family-mono);
   font-size: 0.58rem;
@@ -208,7 +208,7 @@
   margin-top: auto;
   margin-bottom: 4px;
   border: 1px solid #7f78a6;
-  background: #2f2947;
+  background: var(--bg-panel);
   padding: 4px;
 }
 
@@ -289,7 +289,7 @@
   min-height: 20px;
   font-size: 0.62rem;
   padding: 0 3px;
-  background: #3b345f;
+  background: var(--bg-control);
   border: 1px solid #7d76a3;
   color: #e9e6fb;
 }
@@ -325,7 +325,7 @@
   width: calc(100% - 2px);
   margin: 1px;
   min-height: 30px;
-  background: #3b345f;
+  background: var(--bg-control);
   border: 1px solid #7d76a3;
   color: #f0ecff;
   font-size: 0.74rem;
@@ -359,7 +359,7 @@
   gap: var(--space-xs-vw);
 }
 
-.top-button-section .btn-row > * {
+.top-button-section .btn-row>* {
   flex: 1 1 0;
   min-width: 0;
 }

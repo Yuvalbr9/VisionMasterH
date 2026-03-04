@@ -1,93 +1,332 @@
-/* Left Panel Specific Styles */
+/* ===================================================
+   LEFT PANEL – complete redesign to match PCVM reference
+   =================================================== */
 
-/* Panel Header */
-.panel-header {
-  margin-bottom: var(--spacing-xs);
-}
-
-/* Panel Tabs */
-.panel-tabs {
+/* ---- Panel wrapper ---- */
+.left-panel {
+  width: 18vw;
+  min-width: 200px;
+  max-width: 310px;
+  background: var(--bg-panel);
+  border-right: 2px solid var(--border-color);
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
-  gap: var(--space-xs-vw);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0;
 }
 
-/* Data Display in Left Panel */
-.data-display {
-  background: var(--bg-control);
-  border: 1px solid #8a87a4;
-  padding: var(--spacing-md);
-  border-radius: 0.3vh;
+/* ---- Tabs bar ---- */
+.lp-tabs-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  background: var(--bg-dark);
+  border-bottom: 2px solid var(--border-color);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-/* DateTime Display */
-.datetime-display {
+.lp-tabs-bar .tab {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  border-radius: 0;
+  padding: 0.45vh 0.55vw;
+  font-size: 0.62rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.lp-tabs-bar .tab.active {
   background: var(--bg-control);
-  border: 1px solid #8a87a4;
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  border-top: 2px solid #8888cc;
+}
+
+.lp-tabs-bar .tab:hover {
+  background: var(--bg-control);
+  color: var(--text-primary);
+}
+
+.lp-tab-nav-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  color: var(--text-secondary);
+  padding: 0.45vh 0.5vw;
+  font-size: 0.65rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lp-tab-nav-btn:last-child {
+  margin-left: auto;
+}
+
+.lp-tab-nav-btn:hover {
+  background: var(--bg-control-hover);
+  color: var(--text-primary);
+}
+
+/* ---- Section wrappers ---- */
+.lp-section {
+  border-bottom: 2px solid var(--border-color);
+  padding: 1vh 0.7vw 0.8vh 0.7vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55vh;
+  flex-shrink: 0;
+}
+
+/* ---- Row layout ---- */
+.lp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+/* ---- Label (HDG / STW / POS / COG / SOG) ---- */
+.lp-label {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  min-width: 3vw;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.lp-label-spacer {
+  min-width: 3vw;
+  display: inline-block;
+}
+
+/* ---- Green value box (Frame only) ---- */
+.lp-value-box {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #00ff00;
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 0.3vh 0.5vw;
+  text-align: center;
+  min-width: 5vw;
+  white-space: nowrap;
+}
+
+.lp-value-box-wide {
+  min-width: 8vw;
+  flex: 1;
+}
+
+.lp-value-box-sm {
+  min-width: 2.8vw;
+  flex: 0 0 auto;
+}
+
+/* ---- Badge styles ---- */
+.lp-badge {
+  font-family: var(--font-family-sans);
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 0.28vh 0.45vw;
+  border: 1.5px solid;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.lp-badge-green {
+  border-color: var(--border-color);
+  color: #00ff00;
+  background: transparent;
+}
+
+.lp-badge-btn {
+  cursor: pointer;
+  padding: 0.3vh 0.8vw;
+  font-size: 0.75rem;
+}
+
+.lp-badge-btn:hover {
+  background: rgba(0, 255, 0, 0.12);
+}
+
+.lp-badge-autonomous {
+  border-color: var(--border-color);
+  color: #00ff00;
+  background: transparent;
+  font-size: 0.58rem;
+}
+
+.lp-badge-offset {
+  flex: 0 0 auto;
+}
+
+/* ---- STW layout ---- */
+.lp-stw-top {
+  align-items: flex-end;
+}
+
+.lp-value-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lp-top-arrow-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.lp-dashes-row {
+  display: flex;
+  align-items: stretch;
+  margin-left: calc(3vw + 0.5vw);
+}
+
+.lp-dashes-box {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #00ff00;
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  padding: 0.28vh 0.7vw;
+  letter-spacing: 0.2em;
+  min-width: 4.5vw;
   text-align: center;
 }
 
-.date {
-  font-size: var(--font-size-base);
-  color: var(--green);
-  margin-bottom: var(--spacing-xs);
-  text-shadow: none;
-}
-
-.time-row {
+/* ---- Generic White Arrows ---- */
+.lp-white-arrow {
+  color: #ffffff;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: var(--space-sm-vw);
-  font-size: var(--font-size-sm);
-  color: var(--green);
-  text-shadow: none;
+  background: transparent;
+  width: 1rem;
+  font-size: 0.8rem;
+  line-height: 1;
 }
 
-.zone {
-  color: var(--text-secondary);
-}
-
-.left-panel .data-label {
-  font-size: 1.14rem;
-}
-
-.left-panel .data-status {
+.lp-arrow-up-attached {
   font-size: 0.9rem;
+  margin-bottom: -1px;
+  /* attach to bottom box */
 }
 
-.left-panel .data-value {
-  font-size: 1.26rem;
+.lp-arrow-right-attached {
+  background: #ffffff;
+  color: var(--bg-dark);
+  border: 1px solid #ffffff;
 }
 
-.left-panel .data-unit {
+.lp-arrow-left-attached {
+  background: #ffffff;
+  color: var(--bg-dark);
+  border: 1px solid #ffffff;
+}
+
+.lp-arrow-down-attached {
+  font-size: 0.9rem;
+  margin-top: -1px;
+  /* attach to top box */
+}
+
+/* ---- SOG Section ---- */
+.lp-sog-section {
+  gap: 0.5vh;
+}
+
+.lp-sog-header {
   font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  padding-bottom: 0.1vh;
 }
 
-.left-panel .data-input,
-.left-panel .ccrp-input {
-  font-size: 1.04rem;
-  min-height: 3.1vh;
+.lp-sog-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
 }
 
-.left-panel .position-inputs-row .data-input,
-.left-panel .data-input-pos {
-  font-size: 0.85rem;
+.lp-row-relative {
+  position: relative;
 }
 
-.left-panel .sog-label,
-.left-panel .sog-source,
-.left-panel .ccrp-label,
-.left-panel .ccrp-unit,
-.left-panel .position-direction-label {
-  font-size: 0.9rem;
+.lp-value-group {
+  display: flex;
+  align-items: stretch;
 }
 
-.left-panel .date {
-  font-size: 1rem;
+.lp-sog-row-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.left-panel .time-row {
-  font-size: 0.9rem;
+.lp-row-below-arrow {
+  display: flex;
+  padding-left: calc(4.8vw + 0.4vw);
+  justify-content: center;
+  width: fit-content;
+}
+
+.lp-sog-label {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  min-width: 4.8vw;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.lp-sog-source {
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.lp-badge-mr {
+  margin-left: auto;
+}
+
+/* ---- DateTime ---- */
+.lp-datetime {
+  padding: 0.7vh 0.7vw 0.7vh 0.7vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  flex-shrink: 0;
+}
+
+.lp-datetime-date {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #00ff00;
+  font-size: 0.82rem;
+  text-align: center;
+  padding: 0.35vh 0.5vw;
+}
+
+.lp-datetime-time-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+
+.lp-datetime-time {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #00ff00;
+  font-size: 0.82rem;
+  padding: 0.35vh 0.5vw;
+  flex: 1;
+  text-align: center;
 }

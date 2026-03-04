@@ -6,6 +6,36 @@
   background: var(--radar-bg);
 }
 
+/* Main Container */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+  gap: 0;
+}
+
+/* Right Panel */
+.right-panel {
+  width: 17.5vw;
+  min-width: 230px;
+  max-width: 320px;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-color);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
 .legacy-topbar {
   height: 17px;
   background: #1e0aa8;

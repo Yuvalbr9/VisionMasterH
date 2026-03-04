@@ -30,14 +30,14 @@ export const useRadarCanvas = ({ navData, controls, arpaTargets }: UseRadarCanva
     const render = () => {
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
-      const maxRadius = Math.min(centerX, centerY) - 18;
+      const maxRadius = Math.min(centerX, centerY) - 34; // leave room for text
       const sweepAngle = sweepAngleRef.current;
 
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw radar background circle
-      ctx.fillStyle = '#110c1a';
+      ctx.fillStyle = '#000000';
       ctx.beginPath();
       ctx.arc(centerX, centerY, maxRadius, 0, Math.PI * 2);
       ctx.fill();

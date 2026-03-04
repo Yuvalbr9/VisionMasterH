@@ -1,69 +1,74 @@
 :root {
   /* ===== BASE COLORS ===== */
-  --bg-dark: #1c0b36;
-  --bg-panel: #353452;
-  --bg-control: #3b3957;
-  --bg-control-hover: #4a4867;
-  --border-color: #767293;
-  --border-color-hover: #8b88aa;
-  --text-primary: #ececf5;
-  --text-secondary: #c8c7d8;
+  --bg-dark: #1a0a2e;
+  /* deep purple-black */
+  --bg-panel: rgb(49, 41, 66);
+  /* user requested */
+  --bg-control: rgb(57, 46, 102);
+  /* slightly lighter purple for nested boxes */
+  --bg-control-hover: #4a3070;
+  --border-color: rgb(86, 79, 94);
+  --border-color-hover: #7a60a0;
+  --text-primary: #ffffff;
+  --text-secondary: #c0b0d8;
   --green: #00ff00;
-  --yellow: #e7d93f;
-  --radar-bg: #2a004a;
-  --top-line-blue: #2b62c9;
-  --win-face: #3b3957;
-  --win-light: #9a97b7;
-  --win-mid: #656282;
-  --win-dark: #2b2941;
-  --win-shadow: #1a1928;
+  --yellow: #ffff00;
+  --radar-bg: rgb(31, 0, 41);
+
+  /* ===== BADGE COLORS ===== */
+  --badge-green-bg: transparent;
+  --badge-green-border: #00ff00;
+  --badge-green-text: #00ff00;
+  --badge-autonomous-bg: transparent;
+  --badge-autonomous-border: #5555aa;
+  --badge-autonomous-text: #00ff00;
 
   /* ===== SEMANTIC COLORS ===== */
-  /* Green accent colors with transparency */
-  --green-glow-dark: rgba(0, 255, 0, 0.1);
-  --green-glow-medium: rgba(0, 255, 0, 0.3);
-  --green-glow-light: rgba(0, 255, 0, 0.4);
-  --green-glow-bright: rgba(0, 255, 0, 0.5);
-  --green-glow-full: rgba(0, 255, 0, 0.6);
-  
+  --green-glow-dark: rgba(0, 255, 0, 0.0);
+  --green-glow-medium: rgba(0, 255, 0, 0.0);
+  --green-glow-light: rgba(0, 255, 0, 0.0);
+  --green-glow-bright: rgba(0, 255, 0, 0.0);
+  --green-glow-full: rgba(0, 255, 0, 0.0);
+
   /* Dark overlays */
   --overlay-dark-light: rgba(0, 0, 0, 0.3);
   --overlay-dark-medium: rgba(0, 0, 0, 0.5);
-  
+
   /* Hover effects */
-  --hover-glow: rgba(100, 160, 180, 0.3);
+  --hover-glow: rgba(100, 100, 200, 0.3);
 
   /* ===== SPACING VARIABLES (VH) ===== */
-  --spacing-xs: 0.12vh;
-  --spacing-sm: 0.24vh;
-  --spacing-md: 0.36vh;
-  --spacing-lg: 0.5vh;
-  --spacing-xl: 0.65vh;
-  --spacing-2xl: 0.82vh;
-  --spacing-3xl: 1.05vh;
-  --spacing-4xl: 1.35vh;
-  --spacing-5xl: 1.65vh;
-  --spacing-6xl: 2vh;
+  --spacing-xs: 0.1vh;
+  --spacing-sm: 0.2vh;
+  --spacing-md: 0.3vh;
+  --spacing-lg: 0.4vh;
+  --spacing-xl: 0.5vh;
+  --spacing-2xl: 0.6vh;
+  --spacing-3xl: 0.8vh;
+  --spacing-4xl: 1vh;
+  --spacing-5xl: 1.2vh;
+  --spacing-6xl: 1.5vh;
 
   /* ===== SPACING VARIABLES (VW) ===== */
-  --space-xs-vw: 0.24vw;
-  --space-sm-vw: 0.34vw;
-  --space-md-vw: 0.48vw;
-  --space-lg-vw: 0.62vw;
-  --space-xl-vw: 0.85vw;
-  --space-2xl-vw: 1.1vw;
-  --space-3xl-vw: 1.35vw;
-  --space-5xl-vw: 1.6vw;
+  --space-xs-vw: 0.2vw;
+  --space-sm-vw: 0.3vw;
+  --space-md-vw: 0.5vw;
+  --space-lg-vw: 0.6vw;
+  --space-xl-vw: 0.9vw;
+  --space-2xl-vw: 1vw;
+  --space-3xl-vw: 1.2vw;
+  --space-5xl-vw: 1.5vw;
 
   /* ===== TYPOGRAPHY ===== */
-  --font-size-xs: 0.44rem;
-  --font-size-sm: 0.5rem;
-  --font-size-base: 0.56rem;
-  --font-size-md: 0.63rem;
-  --font-size-lg: 0.7rem;
-  --font-size-xl: 0.8rem;
-  --font-size-2xl: 0.9rem;
+  --font-size-xs: 0.5rem;
+  --font-size-sm: 0.563rem;
+  --font-size-base: 0.625rem;
+  --font-size-md: 0.688rem;
+  --font-size-lg: 0.75rem;
+  --font-size-xl: 0.875rem;
+  --font-size-2xl: 1rem;
   --font-family-mono: 'Courier New', monospace;
+  --font-family-sans: Arial, Helvetica, sans-serif;
 
   /* ===== BORDER RADIUS ===== */
   --radius-sm: 0;
@@ -74,13 +79,12 @@
   --scrollbar-width: 0.6vw;
   --scrollbar-min-width: 8px;
   --scrollbar-radius: 0.4vh;
-  --top-bar-height: 0;
-  --top-bar-min-height: 0;
-  --panel-min-width: 250px;
-  --panel-max-width: 340px;
+  --top-bar-height: 5vh;
+  --top-bar-min-height: 40px;
+  --panel-min-width: 200px;
+  --panel-max-width: 320px;
   --panel-width: 18vw;
-  --top-line-height: 2px;
-  
+
   /* Responsive sizing base */
   font-size: 16px;
 }
@@ -91,7 +95,9 @@
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -99,8 +105,7 @@ html, body, #root {
 
 body {
   margin: 0;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-family-sans);
   background: var(--bg-dark);
   color: var(--text-primary);
-  letter-spacing: 0.02em;
 }
