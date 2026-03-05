@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
 import { Angle, Speed, Length } from 'unitsnet-js';
-import { NavigationData, parseLatitude, parseLongitude } from './types';
+import { NavigationData, parseLatitude, parseLongitude, RadarControlState, ARPATarget } from './types';
 import { LeftPanel } from './components/LeftPanel';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
+
+const defaultRadarControls: RadarControlState = {
+  northUp: true,
+  selectedRangeNm: 12,
+  trailsOn: false,
+  vectorTimeMin: 6.0,
+  aisOn: true,
+  chartOverlayOn: false,
+  ebl1Deg: 303.4,
+  ebl2Deg: 5.0,
+  vrm1Nm: 5.07,
+  vrm2Nm: 7.56,
+};
 
 const App: React.FC = () => {
   const [navData, setNavData] = useState<NavigationData>({
@@ -18,26 +31,33 @@ const App: React.FC = () => {
     stemPS: Length.FromMeters(0.0),
   });
 
+  const [radarControls, setRadarControls] = useState<RadarControlState>(defaultRadarControls);
+  const [velocity, setVelocity] = useState<{ vn: number; ve: number }>({ vn: 0, ve: 0 });
+  const [arpaTargets] = useState<ARPATarget[]>([]);
+
   const updateNavData = (updates: Partial<NavigationData>) => {
     setNavData(prev => ({ ...prev, ...updates }));
   };
 
   return (
     <div className="app">
-      <div className="top-bar">
-        <div className="app-logo">
-          <span className="logo-icon">◉</span>
-          <span className="logo-text">PCVN</span>
-        </div>
-        <div className="top-info">
-          <span className="info-item">185 Bayview Road ~ Blasdell ~ New York ~ 14219 ~ 716-822-8668 ~ www.bcgeng.com</span>
-        </div>
-      </div>
-      
       <div className="main-container">
         <LeftPanel navData={navData} updateNavData={updateNavData} />
-        <RadarDisplay navData={navData} />
-        <RightPanel />
+        <RadarDisplay
+          navData={navData}
+          radarControls={radarControls}
+          arpaTargets={arpaTargets}
+          velocity={velocity}
+          leewayDeg={0}
+        />
+        <RightPanel
+          radarControls={radarControls}
+          onRadarControlsChange={setRadarControls}
+          velocity={velocity}
+          onVelocityChange={setVelocity}
+          leewayDeg={0}
+          arpaTargets={arpaTargets}
+        />
       </div>
     </div>
   );

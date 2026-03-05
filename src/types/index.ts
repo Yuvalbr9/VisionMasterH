@@ -19,6 +19,8 @@ export interface RadarPoint {
   intensity: number; // 0-1 for fade effect
 }
 
+export * from './radar';
+
 // Helper functions for position formatting
 export const formatLatitude = (angle: Angle): string => {
   const degrees = Math.abs(angle.Degrees);

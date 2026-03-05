@@ -11,6 +11,7 @@
 
 /* Panel Styles */
 @import url('./panels/left-panel.css');
+@import url('./panels/left-panel-triangles.css');
 @import url('./panels/right-panel.css');
 @import url('./panels/radar.css');
 

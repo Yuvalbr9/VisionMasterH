@@ -1,29 +1,40 @@
 import React from 'react';
-import { Speed } from 'unitsnet-js';
-import { SpeedInput } from '../Inputs';
-import { ArrowButton } from '../Buttons';
+import { Speed, Length } from 'unitsnet-js';
 
 interface SOGDisplayProps {
-  value: Speed;
+  value: Speed;          // CCRP F/A speed
   onChange: (value: Speed) => void;
 }
 
-export const SOGDisplay: React.FC<SOGDisplayProps> = ({ value, onChange }) => {
+export const SOGDisplay: React.FC<SOGDisplayProps> = ({ value }) => {
   return (
-    <div className="data-display">
-      <div className="data-header">
-        <span className="data-label">SOG</span>
+    <div className="lp-section lp-sog-section">
+      <div className="lp-sog-header">SOG</div>
+
+      {/* Bow P/S */}
+      <div className="lp-sog-row">
+        <span className="lp-sog-label">Bow P/S</span>
+        <span className="lp-value-box lp-value-box-sm lp-has-triangle lp-triangle-left">0.0</span>
+        <span className="lp-sog-source">Source</span>
       </div>
-      <div className="sog-selector-compact">
-        <span className="sog-label">Bow P/S</span>
-        <div className="sog-arrows">
-          <ArrowButton direction="left" />
-          <ArrowButton direction="right" />
-        </div>
+
+      {/* CCRP P/S */}
+      <div className="lp-sog-row">
+        <span className="lp-sog-label">CCRP P/S</span>
+        <span className="lp-value-box lp-value-box-sm lp-has-triangle lp-triangle-left">0.0</span>
+        <span className="lp-badge lp-badge-green lp-badge-mr">GPS</span>
       </div>
-      <div className="sog-input-row">
-        <SpeedInput value={value} onChange={onChange} />
-        <span className="sog-source">Source</span>
+
+      {/* CCRP F/A */}
+      <div className="lp-sog-row" style={{ marginTop: '4px', marginBottom: '4px' }}>
+        <span className="lp-sog-label">CCRP F/A</span>
+        <span className="lp-value-box lp-value-box-med lp-has-triangle lp-triangle-down">{value.Knots.toFixed(1)} kn</span>
+      </div>
+
+      {/* Stern P/S */}
+      <div className="lp-sog-row">
+        <span className="lp-sog-label">Stern P/S</span>
+        <span className="lp-value-box lp-value-box-sm lp-has-triangle lp-triangle-left">0.0</span>
       </div>
     </div>
   );

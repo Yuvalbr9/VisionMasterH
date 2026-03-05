@@ -8,7 +8,7 @@
   --green: #00ff00;
   --yellow: #ffcc00;
   --radar-bg: #15102e;
-  
+
   /* Responsive sizing base */
   font-size: 16px;
 }
@@ -19,7 +19,9 @@
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -1046,7 +1048,7 @@ body {
   gap: 0.2vh;
 }
 
-.position-inputs-row > div {
+.position-inputs-row>div {
   display: flex;
   align-items: center;
   gap: 0.2vw;
@@ -1080,7 +1082,7 @@ body {
   padding: 0.15vh 0.2vw;
 }
 
-.position-inputs-row > div > span {
+.position-inputs-row>div>span {
   min-width: 1vw !important;
   font-size: 0.625rem !important;
 }
@@ -1156,4 +1158,3 @@ body {
   color: var(--text-secondary);
   white-space: nowrap;
 }
-

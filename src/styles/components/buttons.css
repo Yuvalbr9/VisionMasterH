@@ -1,259 +1,177 @@
 /* Button Base Styles */
-.arrow-btn {
-  background: var(--bg-dark);
-  border: 1px solid var(--border-color);
+.arrow-btn,
+.control-btn,
+.data-button,
+.tab,
+.header-btn,
+.nav-btn,
+.ais-nav-btn,
+.ais-nav-btn-small,
+.menu-btn,
+.chart-btn,
+.start-btn,
+.tune-btn,
+.overboard-btn-left,
+.overboard-btn-right,
+.ctrl-tab,
+.radar-btn-small {
+  background: var(--bg-control);
+  border: 1px solid var(--win-mid);
+  border-top-color: var(--win-light);
+  border-left-color: var(--win-light);
+  border-right-color: var(--win-dark);
+  border-bottom-color: var(--win-shadow);
   color: var(--text-primary);
-  padding: var(--spacing-xs) var(--space-md-vw);
-  font-size: var(--font-size-md);
+  border-radius: 0;
   cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
+  transition: none;
 }
 
-.arrow-btn:hover {
-  background: var(--border-color);
-}
-
-/* Arrow button variants */
-.arrow-btn-small {
+.arrow-btn,
+.radar-btn-small,
+.ais-nav-btn-small {
   padding: var(--spacing-xs) var(--space-sm-vw);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
+}
+
+.control-btn,
+.data-button,
+.chart-btn,
+.menu-btn,
+.tune-btn,
+.ctrl-tab {
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+}
+
+.tab {
+  padding: var(--spacing-xs) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+}
+
+.tab.active {
+  background: #2f2d46;
+  color: var(--text-primary);
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+}
+
+.arrow-btn:hover,
+.control-btn:hover,
+.data-button:hover,
+.tab:hover,
+.header-btn:hover,
+.nav-btn:hover,
+.ais-nav-btn:hover,
+.ais-nav-btn-small:hover,
+.menu-btn:hover,
+.chart-btn:hover,
+.start-btn:hover,
+.tune-btn:hover,
+.overboard-btn-left:hover,
+.overboard-btn-right:hover,
+.ctrl-tab:hover,
+.radar-btn-small:hover {
+  background: var(--bg-control-hover);
+}
+
+.arrow-btn:active,
+.control-btn:active,
+.data-button:active,
+.tab:active,
+.header-btn:active,
+.nav-btn:active,
+.ais-nav-btn:active,
+.ais-nav-btn-small:active,
+.menu-btn:active,
+.chart-btn:active,
+.start-btn:active,
+.tune-btn:active,
+.overboard-btn-left:active,
+.overboard-btn-right:active,
+.ctrl-tab:active,
+.radar-btn-small:active {
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+}
+
+.arrow-btn-small {
+  font-size: var(--font-size-xs);
 }
 
 .arrow-btn-compact {
   padding: var(--spacing-xs) var(--space-sm-vw);
-  font-size: var(--font-size-base);
-  background: var(--bg-control);
-  border-color: var(--border-color);
-}
-
-.arrow-btn-compact:hover {
-  background: var(--border-color);
 }
 
 .arrow-btn-minimal {
-  background: transparent;
-  border: none;
-  padding: var(--spacing-xs) var(--space-sm-vw);
-  color: var(--green);
-}
-
-.arrow-btn-minimal:hover {
-  background: var(--green-glow-dark);
-  border: 1px solid var(--green);
-}
-
-/* Control Button */
-.control-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-2xl) var(--space-lg-vw);
-  font-size: var(--font-size-md);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.control-btn:hover {
-  background: var(--border-color);
-  box-shadow: 0 0 1vh var(--hover-glow);
-  transform: translateY(var(--spacing-xs));
-}
-
-/* Data Button */
-.data-button {
   background: var(--bg-dark);
   border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-sm) var(--space-lg-vw);
-  font-size: var(--font-size-base);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  margin-left: auto;
-  transition: all 0.2s ease;
-}
-
-.data-button:hover {
-  background: var(--border-color);
-}
-
-/* Tab Button */
-.tab {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  padding: var(--spacing-md) var(--space-md-vw);
-  font-size: var(--font-size-base);
-  color: var(--text-secondary);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.tab.active {
-  background: var(--bg-control-hover);
-  color: var(--text-primary);
-}
-
-.tab:hover {
-  background: var(--border-color);
+  color: var(--green);
 }
 
 /* Header Button */
 .header-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  padding: var(--spacing-lg) var(--space-lg-vw);
+  padding: var(--spacing-sm) var(--space-sm-vw);
   font-size: var(--font-size-base);
-  color: var(--text-primary);
-  cursor: pointer;
-  border-radius: var(--radius-md);
   white-space: nowrap;
-  transition: all 0.2s ease;
-}
-
-.header-btn:hover {
-  background: var(--border-color);
 }
 
 /* Navigation Buttons */
 .nav-btn {
-  background: var(--bg-dark);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
   padding: var(--spacing-lg) var(--space-xl-vw);
   font-size: var(--font-size-xl);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.nav-btn:hover {
-  background: var(--border-color);
 }
 
 .ais-nav-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
   padding: var(--spacing-md) var(--space-lg-vw);
   font-size: var(--font-size-md);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.ais-nav-btn:hover {
-  background: var(--border-color);
 }
 
 .ais-nav-btn-small {
-  background: var(--bg-dark);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
   padding: var(--spacing-xs) var(--space-sm-vw);
   font-size: var(--font-size-sm);
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-}
-
-.ais-nav-btn-small:hover {
-  background: var(--border-color);
 }
 
 /* Action Buttons */
 .menu-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-3xl) var(--space-lg-vw);
+  padding: var(--spacing-md) var(--space-sm-vw);
   font-size: var(--font-size-md);
-  cursor: pointer;
-  border-radius: var(--radius-md);
   width: 100%;
   font-weight: bold;
-  transition: all 0.2s ease;
-}
-
-.menu-btn:hover {
-  background: var(--border-color);
-  transform: translateY(var(--spacing-xs));
 }
 
 .chart-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-5xl) var(--space-xl-vw);
+  padding: var(--spacing-md) var(--space-sm-vw);
   font-size: var(--font-size-md);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.chart-btn:hover {
-  background: var(--border-color);
-  transform: translateY(var(--spacing-xs));
 }
 
 .start-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-4xl);
-  font-size: var(--font-size-lg);
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: var(--radius-lg);
-  transition: all 0.2s ease;
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-weight: normal;
   width: 100%;
 }
 
-.start-btn:hover {
-  background: var(--border-color);
-  transform: translateY(var(--spacing-xs));
-  box-shadow: 0 0.2vh 0.8vh var(--overlay-dark-light);
-}
-
 .tune-btn {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-xl) var(--space-lg-vw);
+  padding: var(--spacing-sm) var(--space-sm-vw);
   font-size: var(--font-size-base);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.tune-btn:hover {
-  background: var(--border-color);
 }
 
 .overboard-btn-left,
 .overboard-btn-right {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-3xl) var(--space-lg-vw);
+  padding: var(--spacing-sm) var(--space-sm-vw);
   font-size: var(--font-size-base);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-md-vw);
   font-weight: normal;
-}
-
-.overboard-btn-left:hover,
-.overboard-btn-right:hover {
-  background: var(--border-color);
-  transform: translateY(var(--spacing-xs));
-  box-shadow: 0 0.2vh 0.8vh var(--overlay-dark-light);
 }
 
 .overboard-btn-left .arrow,
@@ -264,32 +182,12 @@
 
 /* Control Tabs */
 .ctrl-tab {
-  background: var(--bg-dark);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-xl) var(--space-xl-vw);
+  padding: var(--spacing-sm) var(--space-sm-vw);
   font-size: var(--font-size-base);
-  cursor: pointer;
-  border-radius: var(--radius-md);
   flex: 1;
-  transition: all 0.2s ease;
-}
-
-.ctrl-tab:hover {
-  background: var(--border-color);
 }
 
 .radar-btn-small {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: var(--spacing-md) var(--space-lg-vw);
+  padding: var(--spacing-xs) var(--space-sm-vw);
   font-size: var(--font-size-sm);
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-}
-
-.radar-btn-small:hover {
-  background: var(--border-color);
 }

@@ -1,31 +1,41 @@
 :root {
   /* ===== BASE COLORS ===== */
-  --bg-dark: #0a0e1a;
-  --bg-panel: #1a1e2e;
-  --bg-control: #252938;
-  --bg-control-hover: #2a4a5a;
-  --border-color: #3a4a5a;
-  --border-color-hover: #4a5a6a;
+  --bg-dark: #1a0a2e;
+  /* deep purple-black */
+  --bg-panel: rgb(49, 41, 66);
+  /* user requested */
+  --bg-control: rgb(57, 46, 102);
+  /* slightly lighter purple for nested boxes */
+  --bg-control-hover: #4a3070;
+  --border-color: rgb(86, 79, 94);
+  --border-color-hover: #7a60a0;
   --text-primary: #ffffff;
-  --text-secondary: #a0aec0;
+  --text-secondary: #c0b0d8;
   --green: #00ff00;
-  --yellow: #ffcc00;
-  --radar-bg: #15102e;
+  --yellow: #ffff00;
+  --radar-bg: rgb(31, 0, 41);
+
+  /* ===== BADGE COLORS ===== */
+  --badge-green-bg: transparent;
+  --badge-green-border: #00ff00;
+  --badge-green-text: #00ff00;
+  --badge-autonomous-bg: transparent;
+  --badge-autonomous-border: #5555aa;
+  --badge-autonomous-text: #00ff00;
 
   /* ===== SEMANTIC COLORS ===== */
-  /* Green accent colors with transparency */
-  --green-glow-dark: rgba(0, 255, 0, 0.1);
-  --green-glow-medium: rgba(0, 255, 0, 0.3);
-  --green-glow-light: rgba(0, 255, 0, 0.4);
-  --green-glow-bright: rgba(0, 255, 0, 0.5);
-  --green-glow-full: rgba(0, 255, 0, 0.6);
-  
+  --green-glow-dark: rgba(0, 255, 0, 0.0);
+  --green-glow-medium: rgba(0, 255, 0, 0.0);
+  --green-glow-light: rgba(0, 255, 0, 0.0);
+  --green-glow-bright: rgba(0, 255, 0, 0.0);
+  --green-glow-full: rgba(0, 255, 0, 0.0);
+
   /* Dark overlays */
   --overlay-dark-light: rgba(0, 0, 0, 0.3);
   --overlay-dark-medium: rgba(0, 0, 0, 0.5);
-  
+
   /* Hover effects */
-  --hover-glow: rgba(100, 160, 180, 0.3);
+  --hover-glow: rgba(100, 100, 200, 0.3);
 
   /* ===== SPACING VARIABLES (VH) ===== */
   --spacing-xs: 0.1vh;
@@ -58,11 +68,12 @@
   --font-size-xl: 0.875rem;
   --font-size-2xl: 1rem;
   --font-family-mono: 'Courier New', monospace;
+  --font-family-sans: Arial, Helvetica, sans-serif;
 
   /* ===== BORDER RADIUS ===== */
-  --radius-sm: 0.2vh;
-  --radius-md: 0.3vh;
-  --radius-lg: 0.4vh;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
 
   /* ===== SIZING ===== */
   --scrollbar-width: 0.6vw;
@@ -70,10 +81,10 @@
   --scrollbar-radius: 0.4vh;
   --top-bar-height: 5vh;
   --top-bar-min-height: 40px;
-  --panel-min-width: 280px;
-  --panel-max-width: 400px;
-  --panel-width: 20vw;
-  
+  --panel-min-width: 200px;
+  --panel-max-width: 320px;
+  --panel-width: 18vw;
+
   /* Responsive sizing base */
   font-size: 16px;
 }
@@ -84,7 +95,9 @@
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -92,7 +105,7 @@ html, body, #root {
 
 body {
   margin: 0;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-family-sans);
   background: var(--bg-dark);
   color: var(--text-primary);
 }

@@ -1,14 +1,21 @@
 import React from 'react';
 import { useRadarCanvas } from './useRadarCanvas';
+import { ARPATarget, NavigationData, RadarControlState } from '../../types';
 
-export const RadarCanvas: React.FC = () => {
-  const canvasRef = useRadarCanvas();
+interface RadarCanvasProps {
+  navData: NavigationData;
+  controls: RadarControlState;
+  arpaTargets: ARPATarget[];
+}
+
+export const RadarCanvas: React.FC<RadarCanvasProps> = ({ navData, controls, arpaTargets }) => {
+  const canvasRef = useRadarCanvas({ navData, controls, arpaTargets });
 
   return (
     <canvas
       ref={canvasRef}
-      width={550}
-      height={550}
+      width={720}
+      height={720}
       className="radar-canvas"
     />
   );
