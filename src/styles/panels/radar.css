@@ -122,16 +122,18 @@
 
 .radar-bottom-controls {
   position: absolute;
-  left: -1px;
-  bottom: var(--spacing-md);
-  display: block;
+  left: 0;
+  bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   background: transparent;
   padding: 0;
   border: none;
   font-size: var(--font-size-xs);
   z-index: 10;
-  width: 172px;
-  min-width: 172px;
+  width: 292px;
+  min-width: 292px;
 }
 
 .radar-console-main {
@@ -139,7 +141,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 2px;
-  width: 172px;
+  width: 218px;
 }
 
 .radar-console-block {
@@ -152,7 +154,7 @@
 }
 
 .radar-console-btn {
-  background: var(--bg-control);
+  background: linear-gradient(180deg, #3a3c86 0%, #252557 100%);
   border: 1px solid var(--win-mid);
   border-top-color: var(--win-light);
   border-left-color: var(--win-light);
@@ -161,9 +163,10 @@
   color: var(--text-primary);
   font-family: var(--font-family-mono);
   font-size: 0.68rem;
-  height: 28px;
+  height: 31px;
   line-height: 1;
   padding: 0 6px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
 }
 
 .radar-console-btn-wide {
@@ -177,7 +180,7 @@
 
 .radar-console-row {
   display: grid;
-  grid-template-columns: 36px 1fr;
+  grid-template-columns: 56px 1fr;
   align-items: center;
   gap: 4px;
 }
@@ -185,33 +188,39 @@
 .radar-console-label {
   color: var(--text-primary);
   font-family: var(--font-family-mono);
-  font-size: 0.78rem;
+  font-size: 1.05rem;
   text-align: left;
+  padding-left: 3px;
 }
 
 .radar-console-value-box {
-  height: 28px;
+  height: 31px;
   border: 1px solid var(--win-mid);
   border-top-color: var(--win-shadow);
   border-left-color: var(--win-shadow);
   border-right-color: var(--win-light);
   border-bottom-color: var(--win-light);
-  background: #2f2a49;
+  background: #2e2b47;
   display: flex;
   align-items: stretch;
 }
 
 .radar-console-fill {
-  width: 85%;
+  width: 86%;
   background: #5cb74b;
   border-right: 1px solid #3f8134;
 }
 
+.radar-console-top-group {
+  display: grid;
+  grid-template-columns: 218px 74px;
+  gap: 2px;
+  align-items: start;
+}
+
 .radar-console-side-buttons {
-  position: absolute;
-  top: 59px;
-  left: 174px;
-  width: 58px;
+  margin-top: 9.5vh;
+  width: 112%;
   display: grid;
   grid-template-rows: 1fr 1fr;
   gap: 2px;
@@ -219,7 +228,7 @@
 
 .radar-console-bottom-row {
   display: grid;
-  grid-template-columns: 1fr 56px;
+  grid-template-columns: 1fr 58px;
   gap: 2px;
 }
 

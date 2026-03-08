@@ -13,7 +13,12 @@
   --text-secondary: #c0b0d8;
   --green: #00ff00;
   --yellow: #ffff00;
+  --legacy-win-blue: rgba(20, 0, 128, 1);
   --radar-bg: rgb(31, 0, 41);
+  --win-light: #8a87a9;
+  --win-mid: #666281;
+  --win-dark: #2a2940;
+  --win-shadow: #181726;
 
   /* ===== BADGE COLORS ===== */
   --badge-green-bg: transparent;

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Angle, Duration, Length } from 'unitsnet-js';
 import { ARPATarget, RadarControlState } from '../types';
-import { ControlButton } from './Buttons';
+import { UI_TEXT, UI_VALUES } from '../constants';
 import { BottomCornerEblVrm } from './RightPanel/BottomCornerEblVrm';
-import { BearingControls } from './RightPanel/BearingControls';
-import { ChartControls } from './RightPanel/ChartControls';
-import { PositionInfo } from './RightPanel/PositionInfo';
-import { RangeControls } from './RightPanel/RangeControls';
+import { TopControlsSection } from './RightPanel/TopControlsSection';
+import { MobCardSection } from './RightPanel/MobCardSection';
+import { GreenPanelSection } from './RightPanel/GreenPanelSection';
 
 interface RightPanelProps {
   radarControls: RadarControlState;
@@ -21,12 +21,61 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   onRadarControlsChange,
   arpaTargets,
 }) => {
-  const modeLabel = radarControls.northUp ? 'N UP' : 'Head Up';
-  const trailsLabel = radarControls.trailsOn ? 'Trails On' : 'Trails Off';
-  const aisLabel = radarControls.aisOn ? 'AIS On' : 'AIS Off';
-  const chartsLabel = radarControls.chartOverlayOn ? 'Charts On' : 'Charts Off';
+  const modeLabel = radarControls.northUp ? UI_TEXT.RIGHT_PANEL.MODE_N_UP : UI_TEXT.RIGHT_PANEL.MODE_HEAD_UP;
+  const trailsLabel = radarControls.trailsOn ? UI_TEXT.RIGHT_PANEL.TRAILS_ON : UI_TEXT.RIGHT_PANEL.TRAILS_OFF;
+  const aisLabel = radarControls.aisOn ? UI_TEXT.RIGHT_PANEL.AIS_ON : UI_TEXT.RIGHT_PANEL.AIS_OFF;
+  const chartsLabel = radarControls.chartOverlayOn ? UI_TEXT.RIGHT_PANEL.CHARTS_ON : UI_TEXT.RIGHT_PANEL.CHARTS_OFF;
 
   const primaryTarget = arpaTargets[0] as ARPATarget | undefined;
+  const [bearingRInput, setBearingRInput] = useState(radarControls.ebl1Deg.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
+  const [bearingTInput, setBearingTInput] = useState(radarControls.ebl2Deg.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
+  const [rangeInput, setRangeInput] = useState(primaryTarget ? primaryTarget.rangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_DECIMALS) : '');
+  const [rangeValue, setRangeValue] = useState(() => Length.FromNauticalMiles(primaryTarget?.rangeNm ?? 0));
+  const [elapsedTimeInput, setElapsedTimeInput] = useState<string>(UI_TEXT.RIGHT_PANEL.DEFAULT_HMS);
+  const [elapsedDuration, setElapsedDuration] = useState(() => Duration.FromSeconds(UI_VALUES.RIGHT_PANEL.ELAPSED_ZERO_SECONDS));
+
+  useEffect(() => {
+    setBearingRInput(radarControls.ebl1Deg.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
+  }, [radarControls.ebl1Deg]);
+
+  useEffect(() => {
+    setBearingTInput(radarControls.ebl2Deg.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
+  }, [radarControls.ebl2Deg]);
+
+  useEffect(() => {
+    const nextRangeNm = primaryTarget?.rangeNm;
+    if (typeof nextRangeNm === 'number' && Number.isFinite(nextRangeNm)) {
+      setRangeValue(Length.FromNauticalMiles(nextRangeNm));
+      setRangeInput(nextRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_DECIMALS));
+    }
+  }, [primaryTarget?.rangeNm]);
+
+  const parseDurationToSeconds = (value: string): number | null => {
+    const match = value.match(/^(\d{1,2}):(\d{2}):(\d{2})$/);
+    if (!match) {
+      return null;
+    }
+
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    const seconds = Number(match[3]);
+
+    if (minutes > 59 || seconds > 59) {
+      return null;
+    }
+
+    return hours * 3600 + minutes * 60 + seconds;
+  };
+
+  const formatDurationHms = (duration: Duration): string => {
+    const totalSeconds = Math.max(0, Math.floor(duration.Seconds));
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  };
 
   const toggleMode = () => {
     onRadarControlsChange((prev) => ({ ...prev, northUp: !prev.northUp }));
@@ -44,101 +93,68 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     onRadarControlsChange((prev) => ({ ...prev, chartOverlayOn: !prev.chartOverlayOn }));
   };
 
+  const handleBearingRInputChange = (nextValue: string) => {
+    setBearingRInput(nextValue);
+    const parsedValue = Number(nextValue);
+    if (Number.isFinite(parsedValue)) {
+      const angle = Angle.FromDegrees(parsedValue);
+      onRadarControlsChange((prev) => ({ ...prev, ebl1Deg: angle.Degrees }));
+    }
+  };
+
+  const handleBearingTInputChange = (nextValue: string) => {
+    setBearingTInput(nextValue);
+    const parsedValue = Number(nextValue);
+    if (Number.isFinite(parsedValue)) {
+      const angle = Angle.FromDegrees(parsedValue);
+      onRadarControlsChange((prev) => ({ ...prev, ebl2Deg: angle.Degrees }));
+    }
+  };
+
+  const handleRangeInputChange = (nextValue: string) => {
+    setRangeInput(nextValue);
+    const parsedValue = Number(nextValue);
+    if (Number.isFinite(parsedValue)) {
+      setRangeValue(Length.FromNauticalMiles(parsedValue));
+    }
+  };
+
+  const handleElapsedTimeInputChange = (nextValue: string) => {
+    setElapsedTimeInput(nextValue);
+    const seconds = parseDurationToSeconds(nextValue);
+    if (seconds !== null) {
+      setElapsedDuration(Duration.FromSeconds(seconds));
+    }
+  };
+
   return (
     <div className="right-panel vm-right-panel">
-      <div className="vm-upper-detached">
-        <div className="vm-top-matrix">        
-          <ControlButton className="vm-cell" onClick={toggleMode}>{modeLabel}</ControlButton>
-          <ControlButton className="vm-cell">RM</ControlButton>
-          <ControlButton className="vm-cell" onClick={toggleTrails}>{trailsLabel}</ControlButton>
-          <ControlButton className="vm-cell vm-time-cell">0min 00s</ControlButton>
-          <ControlButton className="vm-cell vm-radar-cell">Radar</ControlButton>
+      <TopControlsSection
+        modeLabel={modeLabel}
+        trailsLabel={trailsLabel}
+        aisLabel={aisLabel}
+        chartsLabel={chartsLabel}
+        radarControls={radarControls}
+        onToggleMode={toggleMode}
+        onToggleTrails={toggleTrails}
+        onToggleAis={toggleAis}
+        onToggleCharts={toggleCharts}
+      />
 
-          <ControlButton className="vm-cell vm-ground-cell">Ground Stabilised</ControlButton>
-          <ControlButton className="vm-cell">R Vectors</ControlButton>
-          <ControlButton className="vm-cell">{radarControls.vectorTimeMin.toFixed(1)} min</ControlButton>
+      <MobCardSection
+        bearingRInput={bearingRInput}
+        bearingTInput={bearingTInput}
+        rangeInput={rangeInput}
+        elapsedTimeInput={elapsedTimeInput}
+        onBearingRInputChange={handleBearingRInputChange}
+        onBearingTInputChange={handleBearingTInputChange}
+        onRangeInputChange={handleRangeInputChange}
+        onRangeInputBlur={() => setRangeInput(rangeValue.NauticalMiles.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_DECIMALS))}
+        onElapsedTimeInputChange={handleElapsedTimeInputChange}
+        onElapsedTimeInputBlur={() => setElapsedTimeInput(formatDurationHms(elapsedDuration))}
+      />
 
-          <ControlButton className="vm-cell vm-arrow-cell">◀</ControlButton>
-          <ControlButton className="vm-cell vm-messy-shift">{radarControls.selectedRangeNm.toFixed(0)} RM</ControlButton>
-          <ControlButton className="vm-cell vm-arrow-cell">▶</ControlButton>
-          <ControlButton className="vm-cell">AIS Priority</ControlButton>
-          <ControlButton className="vm-cell" onClick={toggleAis}>{aisLabel}</ControlButton>
-          <ControlButton className="vm-cell">CPA</ControlButton>
-
-          <ControlButton className="vm-cell">Rings {radarControls.selectedRangeNm.toFixed(0)} NM</ControlButton>
-          <ControlButton className="vm-cell">Centre</ControlButton>
-          <ControlButton className="vm-cell">Max</ControlButton>
-          <ControlButton className="vm-cell">iHelp</ControlButton>
-
-          <ControlButton className="vm-cell vm-print-cell">Print</ControlButton>
-          <ControlButton className="vm-cell vm-icon-cell">✉</ControlButton>
-          <ControlButton className="vm-cell" onClick={toggleCharts}>{chartsLabel}</ControlButton>
-          <ControlButton className="vm-cell">Synth On</ControlButton>
-          <ControlButton className="vm-cell">Coast</ControlButton>
-        </div>
-
-        <div className="vm-alert-row">
-          <ControlButton className="vm-alert-main">No Alarms</ControlButton>
-          <ControlButton className="vm-alert-arrow">◀</ControlButton>
-        </div>
-        <ControlButton className="vm-date-row">22 Jul 2014 16:00:31 UTC</ControlButton>
-        <div className="vm-mob-header">
-          <ControlButton>◀</ControlButton>
-          <ControlButton className="vm-mob-header-main">Man Overboard</ControlButton>
-          <ControlButton>▶</ControlButton>
-        </div>
-      </div>
-
-      <div className="vm-lower-detached">
-        <div className="vm-mob-card">
-          <div className="vm-mob-title">Man Overboard</div>
-          <ControlButton className="vm-wide-btn">Select A Position On Chart</ControlButton>
-          <ControlButton className="vm-wide-btn">Manual Edit</ControlButton>
-
-          <div className="vm-field-row">
-            <label>Bearing (R)</label>
-            <input value={radarControls.ebl1Deg.toFixed(1)} readOnly />
-          </div>
-          <div className="vm-field-row">
-            <label>Bearing (T)</label>
-            <input value={radarControls.ebl2Deg.toFixed(1)} readOnly />
-          </div>
-          <div className="vm-field-row">
-            <label>Range (nm)</label>
-            <input value={primaryTarget ? primaryTarget.rangeNm.toFixed(2) : '---'} readOnly />
-          </div>
-          <div className="vm-field-row">
-            <label>Elapsed Time</label>
-            <input value={'00:00:00'} readOnly />
-          </div>
-
-          <ControlButton className="vm-start-btn">Start</ControlButton>
-        </div>
-
-      </div>
-
-        <div className="vm-bottom-detached">
-          <div className="vm-bottom-row">
-            <div className="vm-green-panel-wrap">
-              <div className="vm-green-tabs">
-                <ControlButton className="vm-green-tab">Curs</ControlButton>
-                <ControlButton className="vm-green-tab">Posn</ControlButton>
-                <ControlButton className="vm-green-tab">Route</ControlButton>
-                <ControlButton className="vm-green-tab">Trial</ControlButton>
-              </div>
-
-              <div className="vm-green-panel">
-                <div className="vm-green-line">40°24.496'N</div>
-                <div className="vm-green-line">073°49.944'W</div>
-                <div className="vm-green-line">2.79 NM <span className="vm-rhumb">Rhumb</span></div>
-                <div className="vm-green-line">258.2° <span className="vm-mid-tag">R</span> (078.2°)</div>
-                <div className="vm-green-line">TTG 00:15:29 HH:MM:SS</div>
-              </div>
-
-              <ControlButton className="vm-show-menu-btn">Show Menu</ControlButton>
-            </div>
-          </div>
-        </div>
+      <GreenPanelSection />
 
       <BottomCornerEblVrm radarControls={radarControls} />
     </div>

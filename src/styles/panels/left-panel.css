@@ -86,6 +86,17 @@
   flex-shrink: 0;
 }
 
+.lp-api-status {
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.45vh 0.7vw;
+  font-size: 0.62rem;
+  color: var(--text-secondary);
+}
+
+.lp-api-status-error {
+  color: #ff8f8f;
+}
+
 /* ---- Row layout ---- */
 .lp-row {
   display: flex;
@@ -317,6 +328,223 @@
   font-size: 0.82rem;
   text-align: center;
   padding: 0.35vh 0.5vw;
+}
+
+/* ---- Docking tab ---- */
+.lp-docking-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--text-primary);
+}
+
+.lp-docking-section {
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5vh 0.45vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35vh;
+}
+
+.lp-docking-last {
+  border-bottom: none;
+}
+
+.lp-docking-rot-header,
+.lp-docking-rudder-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 0.62rem;
+  color: var(--text-secondary);
+}
+
+.lp-docking-rot-header span:last-child,
+.lp-docking-rudder-head span:last-child {
+  text-align: right;
+}
+
+.lp-docking-rot-scale {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 0.52rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.lp-docking-rot-bar-wrap {
+  position: relative;
+  height: 0.85vh;
+  background: #2c293f;
+  border: 1px solid var(--border-color);
+}
+
+.lp-docking-rot-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #3d3760 0%, #595082 45%, #595082 55%, #3d3760 100%);
+}
+
+.lp-docking-rot-marker {
+  position: absolute;
+  top: -0.18vh;
+  left: 49%;
+  width: 0.7vw;
+  height: 1.2vh;
+  background: #91ff66;
+}
+
+.lp-docking-rot-ends {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 0.62rem;
+  color: #91ff66;
+}
+
+.lp-docking-rot-ends label:last-child {
+  text-align: right;
+}
+
+.lp-docking-title {
+  font-size: 0.68rem;
+  color: var(--text-primary);
+}
+
+.lp-docking-row {
+  display: grid;
+  grid-template-columns: 1fr 4.2vw;
+  gap: 0.35vw;
+  align-items: center;
+}
+
+.lp-docking-row label {
+  font-size: 0.62rem;
+  color: var(--text-secondary);
+}
+
+.lp-docking-row input,
+.lp-docking-gauge input,
+.lp-docking-wind-values input {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #00ff00;
+  font-family: var(--font-family-mono);
+  font-size: 0.63rem;
+  padding: 0.15vh 0.2vw;
+  text-align: center;
+  width: 100%;
+}
+
+.lp-docking-inline-values {
+  display: grid;
+  grid-template-columns: 3.2vw 1.7vw 2.2vw;
+  gap: 0.2vw;
+  align-items: center;
+}
+
+.lp-docking-pill {
+  border: 1px solid var(--border-color);
+  color: #75ff64;
+  font-size: 0.56rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.lp-docking-gauge-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45vw;
+}
+
+.lp-docking-gauge {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25vh;
+}
+
+.lp-docking-gauge-dial {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #1d1a2d 0 55%, #0f0f17 56% 100%);
+  overflow: hidden;
+}
+
+.lp-docking-gauge-dial::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 1px;
+  height: 40%;
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateX(-50%);
+}
+
+.lp-docking-needle {
+  position: absolute;
+  width: 44%;
+  height: 2px;
+  background: #91ff66;
+  left: 50%;
+  top: 50%;
+  transform-origin: left center;
+}
+
+.lp-docking-needle-left {
+  transform: translateY(-50%) rotate(235deg);
+}
+
+.lp-docking-needle-right {
+  transform: translateY(-50%) rotate(305deg);
+}
+
+.lp-docking-needle-up-left {
+  transform: translateY(-50%) rotate(245deg);
+}
+
+.lp-docking-needle-up-right {
+  transform: translateY(-50%) rotate(295deg);
+}
+
+.lp-docking-thruster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.2vh 0.25vw;
+}
+
+.lp-docking-thruster-btn {
+  height: 1.65vh;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: #ef4545;
+  font-size: 0.58rem;
+  line-height: 1;
+}
+
+.lp-docking-thruster-scale {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-size: 0.52rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.lp-docking-wind-dial {
+  background: radial-gradient(circle at center, #191925 0 52%, #0d0d12 53% 100%);
+}
+
+.lp-docking-wind-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25vw;
+}
+
+.lp-docking-row input:focus,
+.lp-docking-gauge input:focus,
+.lp-docking-wind-values input:focus {
+  outline: 1px solid #75ff64;
 }
 
 .lp-datetime-time-row {

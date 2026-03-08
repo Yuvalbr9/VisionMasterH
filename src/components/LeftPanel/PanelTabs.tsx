@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { TabButton } from '../Buttons';
+import React from 'react';
+import { UI_TEXT } from '../../constants';
+import { BaseButton, TabButton } from '../Buttons';
 
 interface PanelTabsProps {
   tabs: string[];
@@ -8,8 +9,6 @@ interface PanelTabsProps {
 }
 
 export const PanelTabs: React.FC<PanelTabsProps> = ({ tabs, activeTab = 0, onTabChange }) => {
-  const [playing, setPlaying] = useState(false);
-
   return (
     <div className="lp-tabs-bar">
       {tabs.map((tab, index) => (
@@ -20,20 +19,20 @@ export const PanelTabs: React.FC<PanelTabsProps> = ({ tabs, activeTab = 0, onTab
           onClick={() => onTabChange?.(index)}
         />
       ))}
-      <button
+      <BaseButton
         className="lp-tab-nav-btn left-arrow"
         onClick={() => onTabChange?.(Math.max(0, activeTab - 1))}
-        title="Previous"
+        title={UI_TEXT.COMMON.PREVIOUS}
       >
-        ►
-      </button>
-      <button
+        {UI_TEXT.COMMON.TAB_ARROW}
+      </BaseButton>
+      <BaseButton
         className="lp-tab-nav-btn"
         onClick={() => onTabChange?.(Math.max(0, activeTab + 1))}
-        title="Next"
+        title={UI_TEXT.COMMON.NEXT}
       >
-        ►
-      </button>
+        {UI_TEXT.COMMON.TAB_ARROW}
+      </BaseButton>
     </div>
   );
 };

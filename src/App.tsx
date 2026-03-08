@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Angle, Speed, Length } from 'unitsnet-js';
 import { NavigationData, parseLatitude, parseLongitude, RadarControlState, ARPATarget } from './types';
-import { LeftPanel } from './components/LeftPanel';
+import { LeftBar } from './components/LeftBar';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
+import { BaseButton } from './components/Buttons';
+import { UI_TEXT } from './constants';
 
 const defaultRadarControls: RadarControlState = {
   northUp: true,
@@ -41,8 +43,20 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
+      <div className="legacy-topbar">
+        <div className="legacy-topbar-left">
+          <span className="legacy-app-icon" aria-hidden="true">◉</span>
+          <span className="legacy-app-name">{UI_TEXT.TOPBAR.APP_NAME}</span>
+        </div>
+        <div className="legacy-topbar-center" />
+        <div className="legacy-topbar-right">
+          <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MINIMIZE} />
+          <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MAXIMIZE} />
+          <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UI_TEXT.TOPBAR.CLOSE} />
+        </div>
+      </div>
       <div className="main-container">
-        <LeftPanel navData={navData} updateNavData={updateNavData} />
+        <LeftBar navData={navData} updateNavData={updateNavData} />
         <RadarDisplay
           navData={navData}
           radarControls={radarControls}
