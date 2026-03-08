@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { Angle, Speed, Length } from 'unitsnet-js';
-import { NavigationData, parseLatitude, parseLongitude, RadarControlState, ARPATarget } from './types';
+import { NavigationData, RadarControlState, ARPATarget } from './types';
 import { LeftBar } from './components/LeftBar';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
 import { BaseButton } from './components/Buttons';
 import { UI_TEXT } from './constants';
+import {
+  calculateCogSogFromVelocity,
+  calculateLeewayDeg,
+  hasNavigationDeltaAboveTolerance,
+  parseLatitude,
+  parseLongitude,
+} from './util';
 
 const defaultRadarControls: RadarControlState = {
   northUp: true,
@@ -34,7 +41,7 @@ const App: React.FC = () => {
   });
 
   const [radarControls, setRadarControls] = useState<RadarControlState>(defaultRadarControls);
-  const [velocity, setVelocity] = useState<{ vn: number; ve: number }>({ vn: 0, ve: 0 });
+  const [velocity] = useState<{ vn: number; ve: number }>({ vn: 0, ve: 0 });
   const [arpaTargets] = useState<ARPATarget[]>([]);
 
   const updateNavData = (updates: Partial<NavigationData>) => {
@@ -42,24 +49,13 @@ const App: React.FC = () => {
   };
 
   React.useEffect(() => {
-    const vn = velocity.vn;
-    const ve = velocity.ve;
-    const sogKn = Math.hypot(vn, ve);
-    const velocityIsMeaningful = sogKn > 0.001;
+    const { cogDeg: nextCogDeg, sogKn: nextSogKn, velocityIsMeaningful } = calculateCogSogFromVelocity(velocity);
 
     if (!velocityIsMeaningful) {
       return;
     }
 
-    // Spec alignment: COGdeg = atan2(VE, VN) * 180/pi, normalized to [0, 360).
-    const cogDegFromVelocity = ((Math.atan2(ve, vn) * 180) / Math.PI + 360) % 360;
-    const nextCogDeg = cogDegFromVelocity;
-    const nextSogKn = sogKn;
-
-    const cogChanged = Math.abs(nextCogDeg - navData.cog.Degrees) > 0.05;
-    const sogChanged = Math.abs(nextSogKn - navData.sog.Knots) > 0.05;
-
-    if (!cogChanged && !sogChanged) {
+    if (!hasNavigationDeltaAboveTolerance(navData.cog.Degrees, navData.sog.Knots, nextCogDeg, nextSogKn)) {
       return;
     }
 
@@ -69,6 +65,11 @@ const App: React.FC = () => {
       sog: Speed.FromKnots(nextSogKn),
     }));
   }, [velocity.vn, velocity.ve, navData.cog.Degrees, navData.sog.Knots]);
+
+  const leewayDeg = React.useMemo(
+    () => calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees),
+    [navData.cog.Degrees, navData.hdg.Degrees]
+  );
 
   return (
     <div className="app">
@@ -90,15 +91,11 @@ const App: React.FC = () => {
           navData={navData}
           radarControls={radarControls}
           arpaTargets={arpaTargets}
-          velocity={velocity}
-          leewayDeg={0}
+          leewayDeg={leewayDeg}
         />
         <RightPanel
           radarControls={radarControls}
           onRadarControlsChange={setRadarControls}
-          velocity={velocity}
-          onVelocityChange={setVelocity}
-          leewayDeg={0}
           arpaTargets={arpaTargets}
         />
       </div>

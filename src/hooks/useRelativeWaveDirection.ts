@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { Angle } from 'unitsnet-js';
-import { fetchShipWaveDirection } from '../api/shipSidebarService';
+import { ShipWaveApiResponse } from '../types/api';
+import { getShipSidebarDataProvider, ShipSidebarDataProvider } from '../api/shipSidebarService';
+import { useAsyncResource } from './useAsyncResource';
 
 interface UseRelativeWaveDirectionResult {
   relativeWaveDirection: Angle | null;
@@ -9,33 +11,25 @@ interface UseRelativeWaveDirectionResult {
   refetch: () => Promise<void>;
 }
 
-export const useRelativeWaveDirection = (): UseRelativeWaveDirectionResult => {
-  const [relativeWaveDirection, setRelativeWaveDirection] = useState<Angle | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export const useRelativeWaveDirection = (
+  provider: ShipSidebarDataProvider = getShipSidebarDataProvider()
+): UseRelativeWaveDirectionResult => {
+  const fetcher = useCallback(() => provider.getShipWaveDirection(), [provider]);
+  const mapResponse = useCallback(
+    (response: ShipWaveApiResponse) => Angle.FromDegrees(response.relativeWaveDirection),
+    []
+  );
 
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetchShipWaveDirection();
-      setRelativeWaveDirection(Angle.FromDegrees(response.relativeWaveDirection));
-    } catch {
-      setError('Failed to fetch relative wave direction.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const { data, isLoading, error, refetch } = useAsyncResource({
+    fetcher,
+    mapResponse,
+    errorMessage: 'Failed to fetch relative wave direction.',
+  });
 
   return {
-    relativeWaveDirection,
+    relativeWaveDirection: data,
     isLoading,
     error,
-    refetch: load,
+    refetch,
   };
 };

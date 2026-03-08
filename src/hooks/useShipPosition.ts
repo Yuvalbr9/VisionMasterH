@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { Angle } from 'unitsnet-js';
-import { fetchShipPosition } from '../api/shipSidebarService';
-import { parseLatitude, parseLongitude } from '../types';
+import { ShipPositionApiResponse } from '../types/api';
+import { getShipSidebarDataProvider, ShipSidebarDataProvider } from '../api/shipSidebarService';
+import { parseCoordinate } from '../util';
+import { useAsyncResource } from './useAsyncResource';
 
 interface ShipPositionValue {
   lat: Angle;
@@ -15,69 +17,28 @@ interface UseShipPositionResult {
   refetch: () => Promise<void>;
 }
 
-const parseNumericCoordinate = (value: number, kind: 'lat' | 'lon'): Angle => {
-  const absValue = Math.abs(value);
-  const decimalLimit = kind === 'lat' ? 90 : 180;
+export const useShipPosition = (
+  provider: ShipSidebarDataProvider = getShipSidebarDataProvider()
+): UseShipPositionResult => {
+  const fetcher = useCallback(() => provider.getShipPosition(), [provider]);
+  const mapResponse = useCallback(
+    (response: ShipPositionApiResponse): ShipPositionValue => ({
+      lat: parseCoordinate(response.position.lat, 'lat'),
+      lon: parseCoordinate(response.position.lon, 'lon'),
+    }),
+    []
+  );
 
-  if (absValue <= decimalLimit) {
-    return Angle.FromDegrees(value);
-  }
-
-  const sign = value < 0 ? -1 : 1;
-  const degrees = Math.floor(absValue / 100);
-  const minutes = absValue - degrees * 100;
-  const decimalDegrees = degrees + minutes / 60;
-
-  return Angle.FromDegrees(sign * decimalDegrees);
-};
-
-export const useShipPosition = (): UseShipPositionResult => {
-  const [position, setPosition] = useState<ShipPositionValue | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const parseCoordinate = (value: string | number, kind: 'lat' | 'lon'): Angle => {
-    if (typeof value === 'number' && Number.isFinite(value)) {
-      return parseNumericCoordinate(value, kind);
-    }
-
-    const coordinate = String(value);
-
-    if (!/[NSEW°']/.test(coordinate)) {
-      const numericValue = Number(coordinate);
-      if (Number.isFinite(numericValue)) {
-        return parseNumericCoordinate(numericValue, kind);
-      }
-    }
-
-    return kind === 'lat' ? parseLatitude(coordinate) : parseLongitude(coordinate);
-  };
-
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetchShipPosition();
-      setPosition({
-        lat: parseCoordinate(response.position.lat, 'lat'),
-        lon: parseCoordinate(response.position.lon, 'lon'),
-      });
-    } catch {
-      setError('Failed to fetch ship position.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const { data, isLoading, error, refetch } = useAsyncResource({
+    fetcher,
+    mapResponse,
+    errorMessage: 'Failed to fetch ship position.',
+  });
 
   return {
-    position,
+    position: data,
     isLoading,
     error,
-    refetch: load,
+    refetch,
   };
 };

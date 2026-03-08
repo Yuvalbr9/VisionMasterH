@@ -1,13 +1,11 @@
 import React from 'react';
 import { Angle } from 'unitsnet-js';
 import { UI_TEXT, UI_VALUES } from '../../constants';
-import { formatLatitude, formatLongitude, getLatitudeDirection, getLongitudeDirection } from '../../types';
+import { formatLatitude, formatLongitude, getLatitudeDirection, getLongitudeDirection } from '../../util';
 
 interface PositionDisplayProps {
   lat: Angle;
   lon: Angle;
-  onLatChange: (value: Angle) => void;
-  onLonChange: (value: Angle) => void;
 }
 
 export const PositionDisplay: React.FC<PositionDisplayProps> = ({ lat, lon }) => {

@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { fetchShipCurrentTime } from '../api/shipSidebarService';
+import { useCallback } from 'react';
+import { ShipTimeApiResponse } from '../types/api';
+import { getShipSidebarDataProvider, ShipSidebarDataProvider } from '../api/shipSidebarService';
+import { useAsyncResource } from './useAsyncResource';
 
 interface UseCurrentDateTimeResult {
   currentDateTime: string | null;
@@ -8,33 +10,22 @@ interface UseCurrentDateTimeResult {
   refetch: () => Promise<void>;
 }
 
-export const useCurrentDateTime = (): UseCurrentDateTimeResult => {
-  const [currentDateTime, setCurrentDateTime] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export const useCurrentDateTime = (
+  provider: ShipSidebarDataProvider = getShipSidebarDataProvider()
+): UseCurrentDateTimeResult => {
+  const fetcher = useCallback(() => provider.getShipCurrentTime(), [provider]);
+  const mapResponse = useCallback((response: ShipTimeApiResponse) => response.currentDateTime, []);
 
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetchShipCurrentTime();
-      setCurrentDateTime(response.currentDateTime);
-    } catch {
-      setError('Failed to fetch ship time.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const { data, isLoading, error, refetch } = useAsyncResource({
+    fetcher,
+    mapResponse,
+    errorMessage: 'Failed to fetch ship time.',
+  });
 
   return {
-    currentDateTime,
+    currentDateTime: data,
     isLoading,
     error,
-    refetch: load,
+    refetch,
   };
 };

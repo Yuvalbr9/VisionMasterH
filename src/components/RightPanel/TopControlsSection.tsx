@@ -2,6 +2,7 @@ import React from 'react';
 import { ControlButton } from '../Buttons';
 import { LENGTH_UNITS, TIME_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
 import { RadarControlState } from '../../types';
+import { getRangeRingSpacingNm, RADAR_RANGE_RING_COUNT } from '../../util';
 
 interface TopControlsSectionProps {
   modeLabel: string;
@@ -13,6 +14,10 @@ interface TopControlsSectionProps {
   onToggleTrails: () => void;
   onToggleAis: () => void;
   onToggleCharts: () => void;
+  onDecreaseRange: () => void;
+  onIncreaseRange: () => void;
+  canDecreaseRange: boolean;
+  canIncreaseRange: boolean;
 }
 
 export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
@@ -25,7 +30,13 @@ export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
   onToggleTrails,
   onToggleAis,
   onToggleCharts,
+  onDecreaseRange,
+  onIncreaseRange,
+  canDecreaseRange,
+  canIncreaseRange,
 }) => {
+  const ringSpacingNm = getRangeRingSpacingNm(radarControls.selectedRangeNm, RADAR_RANGE_RING_COUNT);
+
   return (
     <div className="vm-upper-detached">
       <div className="vm-top-matrix">
@@ -39,14 +50,19 @@ export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.R_VECTORS}</ControlButton>
         <ControlButton className="vm-cell">{radarControls.vectorTimeMin.toFixed(UI_VALUES.RIGHT_PANEL.VECTOR_TIME_DECIMALS)} {TIME_UNITS.MINUTES}</ControlButton>
 
-        <ControlButton className="vm-cell vm-arrow-cell">{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
-        <ControlButton className="vm-cell vm-messy-shift">{radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} {UI_TEXT.RIGHT_PANEL.RM}</ControlButton>
-        <ControlButton className="vm-cell vm-arrow-cell">{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
+        <ControlButton className="vm-cell vm-arrow-cell" onClick={onDecreaseRange} disabled={!canDecreaseRange}>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
+        <ControlButton
+          className="vm-cell vm-messy-shift"
+          title={`${radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} ${UI_TEXT.RIGHT_PANEL.RM} scale over ${RADAR_RANGE_RING_COUNT} rings`}
+        >
+          {ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS)} {UI_TEXT.RIGHT_PANEL.RM}
+        </ControlButton>
+        <ControlButton className="vm-cell vm-arrow-cell" onClick={onIncreaseRange} disabled={!canIncreaseRange}>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.AIS_PRIORITY}</ControlButton>
         <ControlButton className="vm-cell" onClick={onToggleAis}>{aisLabel}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.CPA}</ControlButton>
 
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.RINGS} {radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} {LENGTH_UNITS.NAUTICAL_MILES}</ControlButton>
+        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.RINGS} {ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS)} {LENGTH_UNITS.NAUTICAL_MILES}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.CENTRE}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.MAX}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.IHELP}</ControlButton>

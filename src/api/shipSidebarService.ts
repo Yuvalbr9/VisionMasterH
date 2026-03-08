@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosHeaders, AxiosInstance, AxiosResponse } from 'axios';
 import {
   mockShipCourseData,
   mockShipPositionData,
@@ -13,7 +13,22 @@ import {
 } from '../types/api';
 
 const SIMULATED_NETWORK_DELAY_MS = 900;
-const USE_MOCK_API = true;
+const DEFAULT_PROVIDER_MODE: SidebarProviderMode = 'mock';
+
+export type SidebarProviderMode = 'mock' | 'http';
+
+export interface ShipSidebarDataProvider {
+  getShipCourse: () => Promise<ShipCourseApiResponse>;
+  getShipPosition: () => Promise<ShipPositionApiResponse>;
+  getShipWaveDirection: () => Promise<ShipWaveApiResponse>;
+  getShipCurrentTime: () => Promise<ShipTimeApiResponse>;
+}
+
+interface CreateShipSidebarDataProviderOptions {
+  mode?: SidebarProviderMode;
+  client?: AxiosInstance;
+  simulatedNetworkDelayMs?: number;
+}
 
 export const shipApiClient = axios.create({
   baseURL: '/api',
@@ -35,7 +50,7 @@ const getMockDataByPath = (path: string) => {
   }
 };
 
-const mockAxiosGet = async <T>(path: string): Promise<T> => {
+const mockAxiosGet = async <T>(path: string, simulatedNetworkDelayMs: number): Promise<T> => {
   const response = await new Promise<AxiosResponse<T>>((resolve) => {
     setTimeout(() => {
       resolve({
@@ -45,44 +60,78 @@ const mockAxiosGet = async <T>(path: string): Promise<T> => {
         headers: {},
         config: { headers: new AxiosHeaders() },
       });
-    }, SIMULATED_NETWORK_DELAY_MS);
+    }, simulatedNetworkDelayMs);
   });
 
   return response.data;
 };
 
-export const fetchShipCourse = async (): Promise<ShipCourseApiResponse> => {
-  if (!USE_MOCK_API) {
-    const response = await shipApiClient.get<ShipCourseApiResponse>('/ship/course');
+const createHttpShipSidebarDataProvider = (client: AxiosInstance = shipApiClient): ShipSidebarDataProvider => ({
+  getShipCourse: async () => {
+    const response = await client.get<ShipCourseApiResponse>('/ship/course');
     return response.data;
+  },
+  getShipPosition: async () => {
+    const response = await client.get<ShipPositionApiResponse>('/ship/pos');
+    return response.data;
+  },
+  getShipWaveDirection: async () => {
+    const response = await client.get<ShipWaveApiResponse>('/ship/wave');
+    return response.data;
+  },
+  getShipCurrentTime: async () => {
+    const response = await client.get<ShipTimeApiResponse>('/ship/time');
+    return response.data;
+  },
+});
+
+const createMockShipSidebarDataProvider = (
+  simulatedNetworkDelayMs: number = SIMULATED_NETWORK_DELAY_MS
+): ShipSidebarDataProvider => ({
+  getShipCourse: () => mockAxiosGet<ShipCourseApiResponse>('/ship/course', simulatedNetworkDelayMs),
+  getShipPosition: () => mockAxiosGet<ShipPositionApiResponse>('/ship/pos', simulatedNetworkDelayMs),
+  getShipWaveDirection: () => mockAxiosGet<ShipWaveApiResponse>('/ship/wave', simulatedNetworkDelayMs),
+  getShipCurrentTime: () => mockAxiosGet<ShipTimeApiResponse>('/ship/time', simulatedNetworkDelayMs),
+});
+
+export const createShipSidebarDataProvider = (
+  options: CreateShipSidebarDataProviderOptions = {}
+): ShipSidebarDataProvider => {
+  const {
+    mode = DEFAULT_PROVIDER_MODE,
+    client = shipApiClient,
+    simulatedNetworkDelayMs = SIMULATED_NETWORK_DELAY_MS,
+  } = options;
+
+  if (mode === 'http') {
+    return createHttpShipSidebarDataProvider(client);
   }
 
-  return mockAxiosGet<ShipCourseApiResponse>('/ship/course');
+  return createMockShipSidebarDataProvider(simulatedNetworkDelayMs);
+};
+
+let activeShipSidebarDataProvider: ShipSidebarDataProvider = createShipSidebarDataProvider();
+
+export const getShipSidebarDataProvider = (): ShipSidebarDataProvider => {
+  return activeShipSidebarDataProvider;
+};
+
+export const setShipSidebarDataProvider = (provider: ShipSidebarDataProvider): void => {
+  activeShipSidebarDataProvider = provider;
+};
+
+export const fetchShipCourse = async (): Promise<ShipCourseApiResponse> => {
+  return activeShipSidebarDataProvider.getShipCourse();
 };
 
 export const fetchShipPosition = async (): Promise<ShipPositionApiResponse> => {
-  if (!USE_MOCK_API) {
-    const response = await shipApiClient.get<ShipPositionApiResponse>('/ship/pos');
-    return response.data;
-  }
-
-  return mockAxiosGet<ShipPositionApiResponse>('/ship/pos');
+  return activeShipSidebarDataProvider.getShipPosition();
 };
 
 export const fetchShipWaveDirection = async (): Promise<ShipWaveApiResponse> => {
-  if (!USE_MOCK_API) {
-    const response = await shipApiClient.get<ShipWaveApiResponse>('/ship/wave');
-    return response.data;
-  }
-
-  return mockAxiosGet<ShipWaveApiResponse>('/ship/wave');
+  return activeShipSidebarDataProvider.getShipWaveDirection();
 };
 
 export const fetchShipCurrentTime = async (): Promise<ShipTimeApiResponse> => {
-  if (!USE_MOCK_API) {
-    const response = await shipApiClient.get<ShipTimeApiResponse>('/ship/time');
-    return response.data;
-  }
-
-  return mockAxiosGet<ShipTimeApiResponse>('/ship/time');
+  return activeShipSidebarDataProvider.getShipCurrentTime();
 };

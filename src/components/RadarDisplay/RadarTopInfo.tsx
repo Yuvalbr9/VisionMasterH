@@ -5,15 +5,14 @@ import { ANGLE_UNITS, SPEED_UNITS, UI_TEXT } from '../../constants';
 interface RadarTopInfoProps {
   navData: NavigationData;
   controls: RadarControlState;
-  velocity: { vn: number; ve: number };
   leewayDeg: number;
 }
 
-export const RadarTopInfo: React.FC<RadarTopInfoProps> = ({ navData, controls, velocity, leewayDeg }) => {
+export const RadarTopInfo: React.FC<RadarTopInfoProps> = ({ navData, controls, leewayDeg }) => {
   const modeLabel = controls.northUp ? UI_TEXT.RADAR_TOP_INFO.MODE_NORTH_UP : UI_TEXT.RADAR_TOP_INFO.MODE_HEAD_UP;
 
   return (
-    <div className="radar-top-info-form">
+    <div className="radar-top-info-form" title={`Orientation: ${modeLabel}`}>
       <div className="radar-top-info-row radar-top-info-row-dark">
         <span className="radar-col radar-col-name">{UI_TEXT.RADAR_TOP_INFO.HDG}</span>
         <span className="radar-col radar-col-value radar-col-value-top">{navData.hdg.Degrees.toFixed(1)}</span>

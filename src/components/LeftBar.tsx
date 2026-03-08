@@ -3,7 +3,6 @@ import { NavigationData } from '../types';
 import { LeftPanel } from './LeftPanel';
 import { useShipCourse } from '../hooks/useShipCourse';
 import { useShipPosition } from '../hooks/useShipPosition';
-import { useRelativeWaveDirection } from '../hooks/useRelativeWaveDirection';
 import { useCurrentDateTime } from '../hooks/useCurrentDateTime';
 
 interface LeftBarProps {
@@ -14,40 +13,45 @@ interface LeftBarProps {
 export const LeftBar: React.FC<LeftBarProps> = ({ navData, updateNavData }) => {
   const courseState = useShipCourse();
   const positionState = useShipPosition();
-  const waveState = useRelativeWaveDirection();
   const timeState = useCurrentDateTime();
   const isManualNavigationMode = !courseState.isLoading && !courseState.shipCourse;
 
   const isLoading =
     courseState.isLoading ||
     positionState.isLoading ||
-    waveState.isLoading ||
     timeState.isLoading;
 
   const error =
     courseState.error ||
     positionState.error ||
-    waveState.error ||
     timeState.error;
 
   useEffect(() => {
-    if (!courseState.shipCourse || !positionState.position) {
+    if (!courseState.shipCourse) {
       return;
     }
 
     updateNavData({
       hdg: courseState.shipCourse,
       cog: courseState.shipCourse,
+    });
+  }, [courseState.shipCourse, updateNavData]);
+
+  useEffect(() => {
+    if (!positionState.position) {
+      return;
+    }
+
+    updateNavData({
       posLat: positionState.position.lat,
       posLon: positionState.position.lon,
     });
-  }, [courseState.shipCourse, positionState.position, updateNavData]);
+  }, [positionState.position, updateNavData]);
 
   return (
     <LeftPanel
       navData={navData}
       updateNavData={updateNavData}
-      waveDirectionRelative={waveState.relativeWaveDirection}
       dateTimeIso={timeState.currentDateTime}
       isLoading={isLoading}
       error={error ?? null}

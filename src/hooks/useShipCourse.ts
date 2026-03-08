@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { Angle } from 'unitsnet-js';
-import { fetchShipCourse } from '../api/shipSidebarService';
+import { ShipCourseApiResponse } from '../types/api';
+import { getShipSidebarDataProvider, ShipSidebarDataProvider } from '../api/shipSidebarService';
+import { useAsyncResource } from './useAsyncResource';
 
 interface UseShipCourseResult {
   shipCourse: Angle | null;
@@ -9,33 +11,22 @@ interface UseShipCourseResult {
   refetch: () => Promise<void>;
 }
 
-export const useShipCourse = (): UseShipCourseResult => {
-  const [shipCourse, setShipCourse] = useState<Angle | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export const useShipCourse = (
+  provider: ShipSidebarDataProvider = getShipSidebarDataProvider()
+): UseShipCourseResult => {
+  const fetcher = useCallback(() => provider.getShipCourse(), [provider]);
+  const mapResponse = useCallback((response: ShipCourseApiResponse) => Angle.FromDegrees(response.shipCourse), []);
 
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetchShipCourse();
-      setShipCourse(Angle.FromDegrees(response.shipCourse));
-    } catch {
-      setError('Failed to fetch ship course.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const { data, isLoading, error, refetch } = useAsyncResource({
+    fetcher,
+    mapResponse,
+    errorMessage: 'Failed to fetch ship course.',
+  });
 
   return {
-    shipCourse,
+    shipCourse: data,
     isLoading,
     error,
-    refetch: load,
+    refetch,
   };
 };

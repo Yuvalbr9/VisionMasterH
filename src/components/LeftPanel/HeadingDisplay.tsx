@@ -2,6 +2,7 @@ import React from 'react';
 import { Angle } from 'unitsnet-js';
 import { DegreeRuler } from './DegreeRuler';
 import { ANGLE_UNITS, UI_TEXT } from '../../constants';
+import { normalizeBearing } from '../../util';
 
 interface HeadingDisplayProps {
   value: Angle;
@@ -11,8 +12,6 @@ interface HeadingDisplayProps {
 
 const WHEEL_STEP_DEG = 0.1;
 const MAX_BUFFER_LENGTH = 3;
-
-const normalizeDegrees = (nextDeg: number): number => ((nextDeg % 360) + 360) % 360;
 
 export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange, isManualMode = false }) => {
   const [buffer, setBuffer] = React.useState('');
@@ -24,7 +23,7 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
   }, [isManualMode, buffer]);
 
   const applyDegrees = (nextDeg: number) => {
-    onChange(Angle.FromDegrees(normalizeDegrees(nextDeg)));
+    onChange(Angle.FromDegrees(normalizeBearing(nextDeg)));
   };
 
   const commitBuffer = () => {

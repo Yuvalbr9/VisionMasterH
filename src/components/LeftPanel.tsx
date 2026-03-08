@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Angle } from 'unitsnet-js';
 import { NavigationData } from '../types';
 import { PanelTabs } from './LeftPanel/PanelTabs';
 import { HeadingDisplay } from './LeftPanel/HeadingDisplay';
@@ -10,11 +9,11 @@ import { SOGDisplay } from './LeftPanel/SOGDisplay';
 import { DateTimeDisplay } from './LeftPanel/DateTimeDisplay';
 import { DockingTab } from '../components/DockingTab';
 import { UI_TEXT } from '../constants';
+import { calculateLeewayDeg } from '../util';
 
 interface LeftPanelProps {
   navData: NavigationData;
   updateNavData: (updates: Partial<NavigationData>) => void;
-  waveDirectionRelative: Angle | null;
   dateTimeIso: string | null;
   isLoading: boolean;
   error: string | null;
@@ -24,7 +23,6 @@ interface LeftPanelProps {
 export const LeftPanel: React.FC<LeftPanelProps> = ({
   navData,
   updateNavData,
-  waveDirectionRelative,
   dateTimeIso,
   isLoading,
   error,
@@ -32,6 +30,10 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
 }) => {
   const tabs = [...UI_TEXT.LEFT_PANEL.TABS];
   const [activeTab, setActiveTab] = useState(0);
+  const leewayDeg = React.useMemo(
+    () => calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees),
+    [navData.cog.Degrees, navData.hdg.Degrees]
+  );
 
   const renderDefaultContent = () => (
     <>
@@ -47,14 +49,11 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
 
       <SpeedDisplay
         value={navData.stw}
-        onChange={(value) => updateNavData({ stw: value })}
       />
 
       <PositionDisplay
         lat={navData.posLat}
         lon={navData.posLon}
-        onLatChange={(value) => updateNavData({ posLat: value })}
-        onLonChange={(value) => updateNavData({ posLon: value })}
       />
 
       <CourseDisplay
@@ -65,7 +64,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
 
       <SOGDisplay
         value={navData.sog}
-        onChange={(value) => updateNavData({ sog: value })}
+        leewayDeg={leewayDeg}
       />
 
 

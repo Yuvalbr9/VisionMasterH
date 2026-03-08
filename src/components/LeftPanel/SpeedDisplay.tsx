@@ -4,7 +4,6 @@ import { SPEED_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
 
 interface SpeedDisplayProps {
   value: Speed;
-  onChange: (value: Speed) => void;
 }
 
 export const SpeedDisplay: React.FC<SpeedDisplayProps> = ({ value }) => {
