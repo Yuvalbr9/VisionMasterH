@@ -8,7 +8,7 @@ export const UI_TEXT = {
     TAB_ARROW: '►',
   },
   TOPBAR: {
-    APP_NAME: 'PCVM',
+    APP_NAME: 'Vision Master',
     MINIMIZE: 'Minimize',
     MAXIMIZE: 'Maximize',
     CLOSE: 'Close',
@@ -16,6 +16,9 @@ export const UI_TEXT = {
   LEFT_PANEL: {
     TABS: ['Default', 'Docking', 'Environment', 'Route'],
     LOADING_SIDEBAR: 'Loading sidebar data...',
+    MANUAL_MODE_ACTIVE: 'Simulation link unavailable - manual HDG/COG input enabled',
+    MANUAL: 'MANUAL',
+    MANUAL_HINT: 'Use mouse wheel or type digits then press Enter',
     HDG: 'HDG',
     COG: 'COG',
     SOG: 'SOG',

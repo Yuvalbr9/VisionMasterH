@@ -16,6 +16,7 @@ export const LeftBar: React.FC<LeftBarProps> = ({ navData, updateNavData }) => {
   const positionState = useShipPosition();
   const waveState = useRelativeWaveDirection();
   const timeState = useCurrentDateTime();
+  const isManualNavigationMode = !courseState.isLoading && !courseState.shipCourse;
 
   const isLoading =
     courseState.isLoading ||
@@ -50,6 +51,7 @@ export const LeftBar: React.FC<LeftBarProps> = ({ navData, updateNavData }) => {
       dateTimeIso={timeState.currentDateTime}
       isLoading={isLoading}
       error={error ?? null}
+      isManualNavigationMode={isManualNavigationMode}
     />
   );
 };

@@ -128,7 +128,8 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   };
 
   return (
-    <div className="right-panel vm-right-panel">
+    <>
+        <div className="right-panel vm-right-panel">
       <TopControlsSection
         modeLabel={modeLabel}
         trailsLabel={trailsLabel}
@@ -139,7 +140,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         onToggleTrails={toggleTrails}
         onToggleAis={toggleAis}
         onToggleCharts={toggleCharts}
-      />
+        />
 
       <MobCardSection
         bearingRInput={bearingRInput}
@@ -152,11 +153,12 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         onRangeInputBlur={() => setRangeInput(rangeValue.NauticalMiles.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_DECIMALS))}
         onElapsedTimeInputChange={handleElapsedTimeInputChange}
         onElapsedTimeInputBlur={() => setElapsedTimeInput(formatDurationHms(elapsedDuration))}
-      />
+        />
 
       <GreenPanelSection />
 
       <BottomCornerEblVrm radarControls={radarControls} />
     </div>
+        </>
   );
 };

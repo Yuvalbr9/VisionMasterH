@@ -18,8 +18,10 @@ const drawSingleVrm = (
 };
 
 export const drawVrm = ({ ctx, centerX, centerY, maxRadiusPx, controls }: RadarDrawContext): void => {
-  const vrm1Px = rangeNmToPixels(controls.vrm1Nm, maxRadiusPx, controls.selectedRangeNm);
-  const vrm2Px = rangeNmToPixels(controls.vrm2Nm, maxRadiusPx, controls.selectedRangeNm);
+  const vrm1Nm = Math.max(0, Math.min(99, controls.vrm1Nm));
+  const vrm2Nm = Math.max(0, Math.min(99, controls.vrm2Nm));
+  const vrm1Px = rangeNmToPixels(vrm1Nm, maxRadiusPx, controls.selectedRangeNm);
+  const vrm2Px = rangeNmToPixels(vrm2Nm, maxRadiusPx, controls.selectedRangeNm);
 
   drawSingleVrm(ctx, centerX, centerY, vrm1Px, 2, [8, 6]);
   drawSingleVrm(ctx, centerX, centerY, vrm2Px, 1, [4, 6]);

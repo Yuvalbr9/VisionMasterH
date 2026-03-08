@@ -41,6 +41,35 @@ const App: React.FC = () => {
     setNavData(prev => ({ ...prev, ...updates }));
   };
 
+  React.useEffect(() => {
+    const vn = velocity.vn;
+    const ve = velocity.ve;
+    const sogKn = Math.hypot(vn, ve);
+    const velocityIsMeaningful = sogKn > 0.001;
+
+    if (!velocityIsMeaningful) {
+      return;
+    }
+
+    // Spec alignment: COGdeg = atan2(VE, VN) * 180/pi, normalized to [0, 360).
+    const cogDegFromVelocity = ((Math.atan2(ve, vn) * 180) / Math.PI + 360) % 360;
+    const nextCogDeg = cogDegFromVelocity;
+    const nextSogKn = sogKn;
+
+    const cogChanged = Math.abs(nextCogDeg - navData.cog.Degrees) > 0.05;
+    const sogChanged = Math.abs(nextSogKn - navData.sog.Knots) > 0.05;
+
+    if (!cogChanged && !sogChanged) {
+      return;
+    }
+
+    setNavData((prev) => ({
+      ...prev,
+      cog: Angle.FromDegrees(nextCogDeg),
+      sog: Speed.FromKnots(nextSogKn),
+    }));
+  }, [velocity.vn, velocity.ve, navData.cog.Degrees, navData.sog.Knots]);
+
   return (
     <div className="app">
       <div className="legacy-topbar">

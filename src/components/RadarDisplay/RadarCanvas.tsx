@@ -14,8 +14,6 @@ export const RadarCanvas: React.FC<RadarCanvasProps> = ({ navData, controls, arp
   return (
     <canvas
       ref={canvasRef}
-      width={720}
-      height={720}
       className="radar-canvas"
     />
   );

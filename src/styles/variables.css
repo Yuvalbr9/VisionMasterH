@@ -81,17 +81,17 @@
   --radius-lg: 0;
 
   /* ===== SIZING ===== */
-  --scrollbar-width: 0.6vw;
+  --scrollbar-width: clamp(8px, 0.6vw, 12px);
   --scrollbar-min-width: 8px;
   --scrollbar-radius: 0.4vh;
-  --top-bar-height: 5vh;
+  --top-bar-height: clamp(22px, 5vh, 40px);
   --top-bar-min-height: 40px;
-  --panel-min-width: 200px;
-  --panel-max-width: 320px;
-  --panel-width: 18vw;
+  --panel-min-width: clamp(160px, 16vw, 220px);
+  --panel-max-width: clamp(280px, 22vw, 360px);
+  --panel-width: clamp(180px, 18vw, 320px);
 
   /* Responsive sizing base */
-  font-size: 16px;
+  font-size: clamp(13px, 0.85vw, 16px);
 }
 
 * {

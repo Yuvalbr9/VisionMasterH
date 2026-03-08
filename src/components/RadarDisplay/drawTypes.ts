@@ -14,6 +14,24 @@ export const degreesToCanvasRadians = (bearingDeg: number): number => {
   return ((bearingDeg - 90) * Math.PI) / 180;
 };
 
+export const normalizeBearing = (bearingDeg: number): number => {
+  return ((bearingDeg % 360) + 360) % 360;
+};
+
+// Convert world bearing into screen bearing according to map orientation mode.
+export const toDisplayBearing = (
+  bearingDeg: number,
+  navData: NavigationData,
+  controls: RadarControlState
+): number => {
+  const normalized = normalizeBearing(bearingDeg);
+  if (controls.northUp) {
+    return normalized;
+  }
+
+  return normalizeBearing(normalized - navData.hdg.Degrees);
+};
+
 export const polarToCanvas = (
   centerX: number,
   centerY: number,

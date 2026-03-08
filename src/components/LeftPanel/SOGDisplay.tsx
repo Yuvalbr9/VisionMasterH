@@ -1,5 +1,5 @@
 import React from 'react';
-import { Speed, Length } from 'unitsnet-js';
+import { Speed } from 'unitsnet-js';
 import { SPEED_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
 
 interface SOGDisplayProps {
@@ -27,7 +27,7 @@ export const SOGDisplay: React.FC<SOGDisplayProps> = ({ value }) => {
       </div>
 
       {/* CCRP F/A */}
-      <div className="lp-sog-row" style={{ marginTop: `${UI_VALUES.SOG.ROW_MARGIN_PX}px`, marginBottom: `${UI_VALUES.SOG.ROW_MARGIN_PX}px` }}>
+      <div className="lp-sog-row lp-sog-row-center">
         <span className="lp-sog-label">{UI_TEXT.LEFT_PANEL.CCRP_FA}</span>
         <span className="lp-value-box lp-value-box-med lp-has-triangle lp-triangle-down">{value.Knots.toFixed(1)} {SPEED_UNITS.KNOTS}</span>
       </div>

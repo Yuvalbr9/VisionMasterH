@@ -6,7 +6,6 @@ export const UI_VALUES = {
   },
   SOG: {
     ZERO_TEXT: '0.0',
-    ROW_MARGIN_PX: 4,
   },
   DOCKING: {
     ROT_VALUE: '3.0°/min',
@@ -48,9 +47,6 @@ export const UI_VALUES = {
     EMPTY_LABEL: '',
   },
   SPEED_DISPLAY: {
-    TOP_MARGIN: '6px',
-    SUB_ROW_MARGIN_TOP: '2px',
-    LOG_MARGIN_LEFT: '12px',
     DASHES: '- - -',
   },
 } as const;

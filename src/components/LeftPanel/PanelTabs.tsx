@@ -9,6 +9,8 @@ interface PanelTabsProps {
 }
 
 export const PanelTabs: React.FC<PanelTabsProps> = ({ tabs, activeTab = 0, onTabChange }) => {
+  const maxIndex = Math.max(0, tabs.length - 1);
+
   return (
     <div className="lp-tabs-bar">
       {tabs.map((tab, index) => (
@@ -28,7 +30,7 @@ export const PanelTabs: React.FC<PanelTabsProps> = ({ tabs, activeTab = 0, onTab
       </BaseButton>
       <BaseButton
         className="lp-tab-nav-btn"
-        onClick={() => onTabChange?.(Math.max(0, activeTab + 1))}
+        onClick={() => onTabChange?.(Math.min(maxIndex, activeTab + 1))}
         title={UI_TEXT.COMMON.NEXT}
       >
         {UI_TEXT.COMMON.TAB_ARROW}

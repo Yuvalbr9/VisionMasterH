@@ -18,6 +18,7 @@ interface LeftPanelProps {
   dateTimeIso: string | null;
   isLoading: boolean;
   error: string | null;
+  isManualNavigationMode: boolean;
 }
 
 export const LeftPanel: React.FC<LeftPanelProps> = ({
@@ -27,6 +28,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
   dateTimeIso,
   isLoading,
   error,
+  isManualNavigationMode,
 }) => {
   const tabs = [...UI_TEXT.LEFT_PANEL.TABS];
   const [activeTab, setActiveTab] = useState(0);
@@ -35,10 +37,12 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
     <>
       {isLoading && <div className="lp-api-status">{UI_TEXT.LEFT_PANEL.LOADING_SIDEBAR}</div>}
       {error && <div className="lp-api-status lp-api-status-error">{error}</div>}
+      {isManualNavigationMode && <div className="lp-api-status lp-api-status-manual">{UI_TEXT.LEFT_PANEL.MANUAL_MODE_ACTIVE}</div>}
 
       <HeadingDisplay
         value={navData.hdg}
         onChange={(value) => updateNavData({ hdg: value })}
+        isManualMode={isManualNavigationMode}
       />
 
       <SpeedDisplay
@@ -56,6 +60,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
       <CourseDisplay
         value={navData.cog}
         onChange={(value) => updateNavData({ cog: value })}
+        isManualMode={isManualNavigationMode}
       />
 
       <SOGDisplay

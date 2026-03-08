@@ -1,15 +1,15 @@
-import { RadarDrawContext, polarToCanvas } from './drawTypes';
+import { RadarDrawContext, polarToCanvas, toDisplayBearing } from './drawTypes';
 
 const drawSingleEbl = (
   ctx: CanvasRenderingContext2D,
   centerX: number,
   centerY: number,
   maxRadiusPx: number,
-  bearingDeg: number,
+  displayBearingDeg: number,
   lineWidth: number,
   dashPattern: number[]
 ): void => {
-  const end = polarToCanvas(centerX, centerY, maxRadiusPx, bearingDeg);
+  const end = polarToCanvas(centerX, centerY, maxRadiusPx, displayBearingDeg);
   ctx.strokeStyle = '#7cff7c';
   ctx.lineWidth = lineWidth;
   ctx.setLineDash(dashPattern);
@@ -20,7 +20,10 @@ const drawSingleEbl = (
   ctx.setLineDash([]);
 };
 
-export const drawEbl = ({ ctx, centerX, centerY, maxRadiusPx, controls }: RadarDrawContext): void => {
-  drawSingleEbl(ctx, centerX, centerY, maxRadiusPx, controls.ebl1Deg, 2, [8, 5]);
-  drawSingleEbl(ctx, centerX, centerY, maxRadiusPx, controls.ebl2Deg, 1, [4, 6]);
+export const drawEbl = ({ ctx, centerX, centerY, maxRadiusPx, controls, navData }: RadarDrawContext): void => {
+  const ebl1Display = toDisplayBearing(controls.ebl1Deg, navData, controls);
+  const ebl2Display = toDisplayBearing(controls.ebl2Deg, navData, controls);
+
+  drawSingleEbl(ctx, centerX, centerY, maxRadiusPx, ebl1Display, 2, [8, 5]);
+  drawSingleEbl(ctx, centerX, centerY, maxRadiusPx, ebl2Display, 1, [4, 6]);
 };
