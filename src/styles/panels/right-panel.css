@@ -199,6 +199,28 @@
   padding: clamp(1px, 0.2vh, 2px) clamp(4px, 0.6vw, 8px);
 }
 
+@media (max-width: 1024px) {
+  .vm-field-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(3px, 0.8vw, 6px);
+  }
+
+  .vm-field-row label {
+    font-size: clamp(0.64rem, 0.95vw, 0.74rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .vm-field-row {
+    grid-template-columns: 1fr;
+    gap: clamp(3px, 1vw, 6px);
+  }
+
+  .vm-field-row input {
+    height: clamp(26px, 3.8vh, 34px);
+  }
+}
+
 .vm-start-btn {
   width: 62%;
   margin: clamp(4px, 0.6vw, 8px) auto 0;

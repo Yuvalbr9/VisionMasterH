@@ -217,14 +217,14 @@
 
 .radar-console-top-group {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(56px, 7.5vw, 74px);
+  grid-template-columns: minmax(0, 1fr) clamp(64px, 8.4vw, 86px);
   gap: clamp(1px, 0.2vw, 3px);
   align-items: start;
   width: 100%;
 }
 
 .radar-console-side-buttons {
-  margin-top: clamp(42px, 8vh, 92px);
+  margin-top: clamp(50px, 11vh, 104px);
   width: 100%;
   display: grid;
   grid-template-rows: 1fr 1fr;

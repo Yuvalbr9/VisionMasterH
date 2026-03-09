@@ -218,3 +218,44 @@
   align-items: flex-end;
   gap: 2px;
 }
+
+.vm-generic-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .data-display {
+    padding: clamp(0.25rem, 0.7vh, 0.45rem);
+  }
+
+  .data-value-container {
+    gap: clamp(0.2rem, 0.5vw, 0.4rem);
+  }
+
+  .data-value {
+    font-size: clamp(0.78rem, 1.1vw, 0.95rem);
+  }
+
+  .data-label,
+  .data-status,
+  .data-unit {
+    font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .data-display {
+    padding: clamp(0.25rem, 0.9vh, 0.42rem);
+  }
+
+  .data-value-container {
+    flex-wrap: wrap;
+    row-gap: 0.2rem;
+  }
+
+  .position-inputs-row > div {
+    gap: clamp(0.2rem, 1vw, 0.4rem);
+  }
+}

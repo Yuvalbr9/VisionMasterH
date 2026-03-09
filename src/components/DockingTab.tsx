@@ -1,5 +1,6 @@
 import React from 'react';
 import { BaseButton } from './Buttons';
+import { GenericInput } from './Inputs';
 import { SPEED_UNITS, UI_TEXT, UI_VALUES } from '../constants';
 
 export const DockingTab: React.FC = () => {
@@ -29,20 +30,20 @@ export const DockingTab: React.FC = () => {
         <div className="lp-docking-title">{UI_TEXT.DOCKING.SPEED_OVER_GROUND}</div>
         <div className="lp-docking-row">
           <label>{UI_TEXT.DOCKING.BOW_PS}</label>
-          <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_SPEED} />
+          <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_SPEED} />
         </div>
         <div className="lp-docking-row">
           <label>{UI_TEXT.DOCKING.CCRP_PS}</label>
-          <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_SPEED} />
+          <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_SPEED} />
         </div>
         <div className="lp-docking-row">
           <label>{UI_TEXT.DOCKING.STEM_PS}</label>
-          <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_SPEED} />
+          <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_SPEED} />
         </div>
         <div className="lp-docking-row lp-docking-row-combo">
           <label>{UI_TEXT.DOCKING.CCRP_FA}</label>
           <div className="lp-docking-inline-values">
-            <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_CCRP_FA} />
+            <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_CCRP_FA} />
             <span className="lp-docking-pill">{SPEED_UNITS.KNOTS}</span>
             <span className="lp-docking-pill">{UI_TEXT.COMMON.GPS}</span>
           </div>
@@ -59,13 +60,13 @@ export const DockingTab: React.FC = () => {
             <div className="lp-docking-gauge-dial">
               <span className="lp-docking-needle lp-docking-needle-left" />
             </div>
-            <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RUDDER} />
+            <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RUDDER} />
           </div>
           <div className="lp-docking-gauge">
             <div className="lp-docking-gauge-dial">
               <span className="lp-docking-needle lp-docking-needle-right" />
             </div>
-            <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RUDDER} />
+            <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RUDDER} />
           </div>
         </div>
       </section>
@@ -97,8 +98,8 @@ export const DockingTab: React.FC = () => {
               <span className="lp-docking-needle lp-docking-needle-up-left" />
             </div>
             <div className="lp-docking-wind-values">
-              <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RELATIVE_WIND_DIR} />
-              <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RELATIVE_WIND_SPEED} />
+              <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RELATIVE_WIND_DIR} />
+              <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_RELATIVE_WIND_SPEED} />
             </div>
           </div>
           <div className="lp-docking-gauge">
@@ -106,8 +107,8 @@ export const DockingTab: React.FC = () => {
               <span className="lp-docking-needle lp-docking-needle-up-right" />
             </div>
             <div className="lp-docking-wind-values">
-              <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_TRUE_WIND_DIR} />
-              <input type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_TRUE_WIND_SPEED} />
+              <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_TRUE_WIND_DIR} />
+              <GenericInput type="number" step="0.1" defaultValue={UI_VALUES.DOCKING.DEFAULT_TRUE_WIND_SPEED} />
             </div>
           </div>
         </div>

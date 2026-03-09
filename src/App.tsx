@@ -72,32 +72,34 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="app">
-      <div className="legacy-topbar">
-        <div className="legacy-topbar-left">
-          <span className="legacy-app-icon" aria-hidden="true">◉</span>
-          <span className="legacy-app-name">{UI_TEXT.TOPBAR.APP_NAME}</span>
+    <div className="app-viewport">
+      <div className="app">
+        <div className="legacy-topbar">
+          <div className="legacy-topbar-left">
+            <span className="legacy-app-icon" aria-hidden="true">◉</span>
+            <span className="legacy-app-name">{UI_TEXT.TOPBAR.APP_NAME}</span>
+          </div>
+          <div className="legacy-topbar-center" />
+          <div className="legacy-topbar-right">
+            <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MINIMIZE} />
+            <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MAXIMIZE} />
+            <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UI_TEXT.TOPBAR.CLOSE} />
+          </div>
         </div>
-        <div className="legacy-topbar-center" />
-        <div className="legacy-topbar-right">
-          <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MINIMIZE} />
-          <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MAXIMIZE} />
-          <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UI_TEXT.TOPBAR.CLOSE} />
+        <div className="main-container">
+          <LeftBar navData={navData} updateNavData={updateNavData} />
+          <RadarDisplay
+            navData={navData}
+            radarControls={radarControls}
+            arpaTargets={arpaTargets}
+            leewayDeg={leewayDeg}
+          />
+          <RightPanel
+            radarControls={radarControls}
+            onRadarControlsChange={setRadarControls}
+            arpaTargets={arpaTargets}
+          />
         </div>
-      </div>
-      <div className="main-container">
-        <LeftBar navData={navData} updateNavData={updateNavData} />
-        <RadarDisplay
-          navData={navData}
-          radarControls={radarControls}
-          arpaTargets={arpaTargets}
-          leewayDeg={leewayDeg}
-        />
-        <RightPanel
-          radarControls={radarControls}
-          onRadarControlsChange={setRadarControls}
-          arpaTargets={arpaTargets}
-        />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export const UI_TEXT = {
     TAB_ARROW: '►',
   },
   TOPBAR: {
-    APP_NAME: 'Vision Master',
+    APP_NAME: 'PCVM',
     MINIMIZE: 'Minimize',
     MAXIMIZE: 'Maximize',
     CLOSE: 'Close',

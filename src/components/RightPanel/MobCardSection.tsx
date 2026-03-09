@@ -1,5 +1,6 @@
 import React from 'react';
 import { ControlButton } from '../Buttons';
+import { GenericInput } from '../Inputs';
 import { UI_TEXT, UI_VALUES } from '../../constants';
 
 interface MobCardSectionProps {
@@ -36,7 +37,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
 
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.BEARING_R}</label>
-          <input
+          <GenericInput
             type="number"
             step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
             value={bearingRInput}
@@ -45,7 +46,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
         </div>
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.BEARING_T}</label>
-          <input
+          <GenericInput
             type="number"
             step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
             value={bearingTInput}
@@ -54,7 +55,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
         </div>
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.RANGE_NM}</label>
-          <input
+          <GenericInput
             type="number"
             step={UI_VALUES.RIGHT_PANEL.RANGE_STEP}
             value={rangeInput}
@@ -64,7 +65,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
         </div>
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.ELAPSED_TIME}</label>
-          <input
+          <GenericInput
             type="text"
             inputMode="numeric"
             placeholder={UI_TEXT.RIGHT_PANEL.PLACEHOLDER_HMS}
