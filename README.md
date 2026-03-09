@@ -1,12 +1,24 @@
 # VisionMasterH
 
-VisionMasterH is a radar/navigation UI simulation built with React, TypeScript, and Vite.
+VisionMasterH is a marine radar/navigation interface simulator built with React, TypeScript, and Vite.
 
-The app includes:
-- A radar canvas with N-UP/H-UP orientation.
-- Right panel controls for range, overlays, and MOB fields.
-- Left panel navigation data and status blocks.
-- Utility-first calculation modules (`src/util`) with SOLID-focused structure.
+It is designed for a desktop-like control experience with a live radar view, navigation panels, and operational controls.
+
+## What This App Does
+
+VisionMasterH simulates a ship radar workstation UI.
+
+- Displays radar visualization with synchronized range/ring behavior.
+- Shows live-style navigation information (heading, speed, position, course, SOG, date/time).
+- Provides operator controls for radar mode, overlays, range stepping, and MOB workflows.
+- Supports a docking-focused operational view via tab switching.
+
+## Highlights
+
+- Radar display with orientation and range behavior.
+- Left-side navigation panel (heading, speed, position, course, SOG, date/time).
+- Right-side operational panel (mode, trails, range stepping, MOB tools).
+- Clean modular architecture with reusable components and utility modules.
 
 ## Tech Stack
 
@@ -16,76 +28,64 @@ The app includes:
 - Axios
 - unitsnet-js
 
-## Getting Started
+## Quick Start
 
-Run all commands from the repository root.
+Run from the project root:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite.
-
-Production build:
+## Available Scripts
 
 ```bash
-npm run build
+npm run dev      # Start local development server
+npm run build    # Create production build
+npm run preview  # Preview production build locally
 ```
 
-Preview production build:
+## How to Use
 
-```bash
-npm run preview
-```
+### Main Layout
 
-## Radar Range and RM Behavior
+- **Top bar**: application header and window-style controls.
+- **Left panel**: navigation data and status information.
+- **Center**: radar canvas and radar overlays.
+- **Right panel**: radar mode and operation controls.
 
-Range display is now tied to the radar circles (range rings) instead of being an isolated UI value.
+### Left Panel Tabs
 
-- Source of truth: `radarControls.selectedRangeNm`
-- Ring count: `RADAR_RANGE_RING_COUNT` in `src/util/radarCalculations.ts`
-- Ring spacing formula: `selectedRangeNm / RADAR_RANGE_RING_COUNT`
-- Right-panel arrows step range using `UI_VALUES.RANGE_CONTROLS.RANGE_STEPS_NM`
+- **Default tab**: main navigation and ship-state displays.
+- **Docking tab**: docking-focused controls and indicators.
 
-This means:
-- Radar ring geometry, RM text, and rings text are synchronized.
-- Changing range through arrows immediately updates the radar circles and displayed RM/rings values together.
+### Range & Rings
 
-## Data Mode (Mock vs HTTP)
+Range control and ring visualization are synchronized.
 
-Sidebar data is provided via a provider abstraction in `src/api/shipSidebarService.ts`.
+- Changing range updates ring spacing and visible ring data consistently.
+- The UI values in control sections and radar view stay aligned.
 
-- Default mode is `mock`.
-- HTTP mode is available through the same interface.
+## Responsiveness
 
-Example setup:
-
-```ts
-import { createShipSidebarDataProvider, setShipSidebarDataProvider } from './api/shipSidebarService';
-
-setShipSidebarDataProvider(createShipSidebarDataProvider({ mode: 'http' }));
-```
-
-Expected HTTP endpoints:
-- `GET /api/ship/course`
-- `GET /api/ship/pos`
-- `GET /api/ship/wave`
-- `GET /api/ship/time`
+The UI uses fluid layout techniques (Grid/Flex, relative units, breakpoints) to stay readable across desktop, tablet, and smaller windows.
 
 ## Project Structure
 
-- `src/App.tsx`: top-level composition and shared state.
-- `src/components/`: UI components and radar drawing layers.
-- `src/hooks/`: async/resource and domain hooks.
-- `src/api/`: API client and provider abstraction.
-- `src/util/`: pure calculations/parsing/formatting utilities.
-- `src/constants/`: static UI text and values.
-- `src/types/`: shared TypeScript models.
+- `src/App.tsx` – top-level app composition.
+- `src/components` – UI components and panel/radar modules.
+- `src/hooks` – reusable app logic hooks.
+- `src/util` – pure calculations, formatting, and parsing.
+- `src/constants` – static labels, values, and shared config.
+- `src/types` – shared TypeScript contracts.
 
-## Architecture Notes
+## Troubleshooting
 
-- Calculation logic is centralized in `src/util`.
-- Components focus on rendering and event wiring.
-- Async fetch lifecycle is reused through `useAsyncResource`.
-- API access follows dependency inversion through provider interfaces.
+- If styles look stale after edits, restart the dev server.
+- If TypeScript errors appear unexpectedly, run a clean build with `npm run build`.
+
+## Notes for Integrators
+
+- Data access is abstracted behind provider/service interfaces.
+- Mock-based development mode is supported out of the box.
+- The UI is organized for maintainability, with clear separation between rendering and business logic.
