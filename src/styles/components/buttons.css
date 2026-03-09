@@ -1,0 +1,218 @@
+/* Button Base Styles */
+.arrow-btn,
+.control-btn,
+.data-button,
+.tab,
+.header-btn,
+.nav-btn,
+.ais-nav-btn,
+.ais-nav-btn-small,
+.menu-btn,
+.chart-btn,
+.start-btn,
+.tune-btn,
+.overboard-btn-left,
+.overboard-btn-right,
+.ctrl-tab,
+.radar-btn-small {
+  background: var(--bg-control);
+  border: 1px solid var(--win-mid);
+  border-top-color: var(--win-light);
+  border-left-color: var(--win-light);
+  border-right-color: var(--win-dark);
+  border-bottom-color: var(--win-shadow);
+  color: var(--text-primary);
+  border-radius: 0;
+  cursor: pointer;
+  transition: none;
+}
+
+.base-button {
+  user-select: none;
+}
+
+.base-button.is-pressed {
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+  filter: brightness(0.92);
+}
+
+.base-button:active {
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+  filter: brightness(0.92);
+}
+
+.base-button:disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.arrow-btn,
+.radar-btn-small,
+.ais-nav-btn-small {
+  padding: var(--spacing-xs) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+}
+
+.control-btn,
+.data-button,
+.chart-btn,
+.menu-btn,
+.tune-btn,
+.ctrl-tab {
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+}
+
+.tab {
+  padding: var(--spacing-xs) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+}
+
+.tab.active {
+  background: #2f2d46;
+  color: var(--text-primary);
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+}
+
+.arrow-btn:hover,
+.control-btn:hover,
+.data-button:hover,
+.tab:hover,
+.header-btn:hover,
+.nav-btn:hover,
+.ais-nav-btn:hover,
+.ais-nav-btn-small:hover,
+.menu-btn:hover,
+.chart-btn:hover,
+.start-btn:hover,
+.tune-btn:hover,
+.overboard-btn-left:hover,
+.overboard-btn-right:hover,
+.ctrl-tab:hover,
+.radar-btn-small:hover {
+  background: var(--bg-control-hover);
+}
+
+.arrow-btn:active,
+.control-btn:active,
+.data-button:active,
+.tab:active,
+.header-btn:active,
+.nav-btn:active,
+.ais-nav-btn:active,
+.ais-nav-btn-small:active,
+.menu-btn:active,
+.chart-btn:active,
+.start-btn:active,
+.tune-btn:active,
+.overboard-btn-left:active,
+.overboard-btn-right:active,
+.ctrl-tab:active,
+.radar-btn-small:active {
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+}
+
+.arrow-btn-small {
+  font-size: var(--font-size-xs);
+}
+
+.arrow-btn-compact {
+  padding: var(--spacing-xs) var(--space-sm-vw);
+}
+
+.arrow-btn-minimal {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--green);
+}
+
+/* Header Button */
+.header-btn {
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+  white-space: nowrap;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+  padding: var(--spacing-lg) var(--space-xl-vw);
+  font-size: var(--font-size-xl);
+}
+
+.ais-nav-btn {
+  padding: var(--spacing-md) var(--space-lg-vw);
+  font-size: var(--font-size-md);
+}
+
+.ais-nav-btn-small {
+  padding: var(--spacing-xs) var(--space-sm-vw);
+  font-size: var(--font-size-sm);
+}
+
+/* Action Buttons */
+.menu-btn {
+  padding: var(--spacing-md) var(--space-sm-vw);
+  font-size: var(--font-size-md);
+  width: 100%;
+  font-weight: bold;
+}
+
+.chart-btn {
+  padding: var(--spacing-md) var(--space-sm-vw);
+  font-size: var(--font-size-md);
+}
+
+.start-btn {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-weight: normal;
+  width: 100%;
+}
+
+.tune-btn {
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+}
+
+.overboard-btn-left,
+.overboard-btn-right {
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md-vw);
+  font-weight: normal;
+}
+
+.overboard-btn-left .arrow,
+.overboard-btn-right .arrow {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+}
+
+/* Control Tabs */
+.ctrl-tab {
+  padding: var(--spacing-sm) var(--space-sm-vw);
+  font-size: var(--font-size-base);
+  flex: 1;
+}
+
+.radar-btn-small {
+  padding: var(--spacing-xs) var(--space-sm-vw);
+  font-size: var(--font-size-sm);
+}

@@ -1,0 +1,100 @@
+/* ---- Value Box CSS Triangles (Arrows) ---- */
+.lp-has-triangle {
+    position: relative;
+}
+
+/* Triangle pointing LEFT attached to LEFT edge */
+.lp-triangle-left::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    /* shift to attach to border */
+    transform: translateY(-50%);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 9px solid var(--border-color);
+    /* border color */
+}
+
+.lp-triangle-left::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    /* inner fill shifted 1px right and slightly smaller */
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 8px solid #ffffff;
+    /* white fill */
+}
+
+/* Triangle pointing RIGHT attached to RIGHT edge */
+.lp-triangle-right::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 9px solid var(--border-color);
+}
+
+.lp-triangle-right::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid #ffffff;
+}
+
+/* Triangle pointing UP attached to TOP edge */
+.lp-triangle-up::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 7px solid var(--border-color);
+}
+
+.lp-triangle-up::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 6px solid #ffffff;
+}
+
+/* Triangle pointing DOWN attached to BOTTOM edge */
+.lp-triangle-down::before {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 8px solid var(--border-color);
+}
+
+.lp-triangle-down::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 7px solid #ffffff;
+}
