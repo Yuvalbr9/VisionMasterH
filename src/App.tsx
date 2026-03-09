@@ -27,6 +27,9 @@ const defaultRadarControls: RadarControlState = {
   vrm2Nm: 7.56,
 };
 
+const defaultVelocity = { vn: 0, ve: 0 };
+const defaultArpaTargets: ARPATarget[] = [];
+
 const App: React.FC = () => {
   const [navData, setNavData] = useState<NavigationData>({
     hdg: Angle.FromDegrees(289.0),
@@ -41,12 +44,12 @@ const App: React.FC = () => {
   });
 
   const [radarControls, setRadarControls] = useState<RadarControlState>(defaultRadarControls);
-  const [velocity] = useState<{ vn: number; ve: number }>({ vn: 0, ve: 0 });
-  const [arpaTargets] = useState<ARPATarget[]>([]);
+  const velocity = defaultVelocity;
+  const arpaTargets = defaultArpaTargets;
 
-  const updateNavData = (updates: Partial<NavigationData>) => {
+  const updateNavData = React.useCallback((updates: Partial<NavigationData>) => {
     setNavData(prev => ({ ...prev, ...updates }));
-  };
+  }, []);
 
   React.useEffect(() => {
     const { cogDeg: nextCogDeg, sogKn: nextSogKn, velocityIsMeaningful } = calculateCogSogFromVelocity(velocity);

@@ -9,7 +9,7 @@ export enum LeftPanelTabs {
 }
 
 interface PanelContentProps {
-  activeTab: number;
+  activeTab: LeftPanelTabs;
   navData: NavigationData;
   updateNavData: (updates: Partial<NavigationData>) => void;
   dateTimeIso: string | null;

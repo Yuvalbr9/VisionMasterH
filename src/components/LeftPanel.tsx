@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationData } from '../types';
 import { PanelTabs } from './LeftPanel/PanelTabs';
-import { PanelContent } from './LeftPanel/PanelContent';
+import { LeftPanelTabs, PanelContent } from './LeftPanel/PanelContent';
 import { UI_TEXT } from '../constants';
 
 interface LeftPanelProps {
@@ -22,11 +22,11 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
   isManualNavigationMode,
 }) => {
   const tabs = [...UI_TEXT.LEFT_PANEL.TABS];
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState<LeftPanelTabs>(LeftPanelTabs.DEFAULT);
 
   return (
     <div className="left-panel">
-      <PanelTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+      <PanelTabs tabs={tabs} activeTab={activeTab} onTabChange={(index) => setActiveTab(index as LeftPanelTabs)} />
       <PanelContent
         activeTab={activeTab}
         navData={navData}
