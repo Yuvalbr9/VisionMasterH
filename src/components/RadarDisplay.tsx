@@ -8,14 +8,13 @@ interface RadarDisplayProps {
   navData: NavigationData;
   radarControls: RadarControlState;
   arpaTargets: ARPATarget[];
-  velocity: { vn: number; ve: number };
   leewayDeg: number;
 }
 
-export const RadarDisplay: React.FC<RadarDisplayProps> = ({ navData, radarControls, arpaTargets, velocity, leewayDeg }) => {
+export const RadarDisplay: React.FC<RadarDisplayProps> = ({ navData, radarControls, arpaTargets, leewayDeg }) => {
   return (
     <div className="radar-display">
-      <RadarTopInfo navData={navData} controls={radarControls} velocity={velocity} leewayDeg={leewayDeg} />
+      <RadarTopInfo navData={navData} controls={radarControls} leewayDeg={leewayDeg} />
       <RadarCanvas navData={navData} controls={radarControls} arpaTargets={arpaTargets} />
       <RadarBottomControls />
     </div>

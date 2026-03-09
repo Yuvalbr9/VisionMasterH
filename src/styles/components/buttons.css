@@ -27,6 +27,31 @@
   transition: none;
 }
 
+.base-button {
+  user-select: none;
+}
+
+.base-button.is-pressed {
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+  filter: brightness(0.92);
+}
+
+.base-button:active {
+  border-top-color: var(--win-dark);
+  border-left-color: var(--win-dark);
+  border-right-color: var(--win-light);
+  border-bottom-color: var(--win-light);
+  filter: brightness(0.92);
+}
+
+.base-button:disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+
 .arrow-btn,
 .radar-btn-small,
 .ais-nav-btn-small {

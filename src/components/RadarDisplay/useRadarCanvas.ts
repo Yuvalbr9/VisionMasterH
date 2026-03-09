@@ -7,6 +7,7 @@ import { drawEchoLayer } from './EchoLayer';
 import { drawEbl } from './EBLComponent';
 import { drawVrm } from './VRMComponent';
 import { drawArpaTargetLayer } from './ARPATargetLayer';
+import { toDisplayBearing } from './drawTypes';
 
 interface UseRadarCanvasParams {
   navData: NavigationData;
@@ -27,14 +28,34 @@ export const useRadarCanvas = ({ navData, controls, arpaTargets }: UseRadarCanva
 
     let animationFrameId: number;
 
+    const fitCanvasToViewport = () => {
+      const bounds = canvas.getBoundingClientRect();
+      const cssWidth = Math.max(220, Math.floor(bounds.width || canvas.clientWidth || 720));
+      const cssHeight = Math.max(220, Math.floor(bounds.height || canvas.clientHeight || cssWidth));
+      const dpr = window.devicePixelRatio || 1;
+      const pixelWidth = Math.floor(cssWidth * dpr);
+      const pixelHeight = Math.floor(cssHeight * dpr);
+
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth;
+        canvas.height = pixelHeight;
+      }
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      return { cssWidth, cssHeight };
+    };
+
     const render = () => {
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const maxRadius = Math.min(centerX, centerY) - 34; // leave room for text
+      const { cssWidth, cssHeight } = fitCanvasToViewport();
+      const centerX = cssWidth / 2;
+      const centerY = cssHeight / 2;
+      const edgePadding = Math.max(18, Math.min(34, Math.round(Math.min(cssWidth, cssHeight) * 0.055)));
+      const maxRadius = Math.min(centerX, centerY) - edgePadding;
       const sweepAngle = sweepAngleRef.current;
 
       // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
 
       // Draw radar background circle
       ctx.fillStyle = '#000000';
@@ -71,8 +92,9 @@ export const useRadarCanvas = ({ navData, controls, arpaTargets }: UseRadarCanva
       // Draw radial lines
       ctx.strokeStyle = '#3f3a4a';
       ctx.lineWidth = 0.7;
-      for (let angle = 0; angle < 360; angle += 30) {
-        const rad = (angle * Math.PI) / 180;
+      for (let trueBearing = 0; trueBearing < 360; trueBearing += 30) {
+        const displayBearing = toDisplayBearing(trueBearing, navData, controls);
+        const rad = (displayBearing * Math.PI) / 180;
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(
@@ -133,7 +155,8 @@ export const useRadarCanvas = ({ navData, controls, arpaTargets }: UseRadarCanva
       });
 
       // Draw rotating sweep beam
-      const sweepRad = (sweepAngle * Math.PI) / 180;
+      const sweepDisplayBearing = toDisplayBearing(sweepAngle, navData, controls);
+      const sweepRad = (sweepDisplayBearing * Math.PI) / 180;
 
       ctx.strokeStyle = '#63ff8f';
       ctx.lineWidth = 1;
@@ -148,7 +171,8 @@ export const useRadarCanvas = ({ navData, controls, arpaTargets }: UseRadarCanva
       // Sweep trail effect
       for (let i = 1; i <= 4; i++) {
         const trailAngle = sweepAngle - i * 3.4;
-        const trailRad = (trailAngle * Math.PI) / 180;
+        const trailDisplayBearing = toDisplayBearing(trailAngle, navData, controls);
+        const trailRad = (trailDisplayBearing * Math.PI) / 180;
         ctx.strokeStyle = '#3ca857';
         ctx.lineWidth = 1;
         ctx.beginPath();

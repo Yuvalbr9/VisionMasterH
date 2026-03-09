@@ -1,12 +1,8 @@
 import React, { ReactNode } from 'react';
 
-export interface BaseButtonProps {
+export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
   className?: string;
-  title?: string;
-  type?: 'button' | 'submit' | 'reset';
 }
 
 export const BaseButton: React.FC<BaseButtonProps> = ({
@@ -16,14 +12,16 @@ export const BaseButton: React.FC<BaseButtonProps> = ({
   className = 'control-btn',
   title,
   type = 'button',
+  ...rest
 }) => {
   return (
     <button
       type={type}
-      className={className}
+      className={`${className} base-button`}
       onClick={onClick}
       disabled={disabled}
       title={title}
+      {...rest}
     >
       {children}
     </button>

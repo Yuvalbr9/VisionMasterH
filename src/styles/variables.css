@@ -13,7 +13,12 @@
   --text-secondary: #c0b0d8;
   --green: #00ff00;
   --yellow: #ffff00;
+  --legacy-win-blue: rgba(20, 0, 128, 1);
   --radar-bg: rgb(31, 0, 41);
+  --win-light: #8a87a9;
+  --win-mid: #666281;
+  --win-dark: #2a2940;
+  --win-shadow: #181726;
 
   /* ===== BADGE COLORS ===== */
   --badge-green-bg: transparent;
@@ -67,7 +72,7 @@
   --font-size-lg: 0.75rem;
   --font-size-xl: 0.875rem;
   --font-size-2xl: 1rem;
-  --font-family-mono: 'Courier New', monospace;
+  --font-family-mono: Arial, Helvetica, sans-serif;
   --font-family-sans: Arial, Helvetica, sans-serif;
 
   /* ===== BORDER RADIUS ===== */
@@ -76,17 +81,17 @@
   --radius-lg: 0;
 
   /* ===== SIZING ===== */
-  --scrollbar-width: 0.6vw;
+  --scrollbar-width: clamp(8px, 0.6vw, 12px);
   --scrollbar-min-width: 8px;
   --scrollbar-radius: 0.4vh;
-  --top-bar-height: 5vh;
+  --top-bar-height: clamp(22px, 5vh, 40px);
   --top-bar-min-height: 40px;
-  --panel-min-width: 200px;
-  --panel-max-width: 320px;
-  --panel-width: 18vw;
+  --panel-min-width: clamp(160px, 16vw, 220px);
+  --panel-max-width: clamp(280px, 22vw, 360px);
+  --panel-width: clamp(180px, 18vw, 320px);
 
   /* Responsive sizing base */
-  font-size: 16px;
+  font-size: clamp(13px, 0.85vw, 16px);
 }
 
 * {
@@ -98,6 +103,7 @@
 html,
 body,
 #root {
+  min-height: 100vh;
   height: 100%;
   width: 100%;
   overflow: hidden;

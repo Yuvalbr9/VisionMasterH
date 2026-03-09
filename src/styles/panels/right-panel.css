@@ -6,7 +6,7 @@
   border-right: 1px solid #8780ab;
   border-top: none;
   border-bottom: none;
-  padding: 3px 2px;
+  padding: clamp(2px, 0.35vw, 4px) clamp(2px, 0.25vw, 4px);
   gap: 0;
   overflow: visible;
   position: relative;
@@ -15,22 +15,22 @@
 .vm-upper-detached {
   border: 1px solid #7f78a6;
   background: var(--bg-panel);
-  padding: 2px;
+  padding: clamp(1px, 0.25vw, 3px);
 }
 
 .vm-lower-detached {
-  margin-top: 8px;
-  margin-left: 10px;
-  width: calc(100% - 12px);
+  margin-top: clamp(5px, 0.75vw, 10px);
+  margin-left: clamp(6px, 0.9vw, 12px);
+  width: calc(100% - clamp(8px, 1vw, 14px));
   border: 1px solid #7f78a6;
   background: var(--bg-panel);
-  padding: 8px;
+  padding: clamp(5px, 0.85vw, 10px);
 }
 
 .vm-top-matrix {
   display: grid;
-  grid-template-columns: 22px 1fr 22px 1fr 1fr 1fr;
-  gap: 2px;
+  grid-template-columns: clamp(18px, 1.8vw, 22px) minmax(0, 1fr) clamp(18px, 1.8vw, 22px) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1px, 0.2vw, 2px);
 }
 
 .vm-cell,
@@ -45,10 +45,13 @@
   border: 1px solid #7d76a3;
   color: #ece9fb;
   font-family: var(--font-family-mono);
-  font-size: 0.60rem;
-  min-height: 22px;
+  font-size: clamp(0.54rem, 0.58vw, 0.62rem);
+  min-height: clamp(20px, 2.5vh, 24px);
   line-height: 1;
-  padding: 2px 3px;
+  padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.35vw, 4px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .vm-cell {
@@ -86,7 +89,7 @@
 .vm-alert-row,
 .vm-date-row,
 .vm-mob-header {
-  margin-top: 2px;
+  margin-top: clamp(1px, 0.2vw, 3px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,29 +97,29 @@
 
 .vm-alert-row {
   justify-content: space-between;
-  padding: 0 2px;
+  padding: 0 clamp(1px, 0.2vw, 3px);
 }
 
 .vm-alert-main {
   flex: 1;
-  height: 20px;
+  height: clamp(18px, 2.3vh, 22px);
   border: 1px solid #7d76a3;
   background: #3b345f;
   color: #ece9fb;
   font-family: var(--font-family-mono);
-  font-size: 0.58rem;
+  font-size: clamp(0.52rem, 0.55vw, 0.6rem);
   text-align: center;
 }
 
 .vm-alert-arrow {
-  width: 20px;
-  min-width: 20px;
-  height: 20px;
+  width: clamp(18px, 2vw, 22px);
+  min-width: clamp(18px, 2vw, 22px);
+  height: clamp(18px, 2.3vh, 22px);
   border: 1px solid #7d76a3;
   background: #3b345f;
   color: #ece9fb;
   font-family: var(--font-family-mono);
-  font-size: 0.58rem;
+  font-size: clamp(0.52rem, 0.55vw, 0.6rem);
   cursor: pointer;
 }
 
@@ -126,14 +129,14 @@
   border: 1px solid #7d76a3;
   background: #3b345f;
   font-family: var(--font-family-mono);
-  font-size: 0.58rem;
+  font-size: clamp(0.52rem, 0.55vw, 0.6rem);
   text-align: center;
 }
 
 .vm-mob-header {
   display: grid;
-  grid-template-columns: 22px 1fr 22px;
-  gap: 2px;
+  grid-template-columns: clamp(18px, 1.8vw, 22px) minmax(0, 1fr) clamp(18px, 1.8vw, 22px);
+  gap: clamp(1px, 0.2vw, 3px);
   padding: 0;
 }
 
@@ -142,8 +145,8 @@
   background: var(--bg-control);
   color: #ece9fb;
   font-family: var(--font-family-mono);
-  font-size: 0.58rem;
-  height: 20px;
+  font-size: clamp(0.52rem, 0.55vw, 0.6rem);
+  height: clamp(18px, 2.2vh, 22px);
   padding: 0;
 }
 
@@ -153,10 +156,10 @@
 
 .vm-mob-card {
   border: 1px solid #7f78a6;
-  padding: 8px 8px 10px;
+  padding: clamp(5px, 0.8vw, 10px) clamp(5px, 0.8vw, 10px) clamp(6px, 0.95vw, 12px);
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: clamp(4px, 0.7vw, 8px);
   background: #332d4f;
 }
 
@@ -169,14 +172,14 @@
 .vm-wide-btn {
   width: 100%;
   cursor: pointer;
-  min-height: 30px;
+  min-height: clamp(24px, 3vh, 32px);
   font-size: 0.68rem;
 }
 
 .vm-field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: clamp(4px, 0.6vw, 8px);
   align-items: center;
 }
 
@@ -192,24 +195,46 @@
   color: #e6e3f3;
   font-family: var(--font-family-mono);
   font-size: 0.72rem;
-  height: 30px;
-  padding: 2px 6px;
+  height: clamp(24px, 3vh, 32px);
+  padding: clamp(1px, 0.2vh, 2px) clamp(4px, 0.6vw, 8px);
+}
+
+@media (max-width: 1024px) {
+  .vm-field-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(3px, 0.8vw, 6px);
+  }
+
+  .vm-field-row label {
+    font-size: clamp(0.64rem, 0.95vw, 0.74rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .vm-field-row {
+    grid-template-columns: 1fr;
+    gap: clamp(3px, 1vw, 6px);
+  }
+
+  .vm-field-row input {
+    height: clamp(26px, 3.8vh, 34px);
+  }
 }
 
 .vm-start-btn {
   width: 62%;
-  margin: 6px auto 0;
+  margin: clamp(4px, 0.6vw, 8px) auto 0;
   cursor: pointer;
-  min-height: 32px;
+  min-height: clamp(25px, 3.2vh, 34px);
   font-size: 0.72rem;
 }
 
 .vm-bottom-detached {
   margin-top: auto;
-  margin-bottom: 4px;
+  margin-bottom: clamp(2px, 0.4vw, 6px);
   border: 1px solid #7f78a6;
   background: var(--bg-panel);
-  padding: 4px;
+  padding: clamp(3px, 0.45vw, 6px);
 }
 
 .vm-bottom-row {
@@ -219,22 +244,22 @@
 
 .vm-bottom-corner-floating {
   position: absolute;
-  left: -206px;
-  bottom: 8px;
-  width: 200px;
+  left: clamp(-206px, -15vw, -136px);
+  bottom: clamp(4px, 0.7vw, 10px);
+  width: clamp(150px, 15vw, 200px);
   z-index: 20;
 }
 
 .vm-ebl-vrm-table {
   display: grid;
-  gap: 2px;
+  gap: clamp(1px, 0.2vw, 3px);
 }
 
 .vm-ebl-row {
   display: grid;
-  grid-template-columns: 46px 1fr 58px 20px;
+  grid-template-columns: clamp(36px, 3.4vw, 46px) minmax(0, 1fr) clamp(44px, 4.3vw, 58px) clamp(16px, 1.8vw, 20px);
   gap: 1px;
-  min-height: 22px;
+  min-height: clamp(20px, 2.4vh, 24px);
 }
 
 .vm-ebl-label,
@@ -244,9 +269,9 @@
   border: 1px solid #8d85b4;
   color: #ebe7fc;
   font-family: var(--font-family-mono);
-  font-size: 0.62rem;
-  padding: 0 2px;
-  min-height: 22px;
+  font-size: clamp(0.56rem, 0.58vw, 0.64rem);
+  padding: 0 clamp(1px, 0.18vw, 3px);
+  min-height: clamp(20px, 2.4vh, 24px);
 }
 
 .vm-ebl-value,
@@ -255,10 +280,10 @@
   border: 1px solid #7d76a3;
   color: #efeefd;
   font-family: var(--font-family-mono);
-  font-size: 0.62rem;
+  font-size: clamp(0.56rem, 0.58vw, 0.64rem);
   display: flex;
   align-items: center;
-  padding: 0 4px;
+  padding: 0 clamp(2px, 0.35vw, 5px);
 }
 
 .vm-ebl-meta {
@@ -267,7 +292,7 @@
 
 .vm-ebl-flag,
 .vm-ebl-flag-empty {
-  min-width: 20px;
+  min-width: clamp(16px, 1.8vw, 20px);
   text-align: center;
   display: grid;
   place-items: center;
@@ -286,9 +311,9 @@
 }
 
 .vm-green-tab {
-  min-height: 20px;
+  min-height: clamp(18px, 2.2vh, 22px);
   font-size: 0.62rem;
-  padding: 0 3px;
+  padding: 0 clamp(2px, 0.3vw, 4px);
   background: var(--bg-control);
   border: 1px solid #7d76a3;
   color: #e9e6fb;
@@ -298,9 +323,9 @@
   margin: 1px;
   border: 1px solid #7f78a6;
   background: #2b2741;
-  padding: 3px;
+  padding: clamp(2px, 0.3vw, 4px);
   display: grid;
-  gap: 2px;
+  gap: clamp(1px, 0.2vw, 3px);
 }
 
 .vm-green-line {
@@ -313,22 +338,51 @@
 .vm-rhumb {
   float: right;
   color: #d8d2ee;
-  margin-left: 6px;
+  margin-left: clamp(3px, 0.5vw, 7px);
 }
 
 .vm-mid-tag {
   color: #ddd7f3;
-  margin: 0 6px;
+  margin: 0 clamp(3px, 0.5vw, 7px);
 }
 
 .vm-show-menu-btn {
   width: calc(100% - 2px);
   margin: 1px;
-  min-height: 30px;
+  min-height: clamp(24px, 3vh, 32px);
   background: var(--bg-control);
   border: 1px solid #7d76a3;
   color: #f0ecff;
   font-size: 0.74rem;
+}
+
+@media (max-width: 1024px) {
+  .vm-right-panel {
+    width: 100%;
+  }
+
+  .vm-bottom-corner-floating {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-top: clamp(3px, 0.5vw, 6px);
+  }
+
+  .vm-ebl-row {
+    grid-template-columns: clamp(34px, 5vw, 44px) minmax(0, 1fr) clamp(42px, 7vw, 56px) clamp(16px, 2.5vw, 20px);
+  }
+}
+
+@media (max-width: 760px) {
+  .vm-top-matrix {
+    grid-template-columns: 18px minmax(0, 1fr) 18px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .vm-messy-shift,
+  .vm-print-cell {
+    margin-left: 0;
+  }
 }
 
 .top-button-section {

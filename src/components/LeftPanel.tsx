@@ -1,55 +1,41 @@
 import React, { useState } from 'react';
-import { Angle, Speed, Length } from 'unitsnet-js';
 import { NavigationData } from '../types';
 import { PanelTabs } from './LeftPanel/PanelTabs';
-import { HeadingDisplay } from './LeftPanel/HeadingDisplay';
-import { SpeedDisplay } from './LeftPanel/SpeedDisplay';
-import { PositionDisplay } from './LeftPanel/PositionDisplay';
-import { CourseDisplay } from './LeftPanel/CourseDisplay';
-import { SOGDisplay } from './LeftPanel/SOGDisplay';
-import { DateTimeDisplay } from './LeftPanel/DateTimeDisplay';
+import { LeftPanelTabs, PanelContent } from './LeftPanel/PanelContent';
+import { UI_TEXT } from '../constants';
 
 interface LeftPanelProps {
   navData: NavigationData;
   updateNavData: (updates: Partial<NavigationData>) => void;
+  dateTimeIso: string | null;
+  isLoading: boolean;
+  error: string | null;
+  isManualNavigationMode: boolean;
 }
 
-export const LeftPanel: React.FC<LeftPanelProps> = ({ navData, updateNavData }) => {
-  const tabs = ['Default', 'Docking', 'Environment', 'Route', 'Sea &'];
-  const [activeTab, setActiveTab] = useState(0);
+export const LeftPanel: React.FC<LeftPanelProps> = ({
+  navData,
+  updateNavData,
+  dateTimeIso,
+  isLoading,
+  error,
+  isManualNavigationMode,
+}) => {
+  const tabs = [...UI_TEXT.LEFT_PANEL.TABS];
+  const [activeTab, setActiveTab] = useState<LeftPanelTabs>(LeftPanelTabs.DEFAULT);
 
   return (
     <div className="left-panel">
-      <PanelTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
-
-      <HeadingDisplay
-        value={navData.hdg}
-        onChange={(value) => updateNavData({ hdg: value })}
+      <PanelTabs tabs={tabs} activeTab={activeTab} onTabChange={(index) => setActiveTab(index as LeftPanelTabs)} />
+      <PanelContent
+        activeTab={activeTab}
+        navData={navData}
+        updateNavData={updateNavData}
+        dateTimeIso={dateTimeIso}
+        isLoading={isLoading}
+        error={error}
+        isManualNavigationMode={isManualNavigationMode}
       />
-
-      <SpeedDisplay
-        value={navData.stw}
-        onChange={(value) => updateNavData({ stw: value })}
-      />
-
-      <PositionDisplay
-        lat={navData.posLat}
-        lon={navData.posLon}
-        onLatChange={(value) => updateNavData({ posLat: value })}
-        onLonChange={(value) => updateNavData({ posLon: value })}
-      />
-
-      <CourseDisplay
-        value={navData.cog}
-        onChange={(value) => updateNavData({ cog: value })}
-      />
-
-      <SOGDisplay
-        value={navData.sog}
-        onChange={(value) => updateNavData({ sog: value })}
-      />
-
-      <DateTimeDisplay />
     </div>
   );
 };

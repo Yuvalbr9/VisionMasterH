@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { Angle, Speed, Length } from 'unitsnet-js';
-import { NavigationData, parseLatitude, parseLongitude, RadarControlState, ARPATarget } from './types';
-import { LeftPanel } from './components/LeftPanel';
+import { NavigationData, RadarControlState, ARPATarget } from './types';
+import { LeftBar } from './components/LeftBar';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
+import { BaseButton } from './components/Buttons';
+import { UI_TEXT } from './constants';
+import {
+  calculateCogSogFromVelocity,
+  calculateLeewayDeg,
+  hasNavigationDeltaAboveTolerance,
+  parseLatitude,
+  parseLongitude,
+} from './util';
 
 const defaultRadarControls: RadarControlState = {
   northUp: true,
@@ -17,6 +26,9 @@ const defaultRadarControls: RadarControlState = {
   vrm1Nm: 5.07,
   vrm2Nm: 7.56,
 };
+
+const defaultVelocity = { vn: 0, ve: 0 };
+const defaultArpaTargets: ARPATarget[] = [];
 
 const App: React.FC = () => {
   const [navData, setNavData] = useState<NavigationData>({
@@ -32,32 +44,65 @@ const App: React.FC = () => {
   });
 
   const [radarControls, setRadarControls] = useState<RadarControlState>(defaultRadarControls);
-  const [velocity, setVelocity] = useState<{ vn: number; ve: number }>({ vn: 0, ve: 0 });
-  const [arpaTargets] = useState<ARPATarget[]>([]);
+  const velocity = defaultVelocity;
+  const arpaTargets = defaultArpaTargets;
 
-  const updateNavData = (updates: Partial<NavigationData>) => {
+  const updateNavData = React.useCallback((updates: Partial<NavigationData>) => {
     setNavData(prev => ({ ...prev, ...updates }));
-  };
+  }, []);
+
+  React.useEffect(() => {
+    const { cogDeg: nextCogDeg, sogKn: nextSogKn, velocityIsMeaningful } = calculateCogSogFromVelocity(velocity);
+
+    if (!velocityIsMeaningful) {
+      return;
+    }
+
+    if (!hasNavigationDeltaAboveTolerance(navData.cog.Degrees, navData.sog.Knots, nextCogDeg, nextSogKn)) {
+      return;
+    }
+
+    setNavData((prev) => ({
+      ...prev,
+      cog: Angle.FromDegrees(nextCogDeg),
+      sog: Speed.FromKnots(nextSogKn),
+    }));
+  }, [velocity.vn, velocity.ve, navData.cog.Degrees, navData.sog.Knots]);
+
+  const leewayDeg = React.useMemo(
+    () => calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees),
+    [navData.cog.Degrees, navData.hdg.Degrees]
+  );
 
   return (
-    <div className="app">
-      <div className="main-container">
-        <LeftPanel navData={navData} updateNavData={updateNavData} />
-        <RadarDisplay
-          navData={navData}
-          radarControls={radarControls}
-          arpaTargets={arpaTargets}
-          velocity={velocity}
-          leewayDeg={0}
-        />
-        <RightPanel
-          radarControls={radarControls}
-          onRadarControlsChange={setRadarControls}
-          velocity={velocity}
-          onVelocityChange={setVelocity}
-          leewayDeg={0}
-          arpaTargets={arpaTargets}
-        />
+    <div className="app-viewport">
+      <div className="app">
+        <div className="legacy-topbar">
+          <div className="legacy-topbar-left">
+            <span className="legacy-app-icon" aria-hidden="true">◉</span>
+            <span className="legacy-app-name">{UI_TEXT.TOPBAR.APP_NAME}</span>
+          </div>
+          <div className="legacy-topbar-center" />
+          <div className="legacy-topbar-right">
+            <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MINIMIZE} />
+            <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MAXIMIZE} />
+            <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UI_TEXT.TOPBAR.CLOSE} />
+          </div>
+        </div>
+        <div className="main-container">
+          <LeftBar navData={navData} updateNavData={updateNavData} />
+          <RadarDisplay
+            navData={navData}
+            radarControls={radarControls}
+            arpaTargets={arpaTargets}
+            leewayDeg={leewayDeg}
+          />
+          <RightPanel
+            radarControls={radarControls}
+            onRadarControlsChange={setRadarControls}
+            arpaTargets={arpaTargets}
+          />
+        </div>
       </div>
     </div>
   );
