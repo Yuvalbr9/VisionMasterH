@@ -2,10 +2,6 @@
 
 .vm-right-panel {
   background: var(--bg-panel);
-  border-left: 1px solid #8780ab;
-  border-right: 1px solid #8780ab;
-  border-top: none;
-  border-bottom: none;
   padding: clamp(2px, 0.35vw, 4px) clamp(2px, 0.25vw, 4px);
   gap: 0;
   overflow: visible;

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { RadarControlState, ARPATarget, RadarPoint } from '../../types';
-import { UI_TEXT } from '../../constants';
+import { UI_TEXT, UI_VALUES } from '../../constants';
 import { BottomCornerEblVrm } from './BottomCornerEblVrm';
 import { TopControlsSection } from './TopControlsSection';
 import { MobCardSection } from './MobCardSection';
