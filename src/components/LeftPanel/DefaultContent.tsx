@@ -8,6 +8,7 @@ import { PositionDisplay } from './PositionDisplay';
 import { CourseDisplay } from './CourseDisplay';
 import { SOGDisplay } from './SOGDisplay';
 import { DateTimeDisplay } from './DateTimeDisplay';
+import './left-panel.css';
 
 interface DefaultContentProps {
   navData: NavigationData;
@@ -29,7 +30,7 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
   const leewayDeg = calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees);
 
   return (
-    <>
+    <div className='left-panel'>
       {isLoading && <div className="lp-api-status">{UI_TEXT.LEFT_PANEL.LOADING_SIDEBAR}</div>}
       {error && <div className="lp-api-status lp-api-status-error">{error}</div>}
       {isManualNavigationMode && <div className="lp-api-status lp-api-status-manual">{UI_TEXT.LEFT_PANEL.MANUAL_MODE_ACTIVE}</div>}
@@ -59,6 +60,6 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
       />
 
       <DateTimeDisplay isoDateTime={dateTimeIso} />
-    </>
+    </div>
   );
 };

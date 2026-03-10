@@ -3,6 +3,9 @@ import { Angle } from 'unitsnet-js';
 import { DegreeRuler } from './DegreeRuler';
 import { ANGLE_UNITS, UI_TEXT } from '../../constants';
 import { normalizeBearing } from '../../util';
+import { Section } from './ui/Section';
+import { LabeledRow } from './ui/LabeledRow';
+import { DataBox } from './ui/DataBox';
 
 interface CourseDisplayProps {
   value: Angle;
@@ -79,18 +82,20 @@ export const CourseDisplay: React.FC<CourseDisplayProps> = ({ value, onChange, i
   };
 
   const displayValue = buffer ? `${buffer}${ANGLE_UNITS.DEGREE}` : `${value.Degrees.toFixed(1)}${ANGLE_UNITS.DEGREE}`;
-  const valueBoxClassName = `lp-value-box${isManualMode ? ' lp-value-box-editable' : ''}${buffer ? ' lp-value-box-editing' : ''}`;
 
   return (
-    <div className="lp-section">
-      <div className="lp-row">
-        <span className="lp-label">{UI_TEXT.LEFT_PANEL.COG}</span>
-        <span
-          className={valueBoxClassName}
+    <Section>
+      <LabeledRow label={UI_TEXT.LEFT_PANEL.COG}>
+        <DataBox
+          value={displayValue}
+          isEditable={isManualMode}
+          isEditing={Boolean(buffer)}
+          badgeText={isManualMode ? UI_TEXT.LEFT_PANEL.MANUAL : UI_TEXT.COMMON.GPS}
+          badgeType={isManualMode ? 'manual' : 'green'}
           tabIndex={isManualMode ? 0 : -1}
           role={isManualMode ? 'spinbutton' : undefined}
-          aria-label="Course over ground in degrees"
-          aria-valuenow={value.Degrees}
+          ariaLabel="Course over ground in degrees"
+          ariaValueNow={value.Degrees}
           onClick={(event) => {
             if (isManualMode) {
               event.currentTarget.focus();
@@ -99,17 +104,12 @@ export const CourseDisplay: React.FC<CourseDisplayProps> = ({ value, onChange, i
           onWheel={handleWheel}
           onKeyDown={handleKeyDown}
           onBlur={() => setBuffer('')}
-        >
-          {displayValue}
-        </span>
-        <span className={`lp-badge ${isManualMode ? 'lp-badge-manual' : 'lp-badge-green'}`}>
-          {isManualMode ? UI_TEXT.LEFT_PANEL.MANUAL : UI_TEXT.COMMON.GPS}
-        </span>
-      </div>
+        />
+      </LabeledRow>
       <div className={isManualMode ? 'lp-ruler-editable' : ''} onWheel={handleWheel}>
         <DegreeRuler value={value.Degrees} />
       </div>
       {isManualMode && <div className="lp-manual-hint">{UI_TEXT.LEFT_PANEL.MANUAL_HINT}</div>}
-    </div>
+    </Section>
   );
 };

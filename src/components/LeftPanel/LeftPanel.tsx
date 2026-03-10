@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { NavigationData } from '../types';
-import { PanelTabs } from './LeftPanel/PanelTabs';
-import { LeftPanelTabs, PanelContent } from './LeftPanel/PanelContent';
-import { UI_TEXT } from '../constants';
+import { NavigationData } from '../../types';
+import { PanelTabs } from './PanelTabs';
+import { LeftPanelTabs, PanelContent } from './PanelContent';
+import { UI_TEXT } from '../../constants';
+// Import colocated CSS
+import './left-panel.css';
+import './forms.css';
 
 interface LeftPanelProps {
   navData: NavigationData;
@@ -25,7 +28,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
   const [activeTab, setActiveTab] = useState<LeftPanelTabs>(LeftPanelTabs.DEFAULT);
 
   return (
-    <div className="left-panel">
+    <div>
       <PanelTabs tabs={tabs} activeTab={activeTab} onTabChange={(index) => setActiveTab(index as LeftPanelTabs)} />
       <PanelContent
         activeTab={activeTab}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationData } from '../../types';
-import { DockingTab } from '../DockingTab';
 import { DefaultContent } from './DefaultContent';
+import { DockingTab } from './DockingTab';
 
 export enum LeftPanelTabs {
   DEFAULT,

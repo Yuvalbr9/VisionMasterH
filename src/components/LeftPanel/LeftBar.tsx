@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { NavigationData } from '../types';
+import { NavigationData } from '../../types';
 import { LeftPanel } from './LeftPanel';
-import { useShipCourse } from '../hooks/useShipCourse';
-import { useShipPosition } from '../hooks/useShipPosition';
-import { useCurrentDateTime } from '../hooks/useCurrentDateTime';
+import { useShipCourse } from '../../hooks/useShipCourse';
+import { useShipPosition } from '../../hooks/useShipPosition';
+import { useCurrentDateTime } from '../../hooks/useCurrentDateTime';
 
 interface LeftBarProps {
   navData: NavigationData;
@@ -27,14 +27,9 @@ export const LeftBar: React.FC<LeftBarProps> = ({ navData, updateNavData }) => {
     timeState.error;
 
   useEffect(() => {
-    if (!courseState.shipCourse) {
-      return;
-    }
-
-    updateNavData({
-      hdg: courseState.shipCourse,
-      cog: courseState.shipCourse,
-    });
+    // We intentionally ignore the course update from the API here to preserve
+    // the independent HDG and COG values configured locally in the state.
+    // If you need it back later, you can map courseState.shipCourse selectively.
   }, [courseState.shipCourse, updateNavData]);
 
   useEffect(() => {

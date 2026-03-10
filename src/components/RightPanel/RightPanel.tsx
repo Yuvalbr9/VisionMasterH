@@ -1,12 +1,13 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { ARPATarget, RadarControlState } from '../types';
-import { UI_TEXT, UI_VALUES } from '../constants';
-import { BottomCornerEblVrm } from './RightPanel/BottomCornerEblVrm';
-import { TopControlsSection } from './RightPanel/TopControlsSection';
-import { MobCardSection } from './RightPanel/MobCardSection';
-import { GreenPanelSection } from './RightPanel/GreenPanelSection';
-import { useMobCardInputs } from './RightPanel/useMobCardInputs';
-import { useRightPanelControls } from './RightPanel/useRightPanelControls';
+import { RadarControlState, ARPATarget, RadarPoint } from '../../types';
+import { UI_TEXT } from '../../constants';
+import { BottomCornerEblVrm } from './BottomCornerEblVrm';
+import { TopControlsSection } from './TopControlsSection';
+import { MobCardSection } from './MobCardSection';
+import { GreenPanelSection } from './GreenPanelSection';
+import { useMobCardInputs } from './useMobCardInputs';
+import { useRightPanelControls } from './useRightPanelControls';
+import './right-panel.css';
 
 interface RightPanelProps {
   radarControls: RadarControlState;

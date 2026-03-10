@@ -1,7 +1,7 @@
 import React from 'react';
-import { BaseButton } from './Buttons';
-import { GenericInput } from './Inputs';
-import { SPEED_UNITS, UI_TEXT, UI_VALUES } from '../constants';
+import { BaseButton } from '../Buttons';
+import { GenericInput } from '../Inputs';
+import { SPEED_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
 
 export const DockingTab: React.FC = () => {
   return (

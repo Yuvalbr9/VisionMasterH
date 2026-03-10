@@ -63,23 +63,29 @@ export const DegreeRuler: React.FC<DegreeRulerProps> = ({ value }) => {
 
                 // Tick heights
                 const tickH = isMajor ? height * 0.5 : isMid ? height * 0.3 : height * 0.18;
-                const tickBottom = height;
 
+                // Bottom ticks
                 ctx.lineWidth = isMajor ? 1.5 : 0.8;
                 ctx.strokeStyle = '#9090c0';
                 ctx.beginPath();
-                ctx.moveTo(x, tickBottom);
-                ctx.lineTo(x, tickBottom - tickH);
+                ctx.moveTo(x, height);
+                ctx.lineTo(x, height - tickH);
+                ctx.stroke();
+
+                // Top ticks (descending from the upper border)
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, tickH);
                 ctx.stroke();
 
                 if (isMajor) {
-                    // Display 3-digit label
+                    // Display 3-digit label in the middle, pushed down slightly by top ticks
                     const label = normalizedDeg === 0 ? '000' : normalizedDeg.toString().padStart(3, '0').slice(0, 3);
-                    ctx.font = `bold ${Math.max(8, height * 0.33)}px var(--font-family-sans, Arial)`;
+                    ctx.font = `bold ${Math.max(8, height * 0.33)}px var(--font-family-mono)`; // Using mono for rulers
                     ctx.fillStyle = '#c0c0d8';
                     ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillText(label, x, height * 0.05);
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(label, x, height / 2);
                 }
             }
 
@@ -93,7 +99,7 @@ export const DegreeRuler: React.FC<DegreeRulerProps> = ({ value }) => {
 
             // Wide, flat green downward-pointing triangle at top center
             const triW = width * 0.12; // wide triangle
-            const triH = height * 0.3; // relatively flat
+            const triH = height * 0.2; // relatively flat
 
             ctx.fillStyle = '#00ff00';
             ctx.strokeStyle = '#00ff00';
@@ -117,7 +123,7 @@ export const DegreeRuler: React.FC<DegreeRulerProps> = ({ value }) => {
     return (
         <canvas
             ref={canvasRef}
-            style={{ width: '100%', height: 'clamp(24px, 2.8vh, 34px)', display: 'block' }}
+            style={{ width: '100%', height: 'clamp(36px, 4.5vh, 50px)', display: 'block', marginTop: '4px' }}
         />
     );
 };

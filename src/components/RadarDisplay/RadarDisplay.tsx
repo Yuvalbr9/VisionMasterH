@@ -1,11 +1,12 @@
-import React from 'react';
-import { ARPATarget, NavigationData, RadarControlState, RadarSelectedPoint } from '../types';
-import { UI_TEXT } from '../constants';
-import { BaseButton } from './Buttons';
-import { RadarTopInfo } from './RadarDisplay/RadarTopInfo';
-import { RadarCanvas } from './RadarDisplay/RadarCanvas';
-import { RadarBottomControls } from './RadarDisplay/RadarBottomControls';
-import { RadarPointPickerModal } from './RadarDisplay/RadarPointPickerModal';
+import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
+import { NavigationData, RadarControlState, ARPATarget, RadarSelectedPoint } from '../../types';
+import { UI_TEXT } from '../../constants';
+import { BaseButton } from '../Buttons';
+import { RadarTopInfo } from './RadarTopInfo';
+import { RadarCanvas } from './RadarCanvas';
+import { RadarBottomControls } from './RadarBottomControls';
+import { RadarPointPickerModal } from './RadarPointPickerModal';
+import './radar.css';
 
 interface RadarPointContextMenuState {
   pointIndex: number;

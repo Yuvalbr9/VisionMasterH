@@ -1,6 +1,9 @@
 import React from 'react';
 import { Speed } from 'unitsnet-js';
-import { SPEED_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
+import { SPEED_UNITS, UI_TEXT } from '../../constants';
+import { Section } from './ui/Section';
+import { LabeledRow } from './ui/LabeledRow';
+import { DataBox } from './ui/DataBox';
 
 interface SpeedDisplayProps {
   value: Speed;
@@ -8,15 +11,14 @@ interface SpeedDisplayProps {
 
 export const SpeedDisplay: React.FC<SpeedDisplayProps> = ({ value }) => {
   return (
-    <div className="lp-section">
-      <div className="lp-row lp-stw-row-main">
-        <span className="lp-label">{UI_TEXT.RADAR_TOP_INFO.STW}</span>
-        <span className="lp-value-box lp-has-triangle lp-triangle-up">{value.Knots.toFixed(1)} {SPEED_UNITS.KNOTS}</span>
-      </div>
-      <div className="lp-row lp-row-sub lp-stw-row-sub">
-        <span className="lp-dashes-box lp-has-triangle lp-triangle-right">{UI_VALUES.SPEED_DISPLAY.DASHES}</span>
-        <span className="lp-badge lp-badge-green lp-badge-btn lp-log-btn lp-log-btn-offset">{UI_TEXT.RADAR_TOP_INFO.LOG}</span>
-      </div>
-    </div>
+    <Section>
+      <LabeledRow label={UI_TEXT.RADAR_TOP_INFO.STW}>
+        <DataBox
+          value={`${Math.abs(value.Knots).toFixed(1)} ${SPEED_UNITS.KNOTS}`}
+          badgeText={UI_TEXT.RADAR_TOP_INFO.LOG}
+          badgeType="green"
+        />
+      </LabeledRow>
+    </Section>
   );
 };

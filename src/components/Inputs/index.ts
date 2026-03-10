@@ -3,3 +3,5 @@ export type { GenericInputProps } from './GenericInput';
 
 export { GenericSlider } from './GenericSlider';
 export type { GenericSliderProps } from './GenericSlider';
+
+import './inputs.css';
