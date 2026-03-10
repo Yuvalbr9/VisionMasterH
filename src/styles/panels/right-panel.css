@@ -286,6 +286,35 @@
   padding: 0 clamp(2px, 0.35vw, 5px);
 }
 
+.vm-ebl-input {
+  background: #151423;
+  border: 1px solid #7d76a3;
+  color: #efeefd;
+  font-family: var(--font-family-mono);
+  font-size: clamp(0.56rem, 0.58vw, 0.64rem);
+  min-height: clamp(20px, 2.4vh, 24px);
+  padding: 0 clamp(2px, 0.35vw, 5px);
+  border-radius: 0;
+  text-align: left;
+}
+
+.vm-ebl-input:focus {
+  outline: 1px solid #7fbf7f;
+  outline-offset: -1px;
+  box-shadow: none;
+}
+
+.vm-ebl-input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.vm-ebl-input[type='number']::-webkit-outer-spin-button,
+.vm-ebl-input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .vm-ebl-meta {
   color: #d3cfe5;
 }

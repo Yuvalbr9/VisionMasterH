@@ -12,12 +12,16 @@ interface RightPanelProps {
   radarControls: RadarControlState;
   onRadarControlsChange: Dispatch<SetStateAction<RadarControlState>>;
   arpaTargets: ARPATarget[];
+  radarPointPickerActive: boolean;
+  onOpenRadarPointPicker: () => void;
 }
 
 export const RightPanel: React.FC<RightPanelProps> = ({
   radarControls,
   onRadarControlsChange,
   arpaTargets,
+  radarPointPickerActive,
+  onOpenRadarPointPicker,
 }) => {
   const {
     modeLabel,
@@ -60,11 +64,13 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         trailsLabel={trailsLabel}
         aisLabel={aisLabel}
         chartsLabel={chartsLabel}
+        radarPointPickerActive={radarPointPickerActive}
         radarControls={radarControls}
         onToggleMode={toggleMode}
         onToggleTrails={toggleTrails}
         onToggleAis={toggleAis}
         onToggleCharts={toggleCharts}
+        onOpenRadarPointPicker={onOpenRadarPointPicker}
         onDecreaseRange={() => applyRangeStepByOffset(-1)}
         onIncreaseRange={() => applyRangeStepByOffset(1)}
         canDecreaseRange={canDecreaseRange}
@@ -86,7 +92,10 @@ export const RightPanel: React.FC<RightPanelProps> = ({
 
       <GreenPanelSection />
 
-      <BottomCornerEblVrm radarControls={radarControls} />
+      <BottomCornerEblVrm
+        radarControls={radarControls}
+        onRadarControlsChange={onRadarControlsChange}
+      />
     </div>
   );
 };

@@ -9,11 +9,13 @@ interface TopControlsSectionProps {
   trailsLabel: string;
   aisLabel: string;
   chartsLabel: string;
+  radarPointPickerActive: boolean;
   radarControls: RadarControlState;
   onToggleMode: () => void;
   onToggleTrails: () => void;
   onToggleAis: () => void;
   onToggleCharts: () => void;
+  onOpenRadarPointPicker: () => void;
   onDecreaseRange: () => void;
   onIncreaseRange: () => void;
   canDecreaseRange: boolean;
@@ -25,11 +27,13 @@ export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
   trailsLabel,
   aisLabel,
   chartsLabel,
+  radarPointPickerActive,
   radarControls,
   onToggleMode,
   onToggleTrails,
   onToggleAis,
   onToggleCharts,
+  onOpenRadarPointPicker,
   onDecreaseRange,
   onIncreaseRange,
   canDecreaseRange,
@@ -41,10 +45,16 @@ export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
     <div className="vm-upper-detached">
       <div className="vm-top-matrix">
         <ControlButton className="vm-cell" onClick={onToggleMode}>{modeLabel}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.RM}</ControlButton>
+        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.NM}</ControlButton>
         <ControlButton className="vm-cell" onClick={onToggleTrails}>{trailsLabel}</ControlButton>
         <ControlButton className="vm-cell vm-time-cell">{UI_TEXT.RIGHT_PANEL.ZERO_TIME_MIN_SEC}</ControlButton>
-        <ControlButton className="vm-cell vm-radar-cell">{UI_TEXT.RIGHT_PANEL.RADAR}</ControlButton>
+        <ControlButton
+          className="vm-cell vm-radar-cell"
+          onClick={onOpenRadarPointPicker}
+          title={radarPointPickerActive ? UI_TEXT.RIGHT_PANEL.RADAR_PICK_ACTIVE_HINT : UI_TEXT.RIGHT_PANEL.RADAR_PICK_TITLE}
+        >
+          {UI_TEXT.RIGHT_PANEL.RADAR}
+        </ControlButton>
 
         <ControlButton className="vm-cell vm-ground-cell">{UI_TEXT.RIGHT_PANEL.GROUND_STABILISED}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.R_VECTORS}</ControlButton>
@@ -53,9 +63,9 @@ export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
         <ControlButton className="vm-cell vm-arrow-cell" onClick={onDecreaseRange} disabled={!canDecreaseRange}>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
         <ControlButton
           className="vm-cell vm-messy-shift"
-          title={`${radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} ${UI_TEXT.RIGHT_PANEL.RM} scale over ${RADAR_RANGE_RING_COUNT} rings`}
+          title={`${radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} ${UI_TEXT.RIGHT_PANEL.NM} scale over ${RADAR_RANGE_RING_COUNT} rings`}
         >
-          {ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS)} {UI_TEXT.RIGHT_PANEL.RM}
+          {ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS)} {UI_TEXT.RIGHT_PANEL.NM}
         </ControlButton>
         <ControlButton className="vm-cell vm-arrow-cell" onClick={onIncreaseRange} disabled={!canIncreaseRange}>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
         <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.AIS_PRIORITY}</ControlButton>

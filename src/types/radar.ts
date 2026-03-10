@@ -21,3 +21,8 @@ export interface ARPATarget {
   cpaNm: number;
   tcpaMin: number;
 }
+
+export interface RadarSelectedPoint {
+  bearingDeg: number;
+  rangeNm: number;
+}
