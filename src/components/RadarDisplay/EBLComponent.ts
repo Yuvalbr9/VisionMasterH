@@ -1,4 +1,4 @@
-import { RadarDrawContext, polarToCanvas, toDisplayBearing } from './drawTypes';
+import { RadarDrawContext, normalizeBearing, polarToCanvas, toDisplayBearing } from './drawTypes';
 
 const drawSingleEbl = (
   ctx: CanvasRenderingContext2D,
@@ -9,15 +9,33 @@ const drawSingleEbl = (
   lineWidth: number,
   dashPattern: number[]
 ): void => {
-  const end = polarToCanvas(centerX, centerY, maxRadiusPx, displayBearingDeg);
+  const safeMaxRadiusPx = Number.isFinite(maxRadiusPx) ? Math.max(0, maxRadiusPx) : 0;
+  if (safeMaxRadiusPx <= 0) {
+    return;
+  }
+
+  const stableBearingDeg = normalizeBearing(displayBearingDeg);
+
+  // Extend by half line width and clip to the radar circle to keep the visual endpoint on the edge.
+  const end = polarToCanvas(centerX, centerY, safeMaxRadiusPx + lineWidth * 0.5, stableBearingDeg);
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, safeMaxRadiusPx, 0, Math.PI * 2);
+  ctx.clip();
+
   ctx.strokeStyle = '#7cff7c';
   ctx.lineWidth = lineWidth;
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'round';
   ctx.setLineDash(dashPattern);
+  ctx.lineDashOffset = 0;
   ctx.beginPath();
   ctx.moveTo(centerX, centerY);
   ctx.lineTo(end.x, end.y);
   ctx.stroke();
-  ctx.setLineDash([]);
+
+  ctx.restore();
 };
 
 export const drawEbl = ({ ctx, centerX, centerY, maxRadiusPx, controls, navData }: RadarDrawContext): void => {

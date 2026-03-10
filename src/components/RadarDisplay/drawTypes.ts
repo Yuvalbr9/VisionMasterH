@@ -14,6 +14,7 @@ export { normalizeBearing } from '../../util/bearingUtils';
 export {
   degreesToCanvasRadians,
   toDisplayBearing,
+  fromDisplayBearing,
   polarToCanvas,
   rangeNmToPixels,
 } from '../../util/radarCalculations';

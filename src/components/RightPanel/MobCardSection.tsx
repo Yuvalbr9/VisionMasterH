@@ -40,6 +40,8 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
           <GenericInput
             type="number"
             step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
+            min={`${UI_VALUES.RIGHT_PANEL.EBL_MIN}`}
+            max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
             value={bearingRInput}
             onChange={(event) => onBearingRInputChange(event.target.value)}
           />
@@ -49,6 +51,8 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
           <GenericInput
             type="number"
             step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
+            min={`${UI_VALUES.RIGHT_PANEL.EBL_MIN}`}
+            max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
             value={bearingTInput}
             onChange={(event) => onBearingTInputChange(event.target.value)}
           />

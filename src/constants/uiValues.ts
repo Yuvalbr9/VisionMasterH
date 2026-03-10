@@ -24,8 +24,16 @@ export const UI_VALUES = {
   },
   RADAR_BOTTOM: {
     GAIN_FILL_MATCH: 'Gain',
+    ROW_MIN: 0,
+    ROW_MAX: 100,
+    ROW_WHEEL_STEP: 2,
+    ROW_DEFAULT_VALUES: [86, 0, 0, 0],
   },
   RIGHT_PANEL: {
+    EBL_MIN: 0,
+    EBL_MAX: 359,
+    VRM_MIN: 0,
+    VRM_MAX: 100,
     BEARING_STEP: '0.1',
     RANGE_STEP: '0.01',
     BEARING_DECIMALS: 1,
