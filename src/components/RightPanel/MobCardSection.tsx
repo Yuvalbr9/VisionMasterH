@@ -30,64 +30,64 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
 }) => {
   return (
     <>
-    <div className="vm-mob-header">
-      <ControlButton>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
-      <ControlButton className="vm-mob-header-main">{UI_TEXT.POSITION_INFO.MAN_OVERBOARD}</ControlButton>
-      <ControlButton>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
+      <div className="vm-mob-header">
+        <ControlButton>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
+        <ControlButton className="vm-mob-header-main">{UI_TEXT.POSITION_INFO.MAN_OVERBOARD}</ControlButton>
+        <ControlButton>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
       </div>
-    <div className="vm-lower-detached">  
-      <div className="vm-mob-card">
-        <div className="vm-mob-title">{UI_TEXT.RIGHT_PANEL.MOB_TITLE}</div>
-        <ControlButton className="vm-wide-btn">{UI_TEXT.RIGHT_PANEL.SELECT_POSITION_CHART}</ControlButton>
-        <ControlButton className="vm-wide-btn">{UI_TEXT.RIGHT_PANEL.MANUAL_EDIT}</ControlButton>
+      <div className="vm-lower-detached">
+        <div className="vm-mob-card">
+          <div className="vm-mob-title">{UI_TEXT.RIGHT_PANEL.MOB_TITLE}</div>
+          <ControlButton className="vm-wide-btn">{UI_TEXT.RIGHT_PANEL.SELECT_POSITION_CHART}</ControlButton>
+          <ControlButton className="vm-wide-btn">{UI_TEXT.RIGHT_PANEL.MANUAL_EDIT}</ControlButton>
 
-        <div className="vm-field-row">
-          <label>{UI_TEXT.RIGHT_PANEL.BEARING_R}</label>
-          <GenericInput
-            type="number"
-            step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
-            min={`${UI_VALUES.RIGHT_PANEL.EBL_MIN}`}
-            max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
-            value={bearingRInput}
-            onChange={(event) => onBearingRInputChange(event.target.value)}
+          <div className="vm-field-row">
+            <label>{UI_TEXT.RIGHT_PANEL.BEARING_R}</label>
+            <GenericInput
+              type="number"
+              step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
+              min={`${UI_VALUES.RIGHT_PANEL.EBL_MIN}`}
+              max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
+              value={bearingRInput}
+              onChange={(event) => onBearingRInputChange(event.target.value)}
             />
-        </div>
-        <div className="vm-field-row">
-          <label>{UI_TEXT.RIGHT_PANEL.BEARING_T}</label>
-          <GenericInput
-            type="number"
-            step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
-            min={`${UI_VALUES.RIGHT_PANEL.EBL_MIN}`}
-            max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
-            value={bearingTInput}
-            onChange={(event) => onBearingTInputChange(event.target.value)}
+          </div>
+          <div className="vm-field-row">
+            <label>{UI_TEXT.RIGHT_PANEL.BEARING_T}</label>
+            <GenericInput
+              type="number"
+              step={UI_VALUES.RIGHT_PANEL.BEARING_STEP}
+              min={`${UI_VALUES.RIGHT_PANEL.EBL_MIN}`}
+              max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
+              value={bearingTInput}
+              onChange={(event) => onBearingTInputChange(event.target.value)}
             />
-        </div>
-        <div className="vm-field-row">
-          <label>{UI_TEXT.RIGHT_PANEL.RANGE_NM}</label>
-          <GenericInput
-            type="number"
-            step={UI_VALUES.RIGHT_PANEL.RANGE_STEP}
-            value={rangeInput}
-            onChange={(event) => onRangeInputChange(event.target.value)}
-            onBlur={onRangeInputBlur}
+          </div>
+          <div className="vm-field-row">
+            <label>{UI_TEXT.RIGHT_PANEL.RANGE_NM}</label>
+            <GenericInput
+              type="number"
+              step={UI_VALUES.RIGHT_PANEL.RANGE_STEP}
+              value={rangeInput}
+              onChange={(event) => onRangeInputChange(event.target.value)}
+              onBlur={onRangeInputBlur}
             />
-        </div>
-        <div className="vm-field-row">
-          <label>{UI_TEXT.RIGHT_PANEL.ELAPSED_TIME}</label>
-          <GenericInput
-            type="text"
-            inputMode="numeric"
-            placeholder={UI_TEXT.RIGHT_PANEL.PLACEHOLDER_HMS}
-            value={elapsedTimeInput}
-            onChange={(event) => onElapsedTimeInputChange(event.target.value)}
-            onBlur={onElapsedTimeInputBlur}
+          </div>
+          <div className="vm-field-row">
+            <label>{UI_TEXT.RIGHT_PANEL.ELAPSED_TIME}</label>
+            <GenericInput
+              type="text"
+              inputMode="numeric"
+              placeholder={UI_TEXT.RIGHT_PANEL.PLACEHOLDER_HMS}
+              value={elapsedTimeInput}
+              onChange={(event) => onElapsedTimeInputChange(event.target.value)}
+              onBlur={onElapsedTimeInputBlur}
             />
-        </div>
+          </div>
 
-        <ControlButton className="vm-start-btn">{UI_TEXT.RIGHT_PANEL.START}</ControlButton>
+          <ControlButton className="vm-start-btn">{UI_TEXT.RIGHT_PANEL.START}</ControlButton>
+        </div>
       </div>
-    </div>
-            </>
+    </>
   );
 };

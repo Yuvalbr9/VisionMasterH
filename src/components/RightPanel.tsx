@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { ARPATarget, RadarControlState } from '../types';
 import { UI_VALUES } from '../constants';
 import { BottomCornerEblVrm } from './RightPanel/BottomCornerEblVrm';
-import { TopControlsSection } from './RightPanel/RightPanelButtons';
+import { RightPanelTopSection } from './RightPanel/RightPanelButtons';
 import { MobCardSection } from './RightPanel/MobCardSection';
 import { GreenPanelSection } from './RightPanel/GreenPanelSection';
 import { useMobCardInputs } from './RightPanel/useMobCardInputs';
@@ -60,7 +60,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   return (
     <div className="right-panel vm-panel-shell">
       <div className="vm-top-detached-shell">
-        <TopControlsSection
+        <RightPanelTopSection
           modeLabel={modeLabel}
           trailsLabel={trailsLabel}
           aisLabel={aisLabel}

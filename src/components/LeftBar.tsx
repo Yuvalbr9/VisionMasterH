@@ -8,14 +8,12 @@ import { useCurrentDateTime } from '../hooks/useCurrentDateTime';
 interface LeftBarProps {
   navData: NavigationData;
   radarControls: RadarControlState;
-  leewayDeg: number;
   updateNavData: (updates: Partial<NavigationData>) => void;
 }
 
 export const LeftBar: React.FC<LeftBarProps> = ({
   navData,
   radarControls,
-  leewayDeg,
   updateNavData,
 }) => {
   const courseState = useShipCourse();
@@ -59,7 +57,6 @@ export const LeftBar: React.FC<LeftBarProps> = ({
     <LeftPanel
       navData={navData}
       radarControls={radarControls}
-      leewayDeg={leewayDeg}
       updateNavData={updateNavData}
       dateTimeIso={timeState.currentDateTime}
       isLoading={isLoading}

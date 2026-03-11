@@ -1,21 +1,9 @@
 import React from 'react';
 import { ControlButton } from '../Buttons';
 import { TIME_UNITS, UI_TEXT } from '../../constants';
-import { RadarControlState } from '../../types';
+import { MainTopControlsProps } from './topControlTypes';
 
-interface TopControlsSectionProps {
-  trailsLabel: string;
-  aisLabel: string;
-  chartsLabel: string;
-  radarPointPickerActive: boolean;
-  radarControls: RadarControlState;
-  onToggleTrails: () => void;
-  onToggleAis: () => void;
-  onToggleCharts: () => void;
-  onOpenRadarPointPicker: () => void;
-}
-
-export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
+export const TopControlsSection: React.FC<MainTopControlsProps> = ({
   trailsLabel,
   aisLabel,
   chartsLabel,

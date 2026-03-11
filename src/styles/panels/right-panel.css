@@ -76,12 +76,6 @@
   padding: clamp(5px, 0.85vw, 10px);
 }
 
-.vm-top-matrix {
-  display: grid;
-  grid-template-columns: clamp(18px, 1.8vw, 22px) minmax(0, 1fr) clamp(18px, 1.8vw, 22px) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1px, 0.2vw, 2px);
-}
-
 .vm-top-columns {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -204,7 +198,6 @@
 
 .vm-cell,
 .vm-radar-cell,
-.vm-ground-cell,
 .vm-alert-row,
 .vm-date-row,
 .vm-mob-header,
@@ -231,22 +224,9 @@
   background: #0d0d11;
 }
 
-.vm-messy-shift {
-  margin-left: -2px;
-}
-
-.vm-print-cell {
-  margin-left: -1px;
-}
-
 .vm-radar-cell {
   grid-column: 6;
   grid-row: 1 / span 2;
-}
-
-.vm-ground-cell {
-  grid-column: 1 / span 3;
-  color: #bfb8da;
 }
 
 .vm-arrow-cell,
@@ -278,10 +258,6 @@
   font-family: var(--font-family-mono);
   font-size: clamp(0.58rem, 0.62vw, 0.68rem);
   text-align: center;
-}
-
-.vm-alert-main-full {
-  width: 100%;
 }
 
 .vm-alert-arrow {
@@ -594,183 +570,3 @@
   }
 }
 
-@media (max-width: 0px) {
-  .vm-top-matrix {
-    grid-template-columns: 18px minmax(0, 1fr) 18px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .vm-messy-shift,
-  .vm-print-cell {
-    margin-left: 0;
-  }
-}
-
-.top-button-section {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xs);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.right-header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.btn-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs-vw);
-  flex-wrap: wrap;
-}
-
-.top-button-section .btn-row {
-  flex-wrap: nowrap;
-  gap: var(--space-xs-vw);
-}
-
-.top-button-section .btn-row>* {
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-.top-button-section .top-line-btn {
-  padding: var(--spacing-xs) var(--space-xs-vw);
-  font-size: 0.68rem;
-  line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.top-button-section .top-inline-info {
-  font-size: 0.66rem;
-  padding: var(--spacing-xs) var(--space-xs-vw);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Range Controls */
-.range-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm-vw);
-  background: var(--bg-control);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-}
-
-.range-display {
-  flex: 1;
-  text-align: center;
-}
-
-.range-label {
-  display: block;
-  font-size: 1.12rem;
-  font-weight: normal;
-  color: var(--green);
-  margin-bottom: var(--spacing-xs);
-  text-shadow: 0 0 0.35vh var(--green-glow-full);
-}
-
-.range-value {
-  display: block;
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-}
-
-/* Position Info */
-.position-info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.info-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm-vw);
-  background: var(--bg-control);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-}
-
-.section-label {
-  font-size: 1.14rem;
-  color: var(--text-secondary);
-  font-weight: bold;
-  margin-bottom: var(--spacing-lg);
-}
-
-.section-values {
-  font-size: 0.8rem;
-  color: var(--text-primary);
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-lg-vw);
-}
-
-.datetime-stamp {
-  font-size: 0.76rem;
-  color: var(--text-secondary);
-  text-align: center;
-  padding: var(--spacing-sm) 0;
-  background: var(--bg-dark);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-}
-
-/* Man Overboard Section */
-.man-overboard-section {
-  display: flex;
-  gap: var(--space-sm-vw);
-}
-
-/* Chart Controls */
-.chart-controls {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-/* Bearing Controls */
-.bearing-controls {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  background: var(--bg-control);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-}
-
-/* Bottom Section */
-.bottom-section {
-  background: var(--bg-control);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.right-panel .info-text,
-.right-panel .pos-label,
-.right-panel .pos-extra {
-  font-size: 0.72rem;
-}
-
-.right-panel .range-label,
-.right-panel .data-label,
-.right-panel .control-group label {
-  font-size: 1.14rem;
-}

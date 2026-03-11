@@ -8,7 +8,6 @@ import { UI_TEXT } from '../constants';
 interface LeftPanelProps {
   navData: NavigationData;
   radarControls: RadarControlState;
-  leewayDeg: number;
   updateNavData: (updates: Partial<NavigationData>) => void;
   dateTimeIso: string | null;
   isLoading: boolean;
@@ -19,7 +18,6 @@ interface LeftPanelProps {
 export const LeftPanel: React.FC<LeftPanelProps> = ({
   navData,
   radarControls,
-  leewayDeg,
   updateNavData,
   dateTimeIso,
   isLoading,
@@ -41,7 +39,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
         error={error}
         isManualNavigationMode={isManualNavigationMode}
       />
-      <RadarOverlayControls navData={navData} radarControls={radarControls} leewayDeg={leewayDeg} />
+      <RadarOverlayControls navData={navData} radarControls={radarControls} />
     </div>
   );
 };

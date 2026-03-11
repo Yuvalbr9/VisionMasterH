@@ -15,7 +15,6 @@ interface RadarDisplayProps {
   navData: NavigationData;
   radarControls: RadarControlState;
   arpaTargets: ARPATarget[];
-  leewayDeg: number;
   radarPointPickerActive: boolean;
   selectedRadarPoints: RadarSelectedPoint[];
   onCloseRadarPointPicker: () => void;
@@ -33,7 +32,6 @@ export const RadarDisplay: React.FC<RadarDisplayProps> = ({
   navData,
   radarControls,
   arpaTargets,
-  leewayDeg,
   radarPointPickerActive,
   selectedRadarPoints,
   onCloseRadarPointPicker,

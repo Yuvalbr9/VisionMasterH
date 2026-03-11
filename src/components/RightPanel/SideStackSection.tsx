@@ -1,20 +1,10 @@
 import React from 'react';
 import { ControlButton } from '../Buttons';
 import { LENGTH_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
-import { RadarControlState } from '../../types';
 import { getRangeRingSpacingNm, RADAR_RANGE_RING_COUNT } from '../../util';
+import { SideStackControlsProps } from './topControlTypes';
 
-interface SideStackSectionProps {
-  modeLabel: string;
-  radarControls: RadarControlState;
-  onToggleMode: () => void;
-  onDecreaseRange: () => void;
-  onIncreaseRange: () => void;
-  canDecreaseRange: boolean;
-  canIncreaseRange: boolean;
-}
-
-export const SideStackSection: React.FC<SideStackSectionProps> = ({
+export const SideStackSection: React.FC<SideStackControlsProps> = ({
   modeLabel,
   radarControls,
   onToggleMode,

@@ -1,27 +1,9 @@
 import React from 'react';
 import { TopControlsSection as MainTopControlsSection } from './TopControlsSection';
 import { SideStackSection } from './SideStackSection';
-import { RadarControlState } from '../../types';
+import { RightPanelTopSectionProps } from './topControlTypes';
 
-interface TopControlsSectionProps {
-  modeLabel: string;
-  trailsLabel: string;
-  aisLabel: string;
-  chartsLabel: string;
-  radarPointPickerActive: boolean;
-  radarControls: RadarControlState;
-  onToggleMode: () => void;
-  onToggleTrails: () => void;
-  onToggleAis: () => void;
-  onToggleCharts: () => void;
-  onOpenRadarPointPicker: () => void;
-  onDecreaseRange: () => void;
-  onIncreaseRange: () => void;
-  canDecreaseRange: boolean;
-  canIncreaseRange: boolean;
-}
-
-export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
+export const RightPanelTopSection: React.FC<RightPanelTopSectionProps> = ({
   modeLabel,
   trailsLabel,
   aisLabel,

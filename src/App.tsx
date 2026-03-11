@@ -8,7 +8,6 @@ import { BaseButton } from './components/Buttons';
 import { UI_TEXT } from './constants';
 import {
   calculateCogSogFromVelocity,
-  calculateLeewayDeg,
   hasNavigationDeltaAboveTolerance,
   parseLatitude,
   parseLongitude,
@@ -93,11 +92,6 @@ const App: React.FC = () => {
       sog: Speed.FromKnots(nextSogKn),
     }));
   }, [velocity.vn, velocity.ve, navData.cog.Degrees, navData.sog.Knots]);
-
-  const leewayDeg = React.useMemo(
-    () => calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees),
-    [navData.cog.Degrees, navData.hdg.Degrees]
-  );
 
   const openRadarPointPicker = React.useCallback(() => {
     if (radarPointPickerActive) {
@@ -227,14 +221,12 @@ const App: React.FC = () => {
             <LeftBar
               navData={navData}
               radarControls={radarControls}
-              leewayDeg={leewayDeg}
               updateNavData={updateNavData}
             />
             <RadarDisplay
               navData={navData}
               radarControls={radarControls}
               arpaTargets={arpaTargets}
-              leewayDeg={leewayDeg}
               radarPointPickerActive={radarPointPickerActive}
               selectedRadarPoints={selectedRadarPoints}
               onCloseRadarPointPicker={closeRadarPointPicker}
