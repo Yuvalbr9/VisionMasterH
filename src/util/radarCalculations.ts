@@ -4,11 +4,19 @@ import { clamp } from './numberUtils';
 
 export const RADAR_RANGE_RING_COUNT = 6;
 
+/**
+ * Converts radar bearing degrees (0 at North, clockwise-positive)
+ * into canvas radians (0 at +X axis).
+ */
 export const degreesToCanvasRadians = (bearingDeg: number): number => {
   const normalizedBearingDeg = normalizeBearing(bearingDeg);
   return ((normalizedBearingDeg - 90) * Math.PI) / 180;
 };
 
+/**
+ * Converts a true/world bearing into the current display frame.
+ * Head-Up mode rotates by own-ship heading.
+ */
 export const toDisplayBearing = (
   bearingDeg: number,
   navData: NavigationData,
@@ -19,11 +27,14 @@ export const toDisplayBearing = (
     return normalized;
   }
 
-  // In Head-Up mode, rotate the world by own-ship heading.
   const ownShipHeading = normalizeBearing(navData.hdg.Degrees);
   return normalizeBearing(normalized - ownShipHeading);
 };
 
+/**
+ * Converts a display-frame bearing back to true/world bearing.
+ * This is the inverse of {@link toDisplayBearing}.
+ */
 export const fromDisplayBearing = (
   displayBearingDeg: number,
   navData: NavigationData,

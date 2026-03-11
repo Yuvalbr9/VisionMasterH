@@ -1,87 +1,50 @@
 import React from 'react';
 import { ControlButton } from '../Buttons';
-import { LENGTH_UNITS, TIME_UNITS, UI_TEXT, UI_VALUES } from '../../constants';
-import { RadarControlState } from '../../types';
-import { getRangeRingSpacingNm, RADAR_RANGE_RING_COUNT } from '../../util';
+import { TIME_UNITS, UI_TEXT } from '../../constants';
+import { MainTopControlsProps } from './topControlTypes';
 
-interface TopControlsSectionProps {
-  modeLabel: string;
-  trailsLabel: string;
-  aisLabel: string;
-  chartsLabel: string;
-  radarPointPickerActive: boolean;
-  radarControls: RadarControlState;
-  onToggleMode: () => void;
-  onToggleTrails: () => void;
-  onToggleAis: () => void;
-  onToggleCharts: () => void;
-  onOpenRadarPointPicker: () => void;
-  onDecreaseRange: () => void;
-  onIncreaseRange: () => void;
-  canDecreaseRange: boolean;
-  canIncreaseRange: boolean;
-}
-
-export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
-  modeLabel,
+export const TopControlsSection: React.FC<MainTopControlsProps> = ({
   trailsLabel,
   aisLabel,
   chartsLabel,
   radarPointPickerActive,
   radarControls,
-  onToggleMode,
   onToggleTrails,
   onToggleAis,
   onToggleCharts,
   onOpenRadarPointPicker,
-  onDecreaseRange,
-  onIncreaseRange,
-  canDecreaseRange,
-  canIncreaseRange,
 }) => {
-  const ringSpacingNm = getRangeRingSpacingNm(radarControls.selectedRangeNm, RADAR_RANGE_RING_COUNT);
-
   return (
-    <div className="vm-upper-detached">
-      <div className="vm-top-matrix">
-        <ControlButton className="vm-cell" onClick={onToggleMode}>{modeLabel}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.NM}</ControlButton>
-        <ControlButton className="vm-cell" onClick={onToggleTrails}>{trailsLabel}</ControlButton>
-        <ControlButton className="vm-cell vm-time-cell">{UI_TEXT.RIGHT_PANEL.ZERO_TIME_MIN_SEC}</ControlButton>
-        <ControlButton
-          className="vm-cell vm-radar-cell"
-          onClick={onOpenRadarPointPicker}
-          title={radarPointPickerActive ? UI_TEXT.RIGHT_PANEL.RADAR_PICK_ACTIVE_HINT : UI_TEXT.RIGHT_PANEL.RADAR_PICK_TITLE}
-        >
-          {UI_TEXT.RIGHT_PANEL.RADAR}
-        </ControlButton>
+    <div className="vm-top-primary">
+      <div className="vm-top-columns">
+        <div className="vm-top-column">
+          <ControlButton className="vm-cell vm-column-cell" onClick={onToggleTrails}>{trailsLabel}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.R_VECTORS}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.AIS_PRIORITY}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.CENTRE}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell" onClick={onToggleCharts}>{chartsLabel}</ControlButton>
+        </div>
 
-        <ControlButton className="vm-cell vm-ground-cell">{UI_TEXT.RIGHT_PANEL.GROUND_STABILISED}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.R_VECTORS}</ControlButton>
-        <ControlButton className="vm-cell">{radarControls.vectorTimeMin.toFixed(UI_VALUES.RIGHT_PANEL.VECTOR_TIME_DECIMALS)} {TIME_UNITS.MINUTES}</ControlButton>
+        <div className="vm-top-column">
+          <ControlButton className="vm-cell vm-column-cell vm-time-cell">{UI_TEXT.RIGHT_PANEL.ZERO_TIME_MIN_SEC}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell vm-time-cell">{`${radarControls.vectorTimeMin.toFixed(0)}${TIME_UNITS.MINUTES}`}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell" onClick={onToggleAis}>{aisLabel}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.MAX}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.SYNTH_ON}</ControlButton>
+        </div>
 
-        <ControlButton className="vm-cell vm-arrow-cell" onClick={onDecreaseRange} disabled={!canDecreaseRange}>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
-        <ControlButton
-          className="vm-cell vm-messy-shift"
-          title={`${radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} ${UI_TEXT.RIGHT_PANEL.NM} scale over ${RADAR_RANGE_RING_COUNT} rings`}
-        >
-          {ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS)} {UI_TEXT.RIGHT_PANEL.NM}
-        </ControlButton>
-        <ControlButton className="vm-cell vm-arrow-cell" onClick={onIncreaseRange} disabled={!canIncreaseRange}>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.AIS_PRIORITY}</ControlButton>
-        <ControlButton className="vm-cell" onClick={onToggleAis}>{aisLabel}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.CPA}</ControlButton>
-
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.RINGS} {ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS)} {LENGTH_UNITS.NAUTICAL_MILES}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.CENTRE}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.MAX}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.IHELP}</ControlButton>
-
-        <ControlButton className="vm-cell vm-print-cell">{UI_TEXT.RIGHT_PANEL.PRINT}</ControlButton>
-        <ControlButton className="vm-cell vm-icon-cell">{UI_TEXT.RIGHT_PANEL.MAIL_ICON}</ControlButton>
-        <ControlButton className="vm-cell" onClick={onToggleCharts}>{chartsLabel}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.SYNTH_ON}</ControlButton>
-        <ControlButton className="vm-cell">{UI_TEXT.RIGHT_PANEL.COAST}</ControlButton>
+        <div className="vm-top-column">
+          <ControlButton
+            className="vm-cell vm-column-cell vm-radar-cell vm-radar-cell-tall"
+            onClick={onOpenRadarPointPicker}
+            title={radarPointPickerActive ? UI_TEXT.RIGHT_PANEL.RADAR_PICK_ACTIVE_HINT : UI_TEXT.RIGHT_PANEL.RADAR_PICK_TITLE}
+          >
+            {UI_TEXT.RIGHT_PANEL.RADAR}
+          </ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.CPA}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.IHELP}</ControlButton>
+          <ControlButton className="vm-cell vm-column-cell">{UI_TEXT.RIGHT_PANEL.COAST}</ControlButton>
+        </div>
       </div>
 
       <div className="vm-alert-row">
@@ -89,11 +52,6 @@ export const TopControlsSection: React.FC<TopControlsSectionProps> = ({
         <ControlButton className="vm-alert-arrow">{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
       </div>
       <ControlButton className="vm-date-row">{UI_TEXT.RIGHT_PANEL.DATE_ROW}</ControlButton>
-      <div className="vm-mob-header">
-        <ControlButton>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
-        <ControlButton className="vm-mob-header-main">{UI_TEXT.POSITION_INFO.MAN_OVERBOARD}</ControlButton>
-        <ControlButton>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
-      </div>
     </div>
   );
 };

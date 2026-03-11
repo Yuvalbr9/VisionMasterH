@@ -2,9 +2,7 @@ import React from 'react';
 import { ARPATarget, NavigationData, RadarControlState, RadarSelectedPoint } from '../types';
 import { UI_TEXT } from '../constants';
 import { BaseButton } from './Buttons';
-import { RadarTopInfo } from './RadarDisplay/RadarTopInfo';
 import { RadarCanvas } from './RadarDisplay/RadarCanvas';
-import { RadarBottomControls } from './RadarDisplay/RadarBottomControls';
 import { RadarPointPickerModal } from './RadarDisplay/RadarPointPickerModal';
 
 interface RadarPointContextMenuState {
@@ -17,7 +15,6 @@ interface RadarDisplayProps {
   navData: NavigationData;
   radarControls: RadarControlState;
   arpaTargets: ARPATarget[];
-  leewayDeg: number;
   radarPointPickerActive: boolean;
   selectedRadarPoints: RadarSelectedPoint[];
   onCloseRadarPointPicker: () => void;
@@ -35,7 +32,6 @@ export const RadarDisplay: React.FC<RadarDisplayProps> = ({
   navData,
   radarControls,
   arpaTargets,
-  leewayDeg,
   radarPointPickerActive,
   selectedRadarPoints,
   onCloseRadarPointPicker,
@@ -112,7 +108,6 @@ export const RadarDisplay: React.FC<RadarDisplayProps> = ({
 
   return (
     <div className="radar-display">
-      <RadarTopInfo navData={navData} controls={radarControls} leewayDeg={leewayDeg} />
       <RadarCanvas
         navData={navData}
         controls={radarControls}
@@ -127,7 +122,6 @@ export const RadarDisplay: React.FC<RadarDisplayProps> = ({
         onPointContextMenuOpen={openContextMenu}
         onPointContextMenuClose={closeContextMenu}
       />
-      <RadarBottomControls />
       {radarPointPickerActive && (
         <RadarPointPickerModal
           canUndo={canUndoRadarPointChange}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavigationData } from '../types';
+import { NavigationData, RadarControlState } from '../types';
 import { LeftPanel } from './LeftPanel';
 import { useShipCourse } from '../hooks/useShipCourse';
 import { useShipPosition } from '../hooks/useShipPosition';
@@ -7,10 +7,15 @@ import { useCurrentDateTime } from '../hooks/useCurrentDateTime';
 
 interface LeftBarProps {
   navData: NavigationData;
+  radarControls: RadarControlState;
   updateNavData: (updates: Partial<NavigationData>) => void;
 }
 
-export const LeftBar: React.FC<LeftBarProps> = ({ navData, updateNavData }) => {
+export const LeftBar: React.FC<LeftBarProps> = ({
+  navData,
+  radarControls,
+  updateNavData,
+}) => {
   const courseState = useShipCourse();
   const positionState = useShipPosition();
   const timeState = useCurrentDateTime();
@@ -51,6 +56,7 @@ export const LeftBar: React.FC<LeftBarProps> = ({ navData, updateNavData }) => {
   return (
     <LeftPanel
       navData={navData}
+      radarControls={radarControls}
       updateNavData={updateNavData}
       dateTimeIso={timeState.currentDateTime}
       isLoading={isLoading}

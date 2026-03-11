@@ -14,6 +14,10 @@ export interface DerivedCogSog {
   velocityIsMeaningful: boolean;
 }
 
+/**
+ * Derives COG/SOG from north-east velocity components.
+ * Returns a normalized COG in degrees and a low-speed validity flag.
+ */
 export const calculateCogSogFromVelocity = ({ vn, ve }: VelocityVector): DerivedCogSog => {
   const sogKn = Math.hypot(vn, ve);
   const cogDeg = normalizeBearing((Math.atan2(ve, vn) * 180) / Math.PI);
@@ -48,6 +52,9 @@ export interface SogComponents {
   foreAftKn: number;
 }
 
+/**
+ * Decomposes speed over ground into ship-relative lateral and fore/aft components.
+ */
 export const decomposeSogByLeeway = (sogKn: number, leewayDeg: number): SogComponents => {
   const leewayRad = (leewayDeg * Math.PI) / 180;
 

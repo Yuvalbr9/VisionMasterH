@@ -40,6 +40,10 @@
   white-space: nowrap;
   flex-shrink: 1;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .lp-tabs-bar .tab.active {
@@ -629,7 +633,7 @@
   text-align: center;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 0px) {
   .left-panel {
     width: 100%;
     max-width: none;
@@ -638,7 +642,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 0px) {
   .lp-section,
   .lp-datetime {
     padding-left: clamp(8px, 2.8vw, 12px);
