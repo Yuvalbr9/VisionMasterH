@@ -2,7 +2,7 @@
 
 .radar-display {
   --radar-overlay-left-offset: calc(var(--design-vw) * 0.35);
-  --radar-bottom-controls-scale: 0.9;
+  --radar-bottom-controls-scale: 0.75;
   flex: 1;
   background: var(--radar-bg);
   display: flex;
@@ -197,7 +197,7 @@
 .radar-bottom-controls {
   position: absolute;
   left: calc(-1 * var(--radar-overlay-left-offset));
-  bottom: clamp(2px, 0.4vw, 6px);
+  bottom: 0;
   transform: scale(var(--radar-bottom-controls-scale));
   transform-origin: left bottom;
   display: flex;
@@ -334,7 +334,7 @@
   }
 
   .radar-bottom-controls {
-    bottom: clamp(2px, 0.4vw, 6px);
+    bottom: 0;
   }
 }
 
