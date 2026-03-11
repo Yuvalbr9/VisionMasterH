@@ -103,7 +103,7 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
           {displayValue}
         </span>
         <span className={`lp-badge ${isManualMode ? 'lp-badge-manual' : 'lp-badge-green'}`}>
-          {isManualMode ? UI_TEXT.LEFT_PANEL.MANUAL : UI_TEXT.RADAR_TOP_INFO.GYRO}
+          {isManualMode ? UI_TEXT.LEFT_PANEL.MANUAL : UI_TEXT.COMMON.GPS}
         </span>
       </div>
       <div className={isManualMode ? 'lp-ruler-editable' : ''} onWheel={handleWheel}>

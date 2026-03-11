@@ -210,7 +210,6 @@ const App: React.FC = () => {
               <span className="legacy-app-icon" aria-hidden="true">◉</span>
               <span className="legacy-app-name">{UI_TEXT.TOPBAR.APP_NAME}</span>
             </div>
-            <div className="legacy-topbar-center" />
             <div className="legacy-topbar-right">
               <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MINIMIZE} />
               <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MAXIMIZE} />
