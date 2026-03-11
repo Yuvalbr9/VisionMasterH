@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { NavigationData } from '../types';
+import { NavigationData, RadarControlState } from '../types';
 import { PanelTabs } from './LeftPanel/PanelTabs';
 import { LeftPanelTabs, PanelContent } from './LeftPanel/PanelContent';
+import { RadarOverlayControls } from './LeftPanel/RadarOverlayControls';
 import { UI_TEXT } from '../constants';
 
 interface LeftPanelProps {
   navData: NavigationData;
+  radarControls: RadarControlState;
+  leewayDeg: number;
   updateNavData: (updates: Partial<NavigationData>) => void;
   dateTimeIso: string | null;
   isLoading: boolean;
@@ -15,6 +18,8 @@ interface LeftPanelProps {
 
 export const LeftPanel: React.FC<LeftPanelProps> = ({
   navData,
+  radarControls,
+  leewayDeg,
   updateNavData,
   dateTimeIso,
   isLoading,
@@ -36,6 +41,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
         error={error}
         isManualNavigationMode={isManualNavigationMode}
       />
+      <RadarOverlayControls navData={navData} radarControls={radarControls} leewayDeg={leewayDeg} />
     </div>
   );
 };

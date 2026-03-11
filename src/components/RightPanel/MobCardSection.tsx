@@ -29,7 +29,13 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
   onElapsedTimeInputBlur,
 }) => {
   return (
-    <div className="vm-lower-detached">
+    <>
+    <div className="vm-mob-header">
+      <ControlButton>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
+      <ControlButton className="vm-mob-header-main">{UI_TEXT.POSITION_INFO.MAN_OVERBOARD}</ControlButton>
+      <ControlButton>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
+      </div>
+    <div className="vm-lower-detached">  
       <div className="vm-mob-card">
         <div className="vm-mob-title">{UI_TEXT.RIGHT_PANEL.MOB_TITLE}</div>
         <ControlButton className="vm-wide-btn">{UI_TEXT.RIGHT_PANEL.SELECT_POSITION_CHART}</ControlButton>
@@ -44,7 +50,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
             max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
             value={bearingRInput}
             onChange={(event) => onBearingRInputChange(event.target.value)}
-          />
+            />
         </div>
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.BEARING_T}</label>
@@ -55,7 +61,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
             max={`${UI_VALUES.RIGHT_PANEL.EBL_MAX}`}
             value={bearingTInput}
             onChange={(event) => onBearingTInputChange(event.target.value)}
-          />
+            />
         </div>
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.RANGE_NM}</label>
@@ -65,7 +71,7 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
             value={rangeInput}
             onChange={(event) => onRangeInputChange(event.target.value)}
             onBlur={onRangeInputBlur}
-          />
+            />
         </div>
         <div className="vm-field-row">
           <label>{UI_TEXT.RIGHT_PANEL.ELAPSED_TIME}</label>
@@ -76,11 +82,12 @@ export const MobCardSection: React.FC<MobCardSectionProps> = ({
             value={elapsedTimeInput}
             onChange={(event) => onElapsedTimeInputChange(event.target.value)}
             onBlur={onElapsedTimeInputBlur}
-          />
+            />
         </div>
 
         <ControlButton className="vm-start-btn">{UI_TEXT.RIGHT_PANEL.START}</ControlButton>
       </div>
     </div>
+            </>
   );
 };
