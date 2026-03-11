@@ -16,7 +16,7 @@ export const PositionDisplay: React.FC<PositionDisplayProps> = ({ lat, lon }) =>
     <div className="lp-section lp-pos-section">
       <div className="lp-row lp-pos-row">
         <span className="lp-label">{UI_VALUES.LEFT_PANEL.POS}</span>
-        <span className="lp-value-box lp-value-box-wide">{latStr}</span>
+        <span className="lp-value-box lp-value-box-short">{latStr}</span>
         <span className="lp-badge lp-badge-green">{UI_TEXT.COMMON.GPS}</span>
       </div>
       <div className="lp-row lp-pos-row">

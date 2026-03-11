@@ -8,19 +8,21 @@ interface HeadingDisplayProps {
   value: Angle;
   onChange: (value: Angle) => void;
   isManualMode?: boolean;
+  allowManualEditing?: boolean;
 }
 
 const WHEEL_STEP_DEG = 0.1;
 const MAX_BUFFER_LENGTH = 3;
 
-export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange, isManualMode = false }) => {
+export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange, isManualMode = false, allowManualEditing = true }) => {
   const [buffer, setBuffer] = React.useState('');
+  const canEdit = isManualMode || allowManualEditing;
 
   React.useEffect(() => {
-    if (!isManualMode && buffer) {
+    if (!canEdit && buffer) {
       setBuffer('');
     }
-  }, [isManualMode, buffer]);
+  }, [canEdit, buffer]);
 
   const applyDegrees = (nextDeg: number) => {
     onChange(Angle.FromDegrees(normalizeBearing(nextDeg)));
@@ -40,7 +42,7 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
   };
 
   const handleWheel = (event: React.WheelEvent<HTMLElement>) => {
-    if (!isManualMode) {
+    if (!canEdit) {
       return;
     }
 
@@ -50,7 +52,7 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-    if (!isManualMode) {
+    if (!canEdit) {
       return;
     }
 
@@ -79,7 +81,7 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
   };
 
   const displayValue = buffer ? `${buffer}${ANGLE_UNITS.DEGREE}` : `${value.Degrees.toFixed(1)}${ANGLE_UNITS.DEGREE}`;
-  const valueBoxClassName = `lp-value-box${isManualMode ? ' lp-value-box-editable' : ''}${buffer ? ' lp-value-box-editing' : ''}`;
+  const valueBoxClassName = `lp-value-box${canEdit ? ' lp-value-box-editable' : ''}${buffer ? ' lp-value-box-editing' : ''}`;
 
   return (
     <div className="lp-section">
@@ -87,12 +89,12 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
         <span className="lp-label">{UI_TEXT.LEFT_PANEL.HDG}</span>
         <span
           className={valueBoxClassName}
-          tabIndex={isManualMode ? 0 : -1}
-          role={isManualMode ? 'spinbutton' : undefined}
+          tabIndex={canEdit ? 0 : -1}
+          role={canEdit ? 'spinbutton' : undefined}
           aria-label="Heading in degrees"
           aria-valuenow={value.Degrees}
           onClick={(event) => {
-            if (isManualMode) {
+            if (canEdit) {
               event.currentTarget.focus();
             }
           }}
@@ -106,7 +108,7 @@ export const HeadingDisplay: React.FC<HeadingDisplayProps> = ({ value, onChange,
           {isManualMode ? UI_TEXT.LEFT_PANEL.MANUAL : UI_TEXT.COMMON.GPS}
         </span>
       </div>
-      <div className={isManualMode ? 'lp-ruler-editable' : ''} onWheel={handleWheel}>
+      <div className={`lp-ruler-wrap ${canEdit ? 'lp-ruler-editable' : ''}`.trim()} onWheel={handleWheel}>
         <DegreeRuler value={value.Degrees} />
       </div>
       {isManualMode && <div className="lp-manual-hint">{UI_TEXT.LEFT_PANEL.MANUAL_HINT}</div>}
