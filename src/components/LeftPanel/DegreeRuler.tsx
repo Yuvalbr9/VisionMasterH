@@ -67,9 +67,17 @@ export const DegreeRuler: React.FC<DegreeRulerProps> = ({ value }) => {
 
                 ctx.lineWidth = isMajor ? 1.5 : 0.8;
                 ctx.strokeStyle = '#9090c0';
+
+                // Bottom tick
                 ctx.beginPath();
                 ctx.moveTo(x, tickBottom);
                 ctx.lineTo(x, tickBottom - tickH);
+                ctx.stroke();
+
+                // Top tick
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, tickH);
                 ctx.stroke();
 
                 if (isMajor) {
@@ -78,8 +86,8 @@ export const DegreeRuler: React.FC<DegreeRulerProps> = ({ value }) => {
                     ctx.font = `bold ${Math.max(8, height * 0.33)}px var(--font-family-sans, Arial)`;
                     ctx.fillStyle = '#c0c0d8';
                     ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillText(label, x, height * 0.05);
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(label, x, height / 2);
                 }
             }
 

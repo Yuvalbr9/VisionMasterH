@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Duration, Length } from 'unitsnet-js';
 import { ARPATarget, RadarControlState } from '../../types';
 import { UI_TEXT, UI_VALUES } from '../../constants';
-import { formatDurationHms, normalizeBearing, parseHmsToSeconds } from '../../util';
+import { clampEblBearingDeg, formatDurationHms, parseHmsToSeconds } from '../../util';
 
 interface UseMobCardInputsParams {
   radarControls: RadarControlState;
@@ -26,6 +26,25 @@ interface MobCardInputsState {
   formatElapsedTime: (duration: Duration) => string;
 }
 
+const tryParseFiniteNumber = (value: string): number | null => {
+  const trimmed = value.trim();
+
+  // Ignore transient input states while the user is still typing.
+  if (
+    trimmed === ''
+    || trimmed === '-'
+    || trimmed === '+'
+    || trimmed === '.'
+    || trimmed === '-.'
+    || trimmed === '+.'
+  ) {
+    return null;
+  }
+
+  const parsed = Number(trimmed);
+  return Number.isFinite(parsed) ? parsed : null;
+};
+
 export const useMobCardInputs = ({
   radarControls,
   arpaTargets,
@@ -41,11 +60,13 @@ export const useMobCardInputs = ({
   const [elapsedDuration, setElapsedDuration] = useState(() => Duration.FromSeconds(UI_VALUES.RIGHT_PANEL.ELAPSED_ZERO_SECONDS));
 
   useEffect(() => {
-    setBearingRInput(radarControls.ebl1Deg.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
+    const clampedBearing = clampEblBearingDeg(radarControls.ebl1Deg);
+    setBearingRInput(clampedBearing.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
   }, [radarControls.ebl1Deg]);
 
   useEffect(() => {
-    setBearingTInput(radarControls.ebl2Deg.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
+    const clampedBearing = clampEblBearingDeg(radarControls.ebl2Deg);
+    setBearingTInput(clampedBearing.toFixed(UI_VALUES.RIGHT_PANEL.BEARING_DECIMALS));
   }, [radarControls.ebl2Deg]);
 
   useEffect(() => {
@@ -57,25 +78,33 @@ export const useMobCardInputs = ({
   }, [primaryTarget?.rangeNm]);
 
   const handleBearingRInputChange = (nextValue: string) => {
-    setBearingRInput(nextValue);
-    const parsedValue = Number(nextValue);
-    if (Number.isFinite(parsedValue)) {
-      onRadarControlsChange((prev) => ({ ...prev, ebl1Deg: normalizeBearing(parsedValue) }));
+    const parsedValue = tryParseFiniteNumber(nextValue);
+    if (parsedValue === null) {
+      setBearingRInput(nextValue);
+      return;
     }
+
+    const clampedValue = clampEblBearingDeg(parsedValue);
+    setBearingRInput(clampedValue === parsedValue ? nextValue : clampedValue.toString());
+    onRadarControlsChange((prev) => ({ ...prev, ebl1Deg: clampedValue }));
   };
 
   const handleBearingTInputChange = (nextValue: string) => {
-    setBearingTInput(nextValue);
-    const parsedValue = Number(nextValue);
-    if (Number.isFinite(parsedValue)) {
-      onRadarControlsChange((prev) => ({ ...prev, ebl2Deg: normalizeBearing(parsedValue) }));
+    const parsedValue = tryParseFiniteNumber(nextValue);
+    if (parsedValue === null) {
+      setBearingTInput(nextValue);
+      return;
     }
+
+    const clampedValue = clampEblBearingDeg(parsedValue);
+    setBearingTInput(clampedValue === parsedValue ? nextValue : clampedValue.toString());
+    onRadarControlsChange((prev) => ({ ...prev, ebl2Deg: clampedValue }));
   };
 
   const handleRangeInputChange = (nextValue: string) => {
     setRangeInput(nextValue);
-    const parsedValue = Number(nextValue);
-    if (Number.isFinite(parsedValue)) {
+    const parsedValue = tryParseFiniteNumber(nextValue);
+    if (parsedValue !== null) {
       setRangeValue(Length.FromNauticalMiles(parsedValue));
     }
   };

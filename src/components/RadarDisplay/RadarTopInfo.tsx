@@ -5,10 +5,9 @@ import { ANGLE_UNITS, SPEED_UNITS, UI_TEXT } from '../../constants';
 interface RadarTopInfoProps {
   navData: NavigationData;
   controls: RadarControlState;
-  leewayDeg: number;
 }
 
-export const RadarTopInfo: React.FC<RadarTopInfoProps> = ({ navData, controls, leewayDeg }) => {
+export const RadarTopInfo: React.FC<RadarTopInfoProps> = ({ navData, controls }) => {
   const modeLabel = controls.northUp ? UI_TEXT.RADAR_TOP_INFO.MODE_NORTH_UP : UI_TEXT.RADAR_TOP_INFO.MODE_HEAD_UP;
 
   return (
