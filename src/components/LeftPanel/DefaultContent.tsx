@@ -27,9 +27,10 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
   isManualNavigationMode,
 }) => {
   const leewayDeg = calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees);
+  const allowManualInput = true; // Set to false to disable manual editing of HDG/COG completely
 
   return (
-    <>
+    <div className="lp-default-content">
       {isLoading && <div className="lp-api-status">{UI_TEXT.LEFT_PANEL.LOADING_SIDEBAR}</div>}
       {error && <div className="lp-api-status lp-api-status-error">{error}</div>}
       {isManualNavigationMode && <div className="lp-api-status lp-api-status-manual">{UI_TEXT.LEFT_PANEL.MANUAL_MODE_ACTIVE}</div>}
@@ -38,6 +39,7 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
         value={navData.hdg}
         onChange={(value) => updateNavData({ hdg: value })}
         isManualMode={isManualNavigationMode}
+        allowManualEditing={allowManualInput}
       />
 
       <SpeedDisplay value={navData.stw} />
@@ -51,6 +53,7 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
         value={navData.cog}
         onChange={(value) => updateNavData({ cog: value })}
         isManualMode={isManualNavigationMode}
+        allowManualEditing={allowManualInput}
       />
 
       <SOGDisplay
@@ -59,6 +62,6 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
       />
 
       <DateTimeDisplay isoDateTime={dateTimeIso} />
-    </>
+    </div>
   );
 };

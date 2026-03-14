@@ -28,6 +28,13 @@
   flex-shrink: 0;
 }
 
+.lp-default-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 .lp-tabs-bar .tab {
   background: var(--bg-panel);
   border: 1px solid var(--border-color);
@@ -83,12 +90,13 @@
 
 /* ---- Section wrappers ---- */
 .lp-section {
-  border-bottom: 2px solid var(--border-color);
-  padding: 1.6vh 0.98vw 1.4vh 0.98vw;
+  border: 2px solid var(--border-color);
+  padding: 1vh 0.98vw 1vh 0.98vw;
   display: flex;
   flex-direction: column;
   gap: 1.05vh;
   flex-shrink: 0;
+  margin: 0 1vh;
 }
 
 .lp-api-status {
@@ -114,17 +122,19 @@
   gap: 0.8vw;
 }
 
-.lp-row > .lp-label + .lp-value-box {
+.lp-row>.lp-label+.lp-value-box {
   margin-left: -0.28vw;
 }
 
-.lp-pos-row > .lp-label + .lp-value-box {
+.lp-pos-row>.lp-label+.lp-value-box {
   margin-left: -0.42vw;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* ---- Label (HDG / STW / POS / COG / SOG) ---- */
 .lp-label {
-  font-size: 1.24rem;
+  font-size: 1.5vh;
   font-weight: bold;
   color: var(--text-primary);
   min-width: clamp(28px, 3vw, 50px);
@@ -167,14 +177,14 @@
   font-family: var(--font-family-sans);
   font-size: 0.72rem;
   font-weight: bold;
-  padding: 0.58vh 0.72vw;
-  border: 1.5px solid;
+  padding: 0.85vh 0.78vw;
+  border: 1px solid;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .lp-badge-green {
-  border-color: var(--border-color);
+  border: 1px solid var(--border-color);
   color: #00ff00;
   background: transparent;
 }
@@ -194,7 +204,8 @@
   color: #00ff00;
   background: transparent;
   font-size: 0.58rem;
-  padding: 0.5vh 0.7vw;}
+  padding: 0.5vh 0.5vw;
+}
 
 .lp-badge-manual {
   border-color: #b59353;
@@ -203,6 +214,7 @@
 }
 
 .lp-badge-offset {
+  padding: 0.85vh 0.98vw;
   flex: 0 0 auto;
 }
 
@@ -369,9 +381,9 @@
 }
 
 .lp-sog-source {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: var(--text-primary);
-  margin-left: auto;
+  margin-left: 4vw;
   white-space: nowrap;
 }
 
@@ -381,20 +393,19 @@
 
 /* ---- DateTime ---- */
 .lp-datetime {
-  padding: 1.2vh 0.98vw;
+  padding: 0 0.6vw;
   display: flex;
   flex-direction: column;
   gap: 1vh;
-  flex-shrink: 0;
 }
 
 .lp-datetime-date {
   background: transparent;
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   color: #00ff00;
   font-size: 0.9rem;
   text-align: center;
-  padding: 0.68vh 0.8vw;
+  padding: 0.68vh 1vw;
   min-height: clamp(26px, 2.55vh, 36px);
 }
 
@@ -619,12 +630,14 @@
 .lp-datetime-time-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  margin: 0;
   gap: clamp(4px, 0.5vw, 10px);
 }
 
 .lp-datetime-time {
   background: transparent;
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   color: #00ff00;
   font-size: 0.9rem;
   padding: 0.68vh 0.8vw;
@@ -643,6 +656,7 @@
 }
 
 @media (max-width: 0px) {
+
   .lp-section,
   .lp-datetime {
     padding-left: clamp(8px, 2.8vw, 12px);

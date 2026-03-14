@@ -200,7 +200,7 @@
 .radar-bottom-controls {
   position: absolute;
   left: calc(-1 * var(--radar-overlay-left-offset));
-  bottom: clamp(2px, 0.4vw, 6px);
+  bottom: 0;
   transform: scale(var(--radar-bottom-controls-scale));
   transform-origin: left bottom;
   display: flex;
@@ -337,7 +337,7 @@
   }
 
   .radar-bottom-controls {
-    bottom: clamp(2px, 0.4vw, 6px);
+    bottom: 0;
   }
 }
 
