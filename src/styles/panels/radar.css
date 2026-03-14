@@ -2,7 +2,8 @@
 
 .radar-display {
   --radar-overlay-left-offset: calc(var(--design-vw) * 0.35);
-  --radar-bottom-controls-scale: 0.9;
+  --radar-top-info-scale: 0.86;
+  --radar-bottom-controls-scale: 0.66;
   flex: 1;
   background: var(--radar-bg);
   display: flex;
@@ -18,6 +19,8 @@
   position: absolute;
   top: clamp(-3px, -0.2vw, -1px);
   left: calc(-1 * var(--radar-overlay-left-offset));
+  transform: scale(var(--radar-top-info-scale));
+  transform-origin: left top;
   display: flex;
   flex-direction: column;
   gap: clamp(1px, 0.2vw, 3px);
