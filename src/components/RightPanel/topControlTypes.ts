@@ -14,8 +14,10 @@ export interface MainTopControlsProps {
 
 export interface SideStackControlsProps {
   modeLabel: string;
+  motionModeLabel: string;
   radarControls: RadarControlState;
   onToggleMode: () => void;
+  onToggleMotionMode: () => void;
   onDecreaseRange: () => void;
   onIncreaseRange: () => void;
   canDecreaseRange: boolean;

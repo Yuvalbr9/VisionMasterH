@@ -6,8 +6,10 @@ import { SideStackControlsProps } from './topControlTypes';
 
 export const SideStackSection: React.FC<SideStackControlsProps> = ({
   modeLabel,
+  motionModeLabel,
   radarControls,
   onToggleMode,
+  onToggleMotionMode,
   onDecreaseRange,
   onIncreaseRange,
   canDecreaseRange,
@@ -15,20 +17,24 @@ export const SideStackSection: React.FC<SideStackControlsProps> = ({
 }) => {
   const ringSpacingNm = getRangeRingSpacingNm(radarControls.selectedRangeNm, RADAR_RANGE_RING_COUNT);
   const ringSpacingLabel = ringSpacingNm.toFixed(UI_VALUES.RANGE_CONTROLS.DISPLAY_DECIMALS);
-  const rangeScaleTitle = `${radarControls.selectedRangeNm.toFixed(UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS)} ${UI_TEXT.RIGHT_PANEL.NM} scale over ${RADAR_RANGE_RING_COUNT} rings`;
+  const rangeDecimals = radarControls.selectedRangeNm < 1
+    ? UI_VALUES.RANGE_CONTROLS.BELOW_ONE_DECIMALS
+    : UI_VALUES.RIGHT_PANEL.RANGE_INTEGER_DECIMALS;
+  const selectedRangeLabel = radarControls.selectedRangeNm.toFixed(rangeDecimals);
+  const rangeScaleTitle = `Radar range ${selectedRangeLabel} ${UI_TEXT.RIGHT_PANEL.NM}`;
 
   return (
     <div className="vm-side-stack">
       <div className="vm-side-row vm-side-row-split">
         <ControlButton className="vm-cell vm-side-half" onClick={onToggleMode}>{modeLabel}</ControlButton>
-        <ControlButton className="vm-cell vm-side-half">{UI_TEXT.RIGHT_PANEL.NM}</ControlButton>
+        <ControlButton className="vm-cell vm-side-half" onClick={onToggleMotionMode}>{motionModeLabel}</ControlButton>
       </div>
 
       <ControlButton className="vm-cell vm-side-full">{UI_TEXT.RIGHT_PANEL.GROUND_STABILISED}</ControlButton>
 
       <div className="vm-side-row vm-side-row-range">
         <ControlButton className="vm-cell vm-side-arrow" onClick={onDecreaseRange} disabled={!canDecreaseRange}>{UI_TEXT.RIGHT_PANEL.LEFT_ARROW}</ControlButton>
-        <ControlButton className="vm-cell vm-side-range-value" title={rangeScaleTitle}>{ringSpacingLabel} {UI_TEXT.RIGHT_PANEL.NM}</ControlButton>
+        <ControlButton className="vm-cell vm-side-range-value" title={rangeScaleTitle}>{selectedRangeLabel} {UI_TEXT.RIGHT_PANEL.NM}</ControlButton>
         <ControlButton className="vm-cell vm-side-arrow" onClick={onIncreaseRange} disabled={!canIncreaseRange}>{UI_TEXT.RIGHT_PANEL.RIGHT_ARROW}</ControlButton>
       </div>
 

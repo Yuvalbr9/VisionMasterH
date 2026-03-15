@@ -5,3 +5,4 @@ export * from './positionUtils';
 export * from './dateTimeUtils';
 export * from './durationUtils';
 export * from './radarCalculations';
+export * from './maritimeRadarMap';

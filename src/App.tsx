@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { Angle, Speed, Length } from 'unitsnet-js';
-import { NavigationData, RadarControlState, ARPATarget, RadarSelectedPoint } from './types';
+import { Angle, Length, Speed } from 'unitsnet-js';
+import {
+  ARPATarget,
+  NavigationData,
+  RadarControlState,
+  RadarMotionMode,
+} from './types';
 import { LeftBar } from './components/LeftBar';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
 import { BaseButton } from './components/Buttons';
-import { UI_TEXT } from './constants';
+import { UI_TEXT as UiText } from './constants';
+import { useRadarTargets } from './hooks/useRadarTargets';
 import {
   calculateCogSogFromVelocity,
   hasNavigationDeltaAboveTolerance,
-  parseLatitude,
-  parseLongitude,
 } from './util';
 
 const defaultRadarControls: RadarControlState = {
@@ -29,47 +33,26 @@ const defaultRadarControls: RadarControlState = {
 const defaultVelocity = { vn: 0, ve: 0 };
 const defaultArpaTargets: ARPATarget[] = [];
 
-const cloneRadarPoints = (points: RadarSelectedPoint[]): RadarSelectedPoint[] => {
-  return points.map((point) => ({ ...point }));
-};
-
-const areRadarPointListsEqual = (left: RadarSelectedPoint[], right: RadarSelectedPoint[]): boolean => {
-  if (left.length !== right.length) {
-    return false;
-  }
-
-  for (let index = 0; index < left.length; index += 1) {
-    if (
-      left[index].bearingDeg !== right[index].bearingDeg
-      || left[index].rangeNm !== right[index].rangeNm
-    ) {
-      return false;
-    }
-  }
-
-  return true;
-};
-
 const App: React.FC = () => {
   const [navData, setNavData] = useState<NavigationData>({
-    hdg: Angle.FromDegrees(289.0),
-    stw: Speed.FromKnots(10.8),
-    sog: Speed.FromKnots(10.8),
-    cog: Angle.FromDegrees(289.0),
-    posLat: parseLatitude("40°27.269'N"),
-    posLon: parseLongitude("73°49.490'W"),
+    hdg: Angle.FromDegrees(48.0),
+    stw: Speed.FromKnots(13.4),
+    sog: Speed.FromKnots(13.4),
+    cog: Angle.FromDegrees(48.0),
+    posLat: Angle.FromDegrees(32.2),
+    posLon: Angle.FromDegrees(34.24),
     ccrpPS: Length.FromMeters(0.0),
     ccrpFA: Length.FromMeters(0.0),
     stemPS: Length.FromMeters(0.0),
   });
 
   const [radarControls, setRadarControls] = useState<RadarControlState>(defaultRadarControls);
+  const [radarMotionMode, setRadarMotionMode] = useState<RadarMotionMode>('RM');
   const [radarPointPickerActive, setRadarPointPickerActive] = useState(false);
-  const [selectedRadarPoints, setSelectedRadarPoints] = useState<RadarSelectedPoint[]>([]);
-  const [radarPointHistory, setRadarPointHistory] = useState<RadarSelectedPoint[][]>([]);
-  const [radarPointPickerInitialPoints, setRadarPointPickerInitialPoints] = useState<RadarSelectedPoint[] | null>(null);
+  const targetsState = useRadarTargets();
   const velocity = defaultVelocity;
   const arpaTargets = defaultArpaTargets;
+  const surfaceTargets = targetsState.targets;
 
   const updateNavData = React.useCallback((updates: Partial<NavigationData>) => {
     setNavData(prev => ({ ...prev, ...updates }));
@@ -98,108 +81,27 @@ const App: React.FC = () => {
       return;
     }
 
-    setRadarPointPickerInitialPoints(cloneRadarPoints(selectedRadarPoints));
-    setRadarPointHistory([]);
     setRadarPointPickerActive(true);
-  }, [radarPointPickerActive, selectedRadarPoints]);
+  }, [radarPointPickerActive]);
 
   const closeRadarPointPicker = React.useCallback(() => {
     setRadarPointPickerActive(false);
-    setRadarPointHistory([]);
-    setRadarPointPickerInitialPoints(null);
   }, []);
 
-  const cancelRadarPointPicker = React.useCallback(() => {
-    if (radarPointPickerInitialPoints) {
-      setSelectedRadarPoints(cloneRadarPoints(radarPointPickerInitialPoints));
-    }
+  const handleRadarPointPickerUndo = React.useCallback(() => undefined, []);
 
-    setRadarPointPickerActive(false);
-    setRadarPointHistory([]);
-    setRadarPointPickerInitialPoints(null);
-  }, [radarPointPickerInitialPoints]);
-
-  const pushRadarPointHistory = React.useCallback((pointsSnapshot: RadarSelectedPoint[]) => {
-    setRadarPointHistory((previousHistory) => {
-      const nextSnapshot = cloneRadarPoints(pointsSnapshot);
-      const latestSnapshot = previousHistory[previousHistory.length - 1];
-
-      if (latestSnapshot && areRadarPointListsEqual(latestSnapshot, nextSnapshot)) {
-        return previousHistory;
+  const handleRadarRangeChange = React.useCallback((nextRangeNm: number) => {
+    setRadarControls((previousControls) => {
+      if (previousControls.selectedRangeNm === nextRangeNm) {
+        return previousControls;
       }
 
-      return [...previousHistory, nextSnapshot];
+      return {
+        ...previousControls,
+        selectedRangeNm: nextRangeNm,
+      };
     });
   }, []);
-
-  const handleRadarPointAdded = React.useCallback((selectedPoint: RadarSelectedPoint) => {
-    setSelectedRadarPoints((previousPoints) => {
-      pushRadarPointHistory(previousPoints);
-      return [...previousPoints, selectedPoint];
-    });
-  }, [pushRadarPointHistory]);
-
-  const handleRadarPointMoved = React.useCallback((pointIndex: number, nextPoint: RadarSelectedPoint) => {
-    setSelectedRadarPoints((previousPoints) => previousPoints.map((point, index) => (
-      index === pointIndex ? nextPoint : point
-    )));
-  }, []);
-
-  const handleRadarPointMoveStart = React.useCallback((pointIndex: number) => {
-    setSelectedRadarPoints((previousPoints) => {
-      if (pointIndex < 0 || pointIndex >= previousPoints.length) {
-        return previousPoints;
-      }
-
-      pushRadarPointHistory(previousPoints);
-      return previousPoints;
-    });
-  }, [pushRadarPointHistory]);
-
-  const handleRadarPointDeleted = React.useCallback((pointIndex: number) => {
-    setSelectedRadarPoints((previousPoints) => {
-      if (pointIndex < 0 || pointIndex >= previousPoints.length) {
-        return previousPoints;
-      }
-
-      pushRadarPointHistory(previousPoints);
-      return previousPoints.filter((_, index) => index !== pointIndex);
-    });
-  }, [pushRadarPointHistory]);
-
-  const handleRadarPointReplaced = React.useCallback((pointIndex: number, nextPoint: RadarSelectedPoint) => {
-    setSelectedRadarPoints((previousPoints) => {
-      if (pointIndex < 0 || pointIndex >= previousPoints.length) {
-        return previousPoints;
-      }
-
-      const currentPoint = previousPoints[pointIndex];
-      if (
-        currentPoint.bearingDeg === nextPoint.bearingDeg
-        && currentPoint.rangeNm === nextPoint.rangeNm
-      ) {
-        return previousPoints;
-      }
-
-      pushRadarPointHistory(previousPoints);
-      return previousPoints.map((point, index) => (index === pointIndex ? nextPoint : point));
-    });
-  }, [pushRadarPointHistory]);
-
-  const undoRadarPointChange = React.useCallback(() => {
-    setRadarPointHistory((previousHistory) => {
-      const previousIndex = previousHistory.length - 1;
-      if (previousIndex < 0) {
-        return previousHistory;
-      }
-
-      const previousSnapshot = previousHistory[previousIndex];
-      setSelectedRadarPoints(cloneRadarPoints(previousSnapshot));
-      return previousHistory.slice(0, previousIndex);
-    });
-  }, []);
-
-  const canUndoRadarPointChange = radarPointHistory.length > 0;
 
   return (
     <div className="app-viewport">
@@ -208,12 +110,12 @@ const App: React.FC = () => {
           <div className="legacy-topbar">
             <div className="legacy-topbar-left">
               <span className="legacy-app-icon" aria-hidden="true">◉</span>
-              <span className="legacy-app-name">{UI_TEXT.TOPBAR.APP_NAME}</span>
+              <span className="legacy-app-name">{UiText.TOPBAR.APP_NAME}</span>
             </div>
             <div className="legacy-topbar-right">
-              <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MINIMIZE} />
-              <BaseButton className="legacy-win-btn" aria-label={UI_TEXT.TOPBAR.MAXIMIZE} />
-              <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UI_TEXT.TOPBAR.CLOSE} />
+              <BaseButton className="legacy-win-btn" aria-label={UiText.TOPBAR.MINIMIZE} />
+              <BaseButton className="legacy-win-btn" aria-label={UiText.TOPBAR.MAXIMIZE} />
+              <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UiText.TOPBAR.CLOSE} />
             </div>
           </div>
           <div className="main-container">
@@ -225,22 +127,20 @@ const App: React.FC = () => {
             <RadarDisplay
               navData={navData}
               radarControls={radarControls}
-              arpaTargets={arpaTargets}
+              surfaceTargets={surfaceTargets}
+              motionMode={radarMotionMode}
+              onRangeChange={handleRadarRangeChange}
               radarPointPickerActive={radarPointPickerActive}
-              selectedRadarPoints={selectedRadarPoints}
               onCloseRadarPointPicker={closeRadarPointPicker}
-              onCancelRadarPointPicker={cancelRadarPointPicker}
-              onUndoRadarPointChange={undoRadarPointChange}
-              canUndoRadarPointChange={canUndoRadarPointChange}
-              onRadarPointAdded={handleRadarPointAdded}
-              onRadarPointMoveStart={handleRadarPointMoveStart}
-              onRadarPointMoved={handleRadarPointMoved}
-              onRadarPointDeleted={handleRadarPointDeleted}
-              onRadarPointReplaced={handleRadarPointReplaced}
+              onCancelRadarPointPicker={closeRadarPointPicker}
+              onUndoRadarPointChange={handleRadarPointPickerUndo}
+              canUndoRadarPointChange={false}
             />
             <RightPanel
               radarControls={radarControls}
               onRadarControlsChange={setRadarControls}
+              motionMode={radarMotionMode}
+              onMotionModeChange={setRadarMotionMode}
               arpaTargets={arpaTargets}
               radarPointPickerActive={radarPointPickerActive}
               onOpenRadarPointPicker={openRadarPointPicker}

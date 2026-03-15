@@ -16,3 +16,16 @@ export interface ShipWaveApiResponse {
 export interface ShipTimeApiResponse {
   currentDateTime: string;
 }
+
+export interface ShipTargetApiRecord {
+  id: string;
+  label: string;
+  lat: number | string;
+  lon: number | string;
+  speedKnots: number;
+  courseDeg: number;
+}
+
+export interface ShipTargetsApiResponse {
+  targets: ShipTargetApiRecord[];
+}

@@ -33,7 +33,7 @@ export const UI_VALUES = {
     EBL_MIN: 0,
     EBL_MAX: 359,
     VRM_MIN: 0,
-    VRM_MAX: 100,
+    VRM_MAX: 192,
     BEARING_STEP: '0.1',
     RANGE_STEP: '0.01',
     BEARING_DECIMALS: 1,
@@ -43,7 +43,7 @@ export const UI_VALUES = {
     ELAPSED_ZERO_SECONDS: 0,
   },
   RANGE_CONTROLS: {
-    RANGE_STEPS_NM: [0.5, 1, 2, 3, 6, 12, 24, 48, 96],
+    RANGE_STEPS_NM: [3, 6, 12, 24, 48, 96, 192],
     BELOW_ONE_DECIMALS: 1,
     DEFAULT_DECIMALS: 0,
     DISPLAY_DECIMALS: 1,

@@ -5,12 +5,14 @@ import { RightPanelTopSectionProps } from './topControlTypes';
 
 export const RightPanelTopSection: React.FC<RightPanelTopSectionProps> = ({
   modeLabel,
+  motionModeLabel,
   trailsLabel,
   aisLabel,
   chartsLabel,
   radarPointPickerActive,
   radarControls,
   onToggleMode,
+  onToggleMotionMode,
   onToggleTrails,
   onToggleAis,
   onToggleCharts,
@@ -25,8 +27,10 @@ export const RightPanelTopSection: React.FC<RightPanelTopSectionProps> = ({
       <div className="vm-top-with-side">
         <SideStackSection
           modeLabel={modeLabel}
+          motionModeLabel={motionModeLabel}
           radarControls={radarControls}
           onToggleMode={onToggleMode}
+          onToggleMotionMode={onToggleMotionMode}
           onDecreaseRange={onDecreaseRange}
           onIncreaseRange={onIncreaseRange}
           canDecreaseRange={canDecreaseRange}

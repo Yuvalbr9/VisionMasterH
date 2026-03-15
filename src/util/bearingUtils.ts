@@ -6,7 +6,7 @@ const BEARING_EPSILON = 1e-9;
 const EBL_MIN_DEGREES = 0;
 const EBL_MAX_DEGREES = 359;
 const VRM_MIN_NM = 0;
-const VRM_MAX_NM = 100;
+const VRM_MAX_NM = 192;
 
 export const normalizeBearing = (bearingDeg: number): number => {
   if (!Number.isFinite(bearingDeg)) {

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { ARPATarget, RadarControlState } from '../types';
+import { ARPATarget, RadarControlState, RadarMotionMode } from '../types';
 import { UI_VALUES } from '../constants';
 import { BottomCornerEblVrm } from './RightPanel/BottomCornerEblVrm';
 import { RightPanelTopSection } from './RightPanel/RightPanelButtons';
@@ -11,6 +11,8 @@ import { useRightPanelControls } from './RightPanel/useRightPanelControls';
 interface RightPanelProps {
   radarControls: RadarControlState;
   onRadarControlsChange: Dispatch<SetStateAction<RadarControlState>>;
+  motionMode: RadarMotionMode;
+  onMotionModeChange: (nextMode: RadarMotionMode) => void;
   arpaTargets: ARPATarget[];
   radarPointPickerActive: boolean;
   onOpenRadarPointPicker: () => void;
@@ -19,6 +21,8 @@ interface RightPanelProps {
 export const RightPanel: React.FC<RightPanelProps> = ({
   radarControls,
   onRadarControlsChange,
+  motionMode,
+  onMotionModeChange,
   arpaTargets,
   radarPointPickerActive,
   onOpenRadarPointPicker,
@@ -36,6 +40,12 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     canDecreaseRange,
     canIncreaseRange,
   } = useRightPanelControls({ radarControls, onRadarControlsChange });
+
+  const motionModeLabel = motionMode === 'RM' ? 'RM' : 'TM';
+
+  const toggleMotionMode = React.useCallback(() => {
+    onMotionModeChange(motionMode === 'RM' ? 'TM' : 'RM');
+  }, [motionMode, onMotionModeChange]);
 
   const {
     bearingRInput,
@@ -62,12 +72,14 @@ export const RightPanel: React.FC<RightPanelProps> = ({
       <div className="vm-top-detached-shell">
         <RightPanelTopSection
           modeLabel={modeLabel}
+          motionModeLabel={motionModeLabel}
           trailsLabel={trailsLabel}
           aisLabel={aisLabel}
           chartsLabel={chartsLabel}
           radarPointPickerActive={radarPointPickerActive}
           radarControls={radarControls}
           onToggleMode={toggleMode}
+          onToggleMotionMode={toggleMotionMode}
           onToggleTrails={toggleTrails}
           onToggleAis={toggleAis}
           onToggleCharts={toggleCharts}

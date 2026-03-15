@@ -3,12 +3,14 @@ import {
   mockShipCourseData,
   mockShipPositionData,
   mockShipTimeData,
+  mockShipTargetsData,
   mockShipWaveData,
 } from './mockShipSidebarData';
 import {
   ShipCourseApiResponse,
   ShipPositionApiResponse,
   ShipTimeApiResponse,
+  ShipTargetsApiResponse,
   ShipWaveApiResponse,
 } from '../types/api';
 
@@ -22,6 +24,7 @@ export interface ShipSidebarDataProvider {
   getShipPosition: () => Promise<ShipPositionApiResponse>;
   getShipWaveDirection: () => Promise<ShipWaveApiResponse>;
   getShipCurrentTime: () => Promise<ShipTimeApiResponse>;
+  getShipTargets: () => Promise<ShipTargetsApiResponse>;
 }
 
 interface CreateShipSidebarDataProviderOptions {
@@ -45,6 +48,8 @@ const getMockDataByPath = (path: string) => {
       return mockShipWaveData;
     case '/ship/time':
       return mockShipTimeData;
+    case '/ship/targets':
+      return mockShipTargetsData;
     default:
       throw new Error(`Unsupported mock API path: ${path}`);
   }
@@ -83,6 +88,10 @@ const createHttpShipSidebarDataProvider = (client: AxiosInstance = shipApiClient
     const response = await client.get<ShipTimeApiResponse>('/ship/time');
     return response.data;
   },
+  getShipTargets: async () => {
+    const response = await client.get<ShipTargetsApiResponse>('/ship/targets');
+    return response.data;
+  },
 });
 
 const createMockShipSidebarDataProvider = (
@@ -92,6 +101,7 @@ const createMockShipSidebarDataProvider = (
   getShipPosition: () => mockAxiosGet<ShipPositionApiResponse>('/ship/pos', simulatedNetworkDelayMs),
   getShipWaveDirection: () => mockAxiosGet<ShipWaveApiResponse>('/ship/wave', simulatedNetworkDelayMs),
   getShipCurrentTime: () => mockAxiosGet<ShipTimeApiResponse>('/ship/time', simulatedNetworkDelayMs),
+  getShipTargets: () => mockAxiosGet<ShipTargetsApiResponse>('/ship/targets', simulatedNetworkDelayMs),
 });
 
 export const createShipSidebarDataProvider = (
@@ -134,4 +144,8 @@ export const fetchShipWaveDirection = async (): Promise<ShipWaveApiResponse> => 
 
 export const fetchShipCurrentTime = async (): Promise<ShipTimeApiResponse> => {
   return activeShipSidebarDataProvider.getShipCurrentTime();
+};
+
+export const fetchShipTargets = async (): Promise<ShipTargetsApiResponse> => {
+  return activeShipSidebarDataProvider.getShipTargets();
 };

@@ -360,3 +360,368 @@
     margin-top: clamp(28px, 6vh, 58px);
   }
 }
+
+.radar-map-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(18px, 1.8vw, 30px);
+}
+
+.radar-map-frame {
+  position: relative;
+  width: min(100%, min(76cqw, 82cqh));
+  height: min(100%, min(76cqw, 82cqh));
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: visible;
+  background:
+    radial-gradient(circle at center, rgba(7, 12, 10, 0.98) 0%, rgba(2, 4, 4, 0.99) 62%, rgba(0, 0, 0, 1) 100%);
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.42),
+    inset 0 0 50px rgba(3, 10, 8, 0.95);
+}
+
+.radar-map-frame::before {
+  content: '';
+  position: absolute;
+  inset: 28px;
+  z-index: 21;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, rgba(40, 232, 128, 0.04) 0%, rgba(40, 232, 128, 0) 54%),
+    conic-gradient(from 0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0));
+}
+
+.radar-map-frame::after {
+  content: none;
+}
+
+.radar-map-leaflet,
+.radar-map-leaflet.leaflet-container {
+  position: relative;
+  z-index: 18;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  font-family: var(--font-family-mono);
+  clip-path: circle(calc(50% - 28px) at 50% 50%);
+}
+
+.radar-map-leaflet .leaflet-control-attribution {
+  display: none;
+}
+
+.radar-map-leaflet .leaflet-interactive {
+  vector-effect: non-scaling-stroke;
+}
+
+.radar-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+}
+
+.radar-scale-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 16;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.radar-overlay-ring {
+  fill: none;
+  stroke: rgba(214, 205, 144, 0.46);
+  stroke-width: 1.4;
+}
+
+.radar-overlay-ring-soft {
+  stroke: rgba(255, 226, 123, 0.26);
+}
+
+.radar-overlay-vrm {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.96);
+}
+
+.radar-overlay-vrm-primary {
+  stroke-width: 2;
+  stroke-dasharray: 8 6;
+}
+
+.radar-overlay-vrm-secondary {
+  stroke-width: 1.2;
+  stroke-dasharray: 4 6;
+  opacity: 0.9;
+}
+
+.radar-degree-tick {
+  stroke: rgba(228, 216, 136, 0.92);
+  vector-effect: non-scaling-stroke;
+}
+
+.radar-degree-tick-major {
+  stroke-width: 1.25;
+}
+
+.radar-degree-tick-minor {
+  stroke-width: 0.72;
+  opacity: 0.9;
+}
+
+.radar-degree-dot {
+  stroke: rgba(211, 197, 119, 0.72);
+  stroke-width: 0.85;
+  stroke-linecap: round;
+}
+
+.radar-degree-dot-five {
+  stroke: rgba(228, 214, 138, 0.86);
+  stroke-width: 1;
+}
+
+.radar-degree-label {
+  fill: rgba(211, 204, 170, 0.86);
+  stroke: rgba(37, 34, 31, 0.84);
+  stroke-width: 0.55;
+  paint-order: stroke fill;
+  font-family: var(--font-family-mono);
+  font-size: clamp(0.31rem, 0.36vw, 0.42rem);
+  letter-spacing: 0.04em;
+}
+
+.radar-degree-label-major {
+  fill: rgba(220, 214, 183, 0.92);
+  font-size: clamp(0.34rem, 0.4vw, 0.46rem);
+  font-weight: 600;
+}
+
+.radar-degree-label-cardinal {
+  fill: rgba(233, 228, 203, 0.96);
+  font-size: clamp(0.36rem, 0.44vw, 0.5rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.radar-grid-ring,
+.radar-grid-spoke,
+.radar-grid-hub {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.radar-grid-ring {
+  stroke: rgba(183, 187, 205, 0.18);
+}
+
+.radar-grid-ring-solid {
+  stroke-width: 1;
+}
+
+.radar-grid-ring-dashed {
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+}
+
+.radar-grid-spoke {
+  stroke: rgba(166, 171, 190, 0.16);
+  stroke-width: 1;
+  stroke-dasharray: 5 6;
+}
+
+.radar-grid-spoke-cardinal {
+  stroke: rgba(182, 187, 206, 0.22);
+}
+
+.radar-grid-hub {
+  stroke: rgba(171, 176, 198, 0.24);
+  stroke-width: 1;
+}
+
+.radar-ebl-label {
+  fill: #ffe36a;
+  font-family: var(--font-family-mono);
+  font-size: clamp(0.44rem, 0.48vw, 0.58rem);
+  letter-spacing: 0.08em;
+}
+
+.radar-heading-line-glow {
+  stroke: rgba(131, 155, 103, 0.18);
+  stroke-width: 5.5;
+}
+
+.radar-heading-line {
+  stroke: #7f9d6c;
+  stroke-width: 2;
+}
+
+.radar-ebl-primary,
+.radar-ebl-secondary {
+  stroke: rgba(198, 255, 221, 0.95);
+  fill: none;
+}
+
+.radar-ebl-primary {
+  stroke-width: 2.4;
+  stroke-dasharray: 10 8;
+}
+
+.radar-ebl-secondary {
+  stroke-width: 1.3;
+  stroke-dasharray: 5 7;
+}
+
+.radar-map-zoom-controls {
+  position: absolute;
+  top: clamp(14px, 1.2vw, 18px);
+  right: clamp(14px, 1.2vw, 18px);
+  z-index: 430;
+  display: grid;
+  gap: clamp(4px, 0.35vw, 6px);
+  pointer-events: auto;
+}
+
+.radar-map-zoom-btn {
+  min-width: clamp(64px, 6.4vw, 86px);
+  min-height: clamp(28px, 2.8vw, 34px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(6px, 0.5vw, 10px);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.radar-map-zoom-btn:hover {
+  background: var(--bg-control-hover);
+}
+
+.radar-map-zoom-btn:disabled {
+  opacity: 0.75;
+}
+
+.radar-map-context-menu {
+  position: fixed;
+  z-index: 1200;
+  min-width: clamp(146px, 13vw, 180px);
+  max-width: calc(100vw - 24px);
+  display: grid;
+  gap: 3px;
+  padding: 4px;
+  background: var(--bg-panel);
+  border: 1px solid var(--win-mid);
+  border-top-color: var(--win-light);
+  border-left-color: var(--win-light);
+  border-right-color: var(--win-dark);
+  border-bottom-color: var(--win-shadow);
+  box-shadow: 2px 2px 0 rgba(24, 23, 38, 0.72);
+}
+
+.radar-map-context-item {
+  width: 100%;
+  min-height: clamp(26px, 2.8vh, 32px);
+  padding: 0 clamp(8px, 0.7vw, 12px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.radar-map-context-item:hover {
+  background: var(--bg-control-hover);
+}
+
+.radar-own-ship-marker-shell {
+  background: transparent;
+  border: none;
+}
+
+.radar-own-ship-icon {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 16px solid #7a88b0;
+  filter: drop-shadow(0 0 3px rgba(122, 136, 176, 0.3));
+}
+
+.radar-map-platform-info {
+  position: fixed;
+  z-index: 1201;
+  min-width: clamp(164px, 14vw, 208px);
+  max-width: calc(100vw - 24px);
+  display: grid;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--win-mid);
+  border-top-color: var(--win-light);
+  border-left-color: var(--win-light);
+  border-right-color: var(--win-dark);
+  border-bottom-color: var(--win-shadow);
+  box-shadow: 2px 2px 0 rgba(24, 23, 38, 0.72);
+  pointer-events: none;
+}
+
+.radar-map-platform-info.is-target-preview {
+  min-width: clamp(220px, 18vw, 264px);
+  background: linear-gradient(180deg, rgba(73, 62, 32, 0.98) 0%, rgba(49, 41, 66, 0.98) 100%);
+  border-top-color: #bda769;
+  border-left-color: #bda769;
+}
+
+.radar-map-platform-info-subtitle {
+  color: #d6be6c;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.radar-map-platform-info-title {
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--win-dark);
+}
+
+.radar-map-platform-info.is-target-preview .radar-map-platform-info-title {
+  color: #fff1ab;
+}
+
+.radar-map-platform-info-line {
+  color: var(--text-secondary);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  line-height: 1.35;
+}
+
+.radar-map-platform-info.is-target-preview .radar-map-platform-info-line {
+  color: #efe7c2;
+}
+
+.radar-leaflet-tooltip {
+  color: var(--text-secondary);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  line-height: 1.35;
+}

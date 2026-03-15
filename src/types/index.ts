@@ -19,6 +19,7 @@ export interface RadarPoint {
 }
 
 export * from './radar';
+export * from './radarMap';
 
 export {
   formatLatitude,
