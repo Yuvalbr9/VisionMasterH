@@ -83,7 +83,7 @@
 }
 
 .vm-top-with-side {
-  --vm-side-width: clamp(160px, 34%, 228px);
+  --vm-side-width: clamp(140px, 32%, 210px);
   display: grid;
   width: calc(100% + var(--vm-side-width));
   margin-left: calc(-1 * var(--vm-side-width));
@@ -131,7 +131,7 @@
 
 .vm-side-row-range {
   display: grid;
-  grid-template-columns: clamp(18px, 1.8vw, 22px) minmax(0, 1fr) clamp(18px, 1.8vw, 22px);
+  grid-template-columns: clamp(16px, 1.6vw, 20px) minmax(0, 1fr) clamp(16px, 1.6vw, 20px);
 }
 
 .vm-side-arrow {
@@ -246,7 +246,7 @@
 
 .vm-alert-row {
   justify-content: space-between;
-  padding: 0 clamp(1px, 0.2vw, 3px);
+  padding: 0 clamp(1px, 0.15vw, 2px);
 }
 
 .vm-alert-main {
@@ -261,8 +261,7 @@
 }
 
 .vm-alert-arrow {
-  width: clamp(18px, 2vw, 22px);
-  min-width: clamp(18px, 2vw, 22px);
+  min-width: clamp(16px, 1.8vw, 20px);
   height: clamp(18px, 2.3vh, 22px);
   border: 1px solid #7d76a3;
   background: #3b345f;
@@ -285,7 +284,7 @@
 
 .vm-mob-header {
   display: grid;
-  grid-template-columns: clamp(18px, 1.8vw, 22px) minmax(0, 1fr) clamp(18px, 1.8vw, 22px);
+  grid-template-columns: clamp(16px, 1.6vw, 20px) minmax(0, 1fr) clamp(16px, 1.6vw, 20px);
   gap: clamp(1px, 0.2vw, 3px);
   padding: 0;
 }
@@ -346,7 +345,7 @@
   font-family: var(--font-family-mono);
   font-size: 0.72rem;
   height: clamp(24px, 3vh, 32px);
-  padding: clamp(1px, 0.2vh, 2px) clamp(4px, 0.6vw, 8px);
+  padding: clamp(1px, 0.15vh, 2px) clamp(3px, 0.5vw, 6px);
 }
 
 @media (max-width: 0px) {
@@ -408,13 +407,12 @@
 .vm-bottom-row {
   display: block;
   width: 100%;
-}
-
-.vm-bottom-corner-floating {
+}.vm-bottom-corner-floating {
   position: absolute;
-  left: clamp(-206px, -15vw, -136px);
+  right: calc(100% + 10px);
+  left: auto;
   bottom: 0px;
-  width: clamp(150px, 15vw, 200px);
+  width: clamp(140px, 13vw, 180px);
   z-index: 20;
 }
 
@@ -425,9 +423,9 @@
 
 .vm-ebl-row {
   display: grid;
-  grid-template-columns: clamp(36px, 3.4vw, 46px) minmax(0, 1fr) clamp(44px, 4.3vw, 58px) clamp(16px, 1.8vw, 20px);
+  grid-template-columns: clamp(28px, 2.8vw, 38px) minmax(0, 1fr) clamp(36px, 3.4vw, 48px) clamp(12px, 1.4vw, 16px);
   gap: 1px;
-  min-height: clamp(20px, 2.4vh, 24px);
+  min-height: clamp(18px, 2.2vh, 22px);
 }
 
 .vm-ebl-label,
@@ -437,9 +435,9 @@
   border: 1px solid #8d85b4;
   color: #ebe7fc;
   font-family: var(--font-family-mono);
-  font-size: clamp(0.56rem, 0.58vw, 0.64rem);
-  padding: 0 clamp(1px, 0.18vw, 3px);
-  min-height: clamp(20px, 2.4vh, 24px);
+  font-size: clamp(0.52rem, 0.54vw, 0.6rem);
+  padding: 0 clamp(1px, 0.15vw, 2px);
+  min-height: clamp(18px, 2.2vh, 22px);
 }
 
 .vm-ebl-value,
@@ -448,10 +446,10 @@
   border: 1px solid #7d76a3;
   color: #efeefd;
   font-family: var(--font-family-mono);
-  font-size: clamp(0.56rem, 0.58vw, 0.64rem);
+  font-size: clamp(0.52rem, 0.54vw, 0.6rem);
   display: flex;
   align-items: center;
-  padding: 0 clamp(2px, 0.35vw, 5px);
+  padding: 0 clamp(2px, 0.3vw, 4px);
 }
 
 .vm-ebl-input {
@@ -459,9 +457,9 @@
   border: 1px solid #7d76a3;
   color: #efeefd;
   font-family: var(--font-family-mono);
-  font-size: clamp(0.56rem, 0.58vw, 0.64rem);
-  min-height: clamp(20px, 2.4vh, 24px);
-  padding: 0 clamp(2px, 0.35vw, 5px);
+  min-height: clamp(18px, 2.2vh, 22px);
+  padding: 0 clamp(2px, 0.3vw, 4px);
+  font-size: clamp(0.52rem, 0.54vw, 0.6rem);
   border-radius: 0;
   text-align: left;
 }

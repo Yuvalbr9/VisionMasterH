@@ -1,8 +1,8 @@
 :root {
   --design-width: 1568;
   --design-height: 768;
-  --left-panel-width-pct: 19;
-  --right-panel-width-pct: 21;
+  --left-panel-width-pct: 17;
+  --right-panel-width-pct: 19;
   --design-width-px: calc(var(--design-width) * 1px);
   --design-height-px: calc(var(--design-height) * 1px);
   --design-vw: 1vw;

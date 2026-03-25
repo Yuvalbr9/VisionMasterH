@@ -51,7 +51,7 @@
   border: 1px solid var(--border-color);
   border-bottom: none;
   border-radius: 0;
-  padding: 0.62vh 0.75vw;
+  padding: 0.62vh 0.5vw;
   font-size: 0.68rem;
   color: var(--text-secondary);
   cursor: pointer;
@@ -102,12 +102,12 @@
 /* ---- Section wrappers ---- */
 .lp-section {
   border: 2px solid var(--border-color);
-  padding: 1vh 0.98vw 1vh 0.98vw;
+  padding: 1vh 0.6vw 1vh 0.6vw;
   display: flex;
   flex-direction: column;
   gap: 1.05vh;
   flex-shrink: 0;
-  margin: 0 1vh;
+  margin: 0 0.6vh;
 }
 
 .lp-api-status {
@@ -130,7 +130,7 @@
 .lp-row {
   display: flex;
   align-items: center;
-  gap: 0.8vw;
+  gap: 0.5vw;
 }
 
 .lp-row>.lp-label+.lp-value-box {
@@ -148,13 +148,13 @@
   font-size: 1.5vh;
   font-weight: bold;
   color: var(--text-primary);
-  min-width: clamp(28px, 3vw, 50px);
+  min-width: clamp(24px, 2.5vw, 42px);
   letter-spacing: 0.02em;
   flex-shrink: 0;
 }
 
 .lp-label-spacer {
-  min-width: clamp(28px, 3vw, 50px);
+  min-width: clamp(24px, 2.5vw, 42px);
   display: inline-block;
 }
 
@@ -169,7 +169,7 @@
   padding: 0.66vh 0.78vw;
   min-height: clamp(26px, 2.55vh, 36px);
   text-align: center;
-  min-width: clamp(56px, 5vw, 90px);
+  min-width: clamp(48px, 4.2vw, 76px);
   white-space: nowrap;
 }
 
@@ -262,7 +262,7 @@
 .lp-dashes-row {
   display: flex;
   align-items: stretch;
-  margin-left: calc(clamp(28px, 3vw, 50px) + clamp(5px, 0.5vw, 8px));
+  margin-left: calc(clamp(24px, 2.5vw, 42px) + clamp(4px, 0.4vw, 6px));
 }
 
 .lp-value-box-editable {
@@ -298,7 +298,7 @@
   padding: 0.62vh 0.95vw;
   min-height: clamp(26px, 2.55vh, 36px);
   letter-spacing: 0.2em;
-  min-width: clamp(52px, 4.5vw, 86px);
+  min-width: clamp(46px, 4.2vw, 78px);
   text-align: center;
 }
 
@@ -386,7 +386,7 @@
 .lp-sog-label {
   font-size: 0.68rem;
   color: var(--text-secondary);
-  min-width: clamp(58px, 4.8vw, 92px);
+  min-width: clamp(52px, 4.2vw, 82px);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -527,7 +527,7 @@
 
 .lp-docking-inline-values {
   display: grid;
-  grid-template-columns: clamp(36px, 3.2vw, 60px) clamp(24px, 1.7vw, 40px) clamp(30px, 2.2vw, 48px);
+  grid-template-columns: clamp(32px, 2.8vw, 54px) clamp(22px, 1.4vw, 36px) clamp(26px, 1.8vw, 42px);
   gap: 0.2vw;
   align-items: center;
 }

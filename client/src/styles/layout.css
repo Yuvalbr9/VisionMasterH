@@ -39,7 +39,7 @@
   min-height: 0;
   overflow: hidden;
   padding: 0;
-  gap: calc(var(--design-vw) * 0.35);
+  gap: calc(var(--design-vw) * 0.2);
 }
 
 .legacy-topbar {

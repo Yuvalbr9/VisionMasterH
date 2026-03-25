@@ -29,7 +29,7 @@
   border: none;
   border-radius: var(--radius-lg);
   z-index: 10;
-  width: min(clamp(170px, 20vw, 270px), calc(100% - 6px));
+  width: min(clamp(150px, 20vw, 200px), calc(100% - 6px));
 }
 
 .radar-top-info-row {
@@ -79,8 +79,8 @@
   display: block;
   background: transparent;
   margin: auto;
-  width: min(100%, min(78cqw, 86cqh));
-  height: min(100%, min(78cqw, 86cqh));
+  width: min(100%, min(86cqw, 94cqh));
+  height: min(100%, min(86cqw, 94cqh));
   aspect-ratio: 1 / 1;
 }
 
@@ -215,6 +215,8 @@
   min-width: min(clamp(190px, 28vw, 292px), calc(100% - 4px));
 }
 
+
+
 .radar-console-main {
   display: flex;
   flex-direction: column;
@@ -348,7 +350,7 @@
   }
 
   .radar-top-info-form {
-    width: min(66%, 240px);
+    width: min(55%, 200px);
   }
 
   .radar-bottom-controls {
@@ -368,13 +370,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(18px, 1.8vw, 30px);
+  padding: clamp(4px, 0.4vw, 8px);
 }
 
 .radar-map-frame {
   position: relative;
-  width: min(100%, min(76cqw, 82cqh));
-  height: min(100%, min(76cqw, 82cqh));
+  width: min(100%, min(84cqw, 92cqh));
+  height: min(100%, min(84cqw, 92cqh));
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   overflow: visible;

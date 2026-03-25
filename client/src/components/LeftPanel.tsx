@@ -39,7 +39,10 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
         error={error}
         isManualNavigationMode={isManualNavigationMode}
       />
-      <RadarOverlayControls navData={navData} radarControls={radarControls} />
+      <RadarOverlayControls 
+        navData={navData} 
+        radarControls={radarControls} 
+      />
     </div>
   );
 };
