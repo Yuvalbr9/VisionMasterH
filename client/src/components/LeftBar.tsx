@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Angle } from 'unitsnet-js';
+import { Angle, Speed } from 'unitsnet-js';
 import { NavigationData, RadarControlState } from '../types';
 import { LeftPanel } from './LeftPanel';
 import { useCurrentDateTime } from '../hooks/useCurrentDateTime';
@@ -37,7 +37,8 @@ export const LeftBar: React.FC<LeftBarProps> = ({
 
     updateNavData({
       hdg: Angle.FromDegrees(ownshipState.ownship.heading),
-      cog: Angle.FromDegrees(ownshipState.ownship.heading),
+      cog: Angle.FromDegrees(ownshipState.ownship.courseOverGround),
+      sog: Speed.FromKnots(ownshipState.ownship.speedOverGround),
       posLat: Angle.FromDegrees(ownshipState.ownship.position.latitude),
       posLon: Angle.FromDegrees(ownshipState.ownship.position.longitude),
     });

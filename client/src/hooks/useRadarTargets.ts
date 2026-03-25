@@ -20,8 +20,10 @@ const mapTargetRecord = (responseTarget: Target): RadarTargetState => {
     label: `Target ${responseTarget.targetId}`,
     latitude: responseTarget.position.latitude,
     longitude: responseTarget.position.longitude,
-    speedKnots: 0,
-    courseDeg: responseTarget.heading,
+    speedKnots: responseTarget.speedOverGround,
+    courseDeg: responseTarget.courseOverGround,
+    relativeSpeedKnots: responseTarget.relativeSpeed,
+    relativeCourseDeg: responseTarget.relativeCourse,
     dimensions: responseTarget.dimensions,
   };
 };

@@ -1,5 +1,6 @@
 using VisionMasterH.Api.Abstractions;
 using VisionMasterH.Api.Models;
+using VisionMasterH.Api.Utilities;
 
 namespace VisionMasterH.Api.DataSources.Ownship;
 
@@ -24,6 +25,10 @@ public sealed class MockOwnshipDataSource : IOwnshipDataSource
                     Height = 4.0,
                 },
                 Heading = 90,
+                VelocityNorth = Target.PLACEHOLDER_V_N,
+                VelocityEast = Target.PLACEHOLDER_V_E,
+                CourseOverGround = NavigationPhysics.CalculateCog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
+                SpeedOverGround = NavigationPhysics.CalculateSog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
             },
         };
     }

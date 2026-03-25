@@ -8,6 +8,12 @@ import {
   RadarRelativeVelocity,
   RadarTargetState,
 } from '../types/radarMap';
+import {
+  calculateRelativeCourse,
+  calculateRelativeSpeed,
+  calculateRelativeVelocity,
+  decomposeVelocity,
+} from './relativeMotionCalculations';
 
 const EARTH_RADIUS_METERS = 6_371_000;
 const METERS_PER_NAUTICAL_MILE = 1_852;
@@ -67,18 +73,6 @@ export const knotsToMetersPerSecond = (speedKnots: number): number => {
 };
 
 /**
- * Resolves east/north velocity components using maritime course conventions.
- */
-export const decomposeVelocityKnots = (speedKnots: number, courseDeg: number) => {
-  const courseRadians = normalizeBearing(courseDeg) * DEGREES_TO_RADIANS;
-
-  return {
-    eastKnots: speedKnots * Math.sin(courseRadians),
-    northKnots: speedKnots * Math.cos(courseRadians),
-  };
-};
-
-/**
  * Clamps a geographic point to the supported maritime operating region.
  */
 export const clampToCoverageBounds = (
@@ -105,7 +99,7 @@ export const advanceGeoPosition = (
     return clampToCoverageBounds(position, bounds);
   }
 
-  const { eastKnots, northKnots } = decomposeVelocityKnots(speedKnots, courseDeg);
+  const { vx: eastKnots, vy: northKnots } = decomposeVelocity(speedKnots, courseDeg);
   const eastMeters = knotsToMetersPerSecond(eastKnots) * elapsedSeconds;
   const northMeters = knotsToMetersPerSecond(northKnots) * elapsedSeconds;
   const latitudeRadians = position.latitude * DEGREES_TO_RADIANS;
@@ -121,28 +115,6 @@ export const advanceGeoPosition = (
     },
     bounds
   );
-};
-
-/**
- * Computes target-relative velocity against own ship using east/north decomposition.
- */
-export const calculateRelativeVelocity = (
-  targetSpeedKnots: number,
-  targetCourseDeg: number,
-  ownShipSpeedKnots: number,
-  ownShipCourseDeg: number
-): RadarRelativeVelocity => {
-  const targetVelocity = decomposeVelocityKnots(targetSpeedKnots, targetCourseDeg);
-  const ownVelocity = decomposeVelocityKnots(ownShipSpeedKnots, ownShipCourseDeg);
-  const eastKnots = targetVelocity.eastKnots - ownVelocity.eastKnots;
-  const northKnots = targetVelocity.northKnots - ownVelocity.northKnots;
-
-  return {
-    eastKnots,
-    northKnots,
-    speedKnots: Math.hypot(eastKnots, northKnots),
-    courseDeg: normalizeBearing(Math.atan2(eastKnots, northKnots) * RADIANS_TO_DEGREES),
-  };
 };
 
 /**
@@ -235,14 +207,23 @@ export const calculateTargetVectorEndpoint = (
   motionMode: RadarMotionMode,
   vectorTimeMinutes: number
 ) => {
-  const relativeVelocity = calculateRelativeVelocity(
-    target.speedKnots,
-    target.courseDeg,
-    ownShip.speedKnots,
-    ownShip.courseDeg
-  );
-  const vectorSpeedKnots = motionMode === 'RM' ? relativeVelocity.speedKnots : target.speedKnots;
-  const vectorCourseDeg = motionMode === 'RM' ? relativeVelocity.courseDeg : target.courseDeg;
+  const vTarget = decomposeVelocity(target.speedKnots, target.courseDeg);
+  const vOwn = decomposeVelocity(ownShip.speedKnots, ownShip.courseDeg);
+  const relVel = calculateRelativeVelocity(vTarget, vOwn);
+  const eastKnots = relVel.vx;
+  const northKnots = relVel.vy;
+  const relSpeedKnots = calculateRelativeSpeed(eastKnots, northKnots);
+  const relCourseDeg = calculateRelativeCourse(eastKnots, northKnots);
+
+  const relativeVelocity = {
+    eastKnots,
+    northKnots,
+    speedKnots: relSpeedKnots,
+    courseDeg: relCourseDeg,
+  };
+
+  const vectorSpeedKnots = motionMode === 'RM' ? relSpeedKnots : target.speedKnots;
+  const vectorCourseDeg = motionMode === 'RM' ? relCourseDeg : target.courseDeg;
   const vectorDistanceMeters = nauticalMilesToMeters(vectorSpeedKnots * (vectorTimeMinutes / 60));
 
   return {

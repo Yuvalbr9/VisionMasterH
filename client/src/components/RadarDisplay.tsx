@@ -5,7 +5,6 @@ import {
   RadarMotionMode,
   RadarTargetState,
 } from '../types';
-import { RadarPointPickerModal } from './RadarDisplay/RadarPointPickerModal';
 import { RadarMap } from './RadarMap/RadarMap';
 
 interface RadarDisplayProps {

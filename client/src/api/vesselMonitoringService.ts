@@ -1,9 +1,4 @@
-import axios, { AxiosHeaders, AxiosInstance, AxiosResponse } from 'axios';
-import {
-  mockEnvironmentApiResponse,
-  mockOwnshipApiResponse,
-  mockTargetsApiResponse,
-} from './mockVesselMonitoringData';
+import axios, { AxiosInstance } from 'axios';
 import {
   Environment,
   EnvironmentApiResponse,
@@ -13,11 +8,6 @@ import {
   TargetApiRecord,
 } from '../types/api';
 
-const SIMULATED_NETWORK_DELAY_MS = 300;
-const DEFAULT_PROVIDER_MODE: VesselMonitoringProviderMode = 'http';
-
-export type VesselMonitoringProviderMode = 'mock' | 'http';
-
 export interface VesselMonitoringDataProvider {
   getEnvironment: () => Promise<Environment>;
   getTargets: () => Promise<Target[]>;
@@ -25,9 +15,7 @@ export interface VesselMonitoringDataProvider {
 }
 
 interface CreateVesselMonitoringDataProviderOptions {
-  mode?: VesselMonitoringProviderMode;
   client?: AxiosInstance;
-  simulatedNetworkDelayMs?: number;
 }
 
 const mapTargetRecord = (record: TargetApiRecord): Target => {
@@ -43,6 +31,14 @@ const mapTargetRecord = (record: TargetApiRecord): Target => {
       height: record.dimensions.height,
     },
     heading: record.heading,
+    velocityNorth: record.velocityNorth,
+    velocityEast: record.velocityEast,
+    courseOverGround: record.courseOverGround,
+    speedOverGround: record.speedOverGround,
+    relativeVelocityNorth: record.relativeVelocityNorth,
+    relativeVelocityEast: record.relativeVelocityEast,
+    relativeSpeed: record.relativeSpeed,
+    relativeCourse: record.relativeCourse,
   };
 };
 
@@ -59,38 +55,9 @@ const mapOwnshipResponse = (response: OwnshipApiResponse): Ownship => {
 };
 
 export const vesselApiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? '/api/v1',
+  baseURL: (import.meta as any).env?.VITE_API_BASE_URL ?? '/api/v1',
   timeout: 10000,
 });
-
-const getMockDataByPath = (path: string) => {
-  switch (path) {
-    case '/environment':
-      return mockEnvironmentApiResponse;
-    case '/targets':
-      return mockTargetsApiResponse;
-    case '/ownship':
-      return mockOwnshipApiResponse;
-    default:
-      throw new Error(`Unsupported mock API path: ${path}`);
-  }
-};
-
-const mockAxiosGet = async <T>(path: string, simulatedNetworkDelayMs: number): Promise<T> => {
-  const response = await new Promise<AxiosResponse<T>>((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: JSON.parse(JSON.stringify(getMockDataByPath(path))) as T,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: { headers: new AxiosHeaders() },
-      });
-    }, simulatedNetworkDelayMs);
-  });
-
-  return response.data;
-};
 
 const createHttpVesselMonitoringDataProvider = (
   client: AxiosInstance = vesselApiClient
@@ -109,37 +76,11 @@ const createHttpVesselMonitoringDataProvider = (
   },
 });
 
-const createMockVesselMonitoringDataProvider = (
-  simulatedNetworkDelayMs: number = SIMULATED_NETWORK_DELAY_MS
-): VesselMonitoringDataProvider => ({
-  getEnvironment: async () => {
-    const response = await mockAxiosGet<EnvironmentApiResponse>('/environment', simulatedNetworkDelayMs);
-    return mapEnvironmentResponse(response);
-  },
-  getTargets: async () => {
-    const response = await mockAxiosGet<TargetApiRecord[]>('/targets', simulatedNetworkDelayMs);
-    return response.map(mapTargetRecord);
-  },
-  getOwnship: async () => {
-    const response = await mockAxiosGet<OwnshipApiResponse>('/ownship', simulatedNetworkDelayMs);
-    return mapOwnshipResponse(response);
-  },
-});
-
 export const createVesselMonitoringDataProvider = (
   options: CreateVesselMonitoringDataProviderOptions = {}
 ): VesselMonitoringDataProvider => {
-  const {
-    mode = DEFAULT_PROVIDER_MODE,
-    client = vesselApiClient,
-    simulatedNetworkDelayMs = SIMULATED_NETWORK_DELAY_MS,
-  } = options;
-
-  if (mode === 'http') {
-    return createHttpVesselMonitoringDataProvider(client);
-  }
-
-  return createMockVesselMonitoringDataProvider(simulatedNetworkDelayMs);
+  const { client = vesselApiClient } = options;
+  return createHttpVesselMonitoringDataProvider(client);
 };
 
 let activeVesselMonitoringDataProvider: VesselMonitoringDataProvider = createVesselMonitoringDataProvider();

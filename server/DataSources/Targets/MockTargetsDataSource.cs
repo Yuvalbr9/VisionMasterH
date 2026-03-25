@@ -1,5 +1,6 @@
 using VisionMasterH.Api.Abstractions;
 using VisionMasterH.Api.Models;
+using VisionMasterH.Api.Utilities;
 
 namespace VisionMasterH.Api.DataSources.Targets;
 
@@ -24,6 +25,10 @@ public sealed class MockTargetsDataSource : ITargetsDataSource
                     Height = 3.0,
                 },
                 Heading = 45,
+                VelocityNorth = Target.PLACEHOLDER_V_N,
+                VelocityEast = Target.PLACEHOLDER_V_E,
+                CourseOverGround = NavigationPhysics.CalculateCog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
+                SpeedOverGround = NavigationPhysics.CalculateSog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
             },
             new Target
             {
@@ -40,6 +45,10 @@ public sealed class MockTargetsDataSource : ITargetsDataSource
                     Height = 8.6,
                 },
                 Heading = 121,
+                VelocityNorth = Target.PLACEHOLDER_V_N,
+                VelocityEast = Target.PLACEHOLDER_V_E,
+                CourseOverGround = NavigationPhysics.CalculateCog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
+                SpeedOverGround = NavigationPhysics.CalculateSog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
             },
             new Target
             {
@@ -56,6 +65,10 @@ public sealed class MockTargetsDataSource : ITargetsDataSource
                     Height = 12.5,
                 },
                 Heading = 312,
+                VelocityNorth = Target.PLACEHOLDER_V_N,
+                VelocityEast = Target.PLACEHOLDER_V_E,
+                CourseOverGround = NavigationPhysics.CalculateCog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
+                SpeedOverGround = NavigationPhysics.CalculateSog(Target.PLACEHOLDER_V_N, Target.PLACEHOLDER_V_E),
             },
         ];
     }

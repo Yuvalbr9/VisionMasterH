@@ -27,6 +27,8 @@ export interface RadarTargetState extends RadarGeoPosition {
   label: string;
   speedKnots: number;
   courseDeg: number;
+  relativeSpeedKnots: number;
+  relativeCourseDeg: number;
   dimensions?: {
     length: number;
     width: number;

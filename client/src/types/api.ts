@@ -16,6 +16,14 @@ export interface TargetApiRecord {
   position: TargetPosition;
   dimensions: TargetDimensions;
   heading: number;
+  velocityNorth: number;
+  velocityEast: number;
+  courseOverGround: number;
+  speedOverGround: number;
+  relativeVelocityNorth: number;
+  relativeVelocityEast: number;
+  relativeSpeed: number;
+  relativeCourse: number;
 }
 
 export interface EnvironmentApiResponse {
@@ -39,6 +47,14 @@ export interface Target {
   position: TargetPosition;
   dimensions: TargetDimensions;
   heading: number;
+  velocityNorth: number;
+  velocityEast: number;
+  courseOverGround: number;
+  speedOverGround: number;
+  relativeVelocityNorth: number;
+  relativeVelocityEast: number;
+  relativeSpeed: number;
+  relativeCourse: number;
 }
 
 export type Ownship = Target;
