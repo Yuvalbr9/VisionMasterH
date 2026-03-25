@@ -9,16 +9,18 @@ interface LeftBarProps {
   navData: NavigationData;
   radarControls: RadarControlState;
   updateNavData: (updates: Partial<NavigationData>) => void;
+  isConnected: boolean;
 }
 
 export const LeftBar: React.FC<LeftBarProps> = ({
   navData,
   radarControls,
   updateNavData,
+  isConnected,
 }) => {
   const ownshipState = useOwnship();
   const timeState = useCurrentDateTime();
-  const isManualNavigationMode = !ownshipState.isLoading && !ownshipState.ownship;
+  const isManualNavigationMode = !isConnected;
 
   const isLoading =
     ownshipState.isLoading ||

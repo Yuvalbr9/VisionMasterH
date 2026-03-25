@@ -12,6 +12,8 @@ export const UI_TEXT = {
     MINIMIZE: 'Minimize',
     MAXIMIZE: 'Maximize',
     CLOSE: 'Close',
+    SYSTEM_CONNECTION: 'חיבור מערכות',
+    RECEIVING_DATA: 'קבלת נתונים',
   },
   LEFT_PANEL: {
     TABS: ['Default', 'Docking', 'Environment', 'Route'],

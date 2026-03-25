@@ -9,13 +9,11 @@ import {
 import { LeftBar } from './components/LeftBar';
 import { RadarDisplay } from './components/RadarDisplay';
 import { RightPanel } from './components/RightPanel';
-import { BaseButton } from './components/Buttons';
-import { UI_TEXT as UiText } from './constants';
+import { Topbar } from './components/Topbar';
 import { useRadarTargets } from './hooks/useRadarTargets';
-import {
-  calculateCogSogFromVelocity,
-  hasNavigationDeltaAboveTolerance,
-} from './util';
+import { useServerConnection } from './hooks/useServerConnection';
+import { useAutoRefetch } from './hooks/useAutoRefetch';
+import { useVelocityNavigationSync } from './hooks/useVelocityNavigationSync';
 
 const defaultRadarControls: RadarControlState = {
   northUp: true,
@@ -50,31 +48,19 @@ const App: React.FC = () => {
   const [radarMotionMode, setRadarMotionMode] = useState<RadarMotionMode>('RM');
   const [radarPointPickerActive, setRadarPointPickerActive] = useState(false);
   const targetsState = useRadarTargets();
+  const { isConnected } = useServerConnection();
+
+  useAutoRefetch(isConnected, targetsState.refetch);
+
   const velocity = defaultVelocity;
   const arpaTargets = defaultArpaTargets;
   const surfaceTargets = targetsState.targets;
 
   const updateNavData = React.useCallback((updates: Partial<NavigationData>) => {
-    setNavData(prev => ({ ...prev, ...updates }));
+    setNavData((prev) => ({ ...prev, ...updates }));
   }, []);
 
-  React.useEffect(() => {
-    const { cogDeg: nextCogDeg, sogKn: nextSogKn, velocityIsMeaningful } = calculateCogSogFromVelocity(velocity);
-
-    if (!velocityIsMeaningful) {
-      return;
-    }
-
-    if (!hasNavigationDeltaAboveTolerance(navData.cog.Degrees, navData.sog.Knots, nextCogDeg, nextSogKn)) {
-      return;
-    }
-
-    setNavData((prev) => ({
-      ...prev,
-      cog: Angle.FromDegrees(nextCogDeg),
-      sog: Speed.FromKnots(nextSogKn),
-    }));
-  }, [velocity.vn, velocity.ve, navData.cog.Degrees, navData.sog.Knots]);
+  useVelocityNavigationSync(velocity, navData, updateNavData);
 
   const openRadarPointPicker = React.useCallback(() => {
     if (radarPointPickerActive) {
@@ -107,22 +93,16 @@ const App: React.FC = () => {
     <div className="app-viewport">
       <div className="app-frame">
         <div className="app">
-          <div className="legacy-topbar">
-            <div className="legacy-topbar-left">
-              <span className="legacy-app-icon" aria-hidden="true">◉</span>
-              <span className="legacy-app-name">{UiText.TOPBAR.APP_NAME}</span>
-            </div>
-            <div className="legacy-topbar-right">
-              <BaseButton className="legacy-win-btn" aria-label={UiText.TOPBAR.MINIMIZE} />
-              <BaseButton className="legacy-win-btn" aria-label={UiText.TOPBAR.MAXIMIZE} />
-              <BaseButton className="legacy-win-btn legacy-win-btn-close" aria-label={UiText.TOPBAR.CLOSE} />
-            </div>
-          </div>
+          <Topbar 
+            isConnected={isConnected} 
+            isReceivingData={isConnected && !targetsState.error} 
+          />
           <div className="main-container">
             <LeftBar
               navData={navData}
               radarControls={radarControls}
               updateNavData={updateNavData}
+              isConnected={isConnected}
             />
             <RadarDisplay
               navData={navData}

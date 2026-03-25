@@ -27,7 +27,7 @@ export const DefaultContent: React.FC<DefaultContentProps> = ({
   isManualNavigationMode,
 }) => {
   const leewayDeg = calculateLeewayDeg(navData.cog.Degrees, navData.hdg.Degrees);
-  const allowManualInput = true; // Set to false to disable manual editing of HDG/COG completely
+  const allowManualInput = isManualNavigationMode; 
 
   return (
     <div className="lp-default-content">
