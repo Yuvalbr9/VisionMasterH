@@ -59,6 +59,12 @@ export const useRadarPanels = () => {
     }
 
     const handlePointerDown = (event: PointerEvent) => {
+      // Ignore non-primary buttons (like right-click) to avoid closing 
+      // the panel immediately after it was opened by a contextmenu event.
+      if (event.button !== 0) {
+        return;
+      }
+
       const target = event.target as HTMLElement | null;
 
       if (target?.closest('.radar-map-context-menu') || target?.closest('.radar-map-platform-info')) {

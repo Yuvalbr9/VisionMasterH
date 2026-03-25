@@ -259,39 +259,6 @@ export const RadarMap: React.FC<RadarMapProps> = ({
     ]));
     closeContextMenu();
   }, [closeContextMenu, contextMenuState]);
-
-  const handleGoTo = React.useCallback(() => {
-    if (!contextMenuState) {
-      return;
-    }
-
-    const nextGoToPoint: RadarAnnotationPoint = {
-      id: createRadarAnnotationId('goto'),
-      kind: 'goto',
-      latitude: contextMenuState.position.latitude,
-      longitude: contextMenuState.position.longitude,
-    };
-
-    setGoToPoint(nextGoToPoint);
-
-    if (motionMode === 'TM') {
-      setManualViewCenter(null);
-      setTrueMotionCenter(nextGoToPoint);
-    } else {
-      setManualViewCenter(nextGoToPoint);
-    }
-
-    const map = mapRef.current;
-    if (map) {
-      map.flyTo([nextGoToPoint.latitude, nextGoToPoint.longitude], map.getZoom(), {
-        animate: true,
-        duration: 1.2,
-      });
-    }
-
-    closeContextMenu();
-  }, [closeContextMenu, contextMenuState, motionMode]);
-
   const handleMenuAction = React.useCallback((action: RadarContextMenuAction) => {
     switch (action) {
       case 'acquire-target':
@@ -306,13 +273,10 @@ export const RadarMap: React.FC<RadarMapProps> = ({
       case 'draw-pen':
         handleDrawPen();
         break;
-      case 'go-to':
-        handleGoTo();
-        break;
       default:
         break;
     }
-  }, [acquireTargetFromMenu, handleCenterOff, handleDrawPen, handleGoTo, positionEblAndVrm]);
+  }, [acquireTargetFromMenu, handleCenterOff, handleDrawPen, positionEblAndVrm]);
 
   return (
     <div className="radar-map-shell">
@@ -452,6 +416,7 @@ export const RadarMap: React.FC<RadarMapProps> = ({
         <RadarPortalOverlays
           contextMenuState={contextMenuState}
           platformInfoState={platformInfoState}
+          motionMode={motionMode}
           onMenuAction={handleMenuAction}
         />
       </div>

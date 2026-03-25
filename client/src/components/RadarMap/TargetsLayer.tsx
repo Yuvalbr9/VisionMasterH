@@ -1,5 +1,6 @@
 import React from 'react';
-import { CircleMarker, LayerGroup, Polyline } from 'react-leaflet';
+import { divIcon } from 'leaflet';
+import { Marker, LayerGroup, Polyline } from 'react-leaflet';
 import { RadarMotionMode, RadarOwnShipState, RadarTargetState } from '../../types';
 import {
   calculateGeoBearingDeg,
@@ -9,6 +10,20 @@ import {
   metersToNauticalMiles,
 } from '../../util';
 import { RadarPlatformInfoState } from './radarMapTypes';
+
+const TargetCircleIcon = divIcon({
+  className: 'radar-target-marker-shell',
+  html: '<span class="radar-target-icon" aria-hidden="true"></span>',
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
+});
+
+const AcquiredTargetCircleIcon = divIcon({
+  className: 'radar-target-marker-shell is-acquired',
+  html: '<span class="radar-target-icon" aria-hidden="true"></span>',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+});
 
 interface TargetsLayerProps {
   targets: RadarTargetState[];
@@ -62,38 +77,29 @@ export const TargetsLayer: React.FC<TargetsLayerProps> = ({
                 interactive={false}
               />
             )}
-            <CircleMarker
-              center={[target.latitude, target.longitude]}
-              radius={isAcquired ? 8 : 6}
-              pathOptions={{
-                color: '#ffe36a',
-                weight: isAcquired ? 3 : 2,
-                fillColor: 'transparent',
-                fillOpacity: 0,
-              }}
+            <Marker
+              position={[target.latitude, target.longitude]}
+              icon={isAcquired ? AcquiredTargetCircleIcon : TargetCircleIcon}
+              interactive={true}
+              bubblingMouseEvents={false}
               eventHandlers={{
-                ...(onTargetSelect ? { click: () => onTargetSelect(target.id) } : {}),
-                ...(onTargetInfoRequest ? {
-                  contextmenu: (event) => {
-                    event.originalEvent.preventDefault();
-                    event.originalEvent.stopPropagation();
+                click: onTargetSelect ? () => onTargetSelect(target.id) : undefined,
+                contextmenu: (event) => {
+                  event.originalEvent.preventDefault();
+                  event.originalEvent.stopPropagation();
+                  
+                  if (onTargetInfoRequest) {
                     onTargetInfoRequest({
                       x: event.originalEvent.clientX,
                       y: event.originalEvent.clientY,
                       title: target.label,
-                      subtitle: 'Target Preview',
-                      variant: 'target-preview',
                       lines: [
-                        `LAT ${target.latitude.toFixed(4)}  LON ${target.longitude.toFixed(4)}`,
-                        `BRG ${formatRadarDegrees(bearingDeg)} RNG ${rangeNm.toFixed(2)} NM`,
-                        target.dimensions
-                          ? `DIM ${target.dimensions.length.toFixed(1)} x ${target.dimensions.width.toFixed(1)} x ${target.dimensions.height.toFixed(1)} m`
-                          : 'DIM --',
-                        `SPD ${target.speedKnots.toFixed(1)} kn CSE ${formatRadarDegrees(target.courseDeg)}`,
+                        `${target.latitude.toFixed(4)} / ${target.longitude.toFixed(4)}`,
+                        `${target.speedKnots.toFixed(1)} kn CSE ${formatRadarDegrees(target.courseDeg)}`,
                       ],
                     });
-                  },
-                } : {}),
+                  }
+                },
               }}
             />
           </React.Fragment>

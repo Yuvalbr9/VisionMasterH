@@ -661,10 +661,35 @@
   filter: drop-shadow(0 0 3px rgba(122, 136, 176, 0.3));
 }
 
+.radar-target-marker-shell {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-target-icon {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffe36a;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 2px rgba(255, 227, 106, 0.3);
+}
+
+.radar-target-marker-shell.is-acquired .radar-target-icon {
+  width: 16px;
+  height: 16px;
+  border-width: 3px;
+  box-shadow: 0 0 3px rgba(255, 227, 106, 0.4);
+}
+
 .radar-map-platform-info {
   position: fixed;
   z-index: 1201;
-  min-width: clamp(164px, 14vw, 208px);
+  min-width: clamp(120px, 9vw, 150px);
   max-width: calc(100vw - 24px);
   display: grid;
   gap: 4px;

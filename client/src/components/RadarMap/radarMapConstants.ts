@@ -1,7 +1,7 @@
 import type { LatLngBoundsExpression } from 'leaflet';
 import { UI_VALUES as UiValues } from '../../constants';
 
-export type RadarContextMenuAction = 'acquire-target' | 'position-ebl-vrm' | 'center-off' | 'draw-pen' | 'go-to';
+export type RadarContextMenuAction = 'acquire-target' | 'position-ebl-vrm' | 'center-off' | 'draw-pen';
 
 export interface RadarContextMenuItem {
   id: RadarContextMenuAction;
@@ -12,7 +12,7 @@ export const OverlayViewportPaddingPx = 12;
 export const OverlayCursorOffsetPx = 10;
 export const ContextMenuEstimatedWidthPx = 196;
 export const ContextMenuEstimatedHeightPx = 188;
-export const PlatformInfoEstimatedWidthPx = 224;
+export const PlatformInfoEstimatedWidthPx = 150;
 export const PlatformInfoEstimatedHeightPx = 112;
 export const RadarScaleEdgeInsetPx = 2;
 export const RadarScaleBandPx = 26;
@@ -21,9 +21,8 @@ export const RadarContentInsetPx = RadarScaleEdgeInsetPx + RadarScaleBandPx;
 export const RadarMenuItems: readonly RadarContextMenuItem[] = [
   { id: 'acquire-target', label: 'Acquire Target' },
   { id: 'position-ebl-vrm', label: 'EBL / VRM Position' },
-  { id: 'center-off', label: 'Center Off' },
+  { id: 'center-off', label: 'Pulse Center' },
   { id: 'draw-pen', label: 'Draw Pen' },
-  { id: 'go-to', label: 'Go To' },
 ] as const;
 
 export const RadarMapBounds: LatLngBoundsExpression = [
