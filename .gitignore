@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.vite/
 .env
 # Logs
 logs
@@ -42,6 +43,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+client/node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -84,6 +86,11 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+client/dist/
+
+# ASP.NET build output
+server/bin/
+server/obj/
 
 # Gatsby files
 .cache/
@@ -140,3 +147,6 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Ignore Visual Studio local cache
+.vs/
