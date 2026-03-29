@@ -8,6 +8,7 @@ import { useOwnship } from '../hooks/useOwnship';
 interface LeftBarProps {
   navData: NavigationData;
   radarControls: RadarControlState;
+  onRadarControlsChange: React.Dispatch<React.SetStateAction<RadarControlState>>;
   updateNavData: (updates: Partial<NavigationData>) => void;
   isConnected: boolean;
 }
@@ -15,6 +16,7 @@ interface LeftBarProps {
 export const LeftBar: React.FC<LeftBarProps> = ({
   navData,
   radarControls,
+  onRadarControlsChange,
   updateNavData,
   isConnected,
 }) => {
@@ -48,6 +50,7 @@ export const LeftBar: React.FC<LeftBarProps> = ({
     <LeftPanel
       navData={navData}
       radarControls={radarControls}
+      onRadarControlsChange={onRadarControlsChange}
       updateNavData={updateNavData}
       dateTimeIso={timeState.currentDateTime}
       isLoading={isLoading}

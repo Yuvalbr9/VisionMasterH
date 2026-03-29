@@ -26,6 +26,12 @@ const defaultRadarControls: RadarControlState = {
   ebl2Deg: 5.0,
   vrm1Nm: 5.07,
   vrm2Nm: 7.56,
+  ebl1On: true,
+  vrm1On: true,
+  ebl2On: false,
+  vrm2On: false,
+  ebl2Mode: 'carried-origin',
+  vrm2Mode: 'carried-origin',
 };
 
 const defaultVelocity = { vn: 0, ve: 0 };
@@ -101,6 +107,7 @@ const App: React.FC = () => {
             <LeftBar
               navData={navData}
               radarControls={radarControls}
+              onRadarControlsChange={setRadarControls}
               updateNavData={updateNavData}
               isConnected={isConnected}
             />

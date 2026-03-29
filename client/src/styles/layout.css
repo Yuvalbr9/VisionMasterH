@@ -30,9 +30,7 @@
 .main-container {
   display: grid;
   grid-template-columns:
-    calc(var(--left-panel-width-pct) * 1%)
-    minmax(0, 1fr)
-    calc(var(--right-panel-width-pct) * 1%);
+    calc(var(--left-panel-width-pct) * 1%) minmax(0, 1fr) calc(var(--right-panel-width-pct) * 1%);
   grid-template-areas: 'left radar right';
   flex: 1;
   height: 100%;
@@ -92,7 +90,7 @@
   border-radius: 4px;
   padding: 2px 8px;
   background: transparent;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .connection-text {
@@ -109,7 +107,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 .status-green {
@@ -171,6 +169,8 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  position: relative;
+  /* Anchor for floating EBL panel */
 }
 
 .right-panel-content {
@@ -193,3 +193,146 @@
   flex-wrap: wrap;
 }
 
+/* Radar EBL/VRM Overlays */
+.radar-ebl-primary {
+  stroke: #00ffff;
+  stroke-width: 2.5;
+  stroke-dasharray: 8, 4;
+  pointer-events: none;
+}
+
+.radar-ebl-secondary {
+  stroke: #00ffff;
+  stroke-width: 1.2;
+  stroke-dasharray: 4, 3;
+  pointer-events: none;
+}
+
+.radar-overlay-vrm {
+  fill: none;
+  stroke: #00ffff;
+  pointer-events: none;
+}
+
+.radar-overlay-vrm-primary {
+  stroke-width: 2.5;
+  stroke-dasharray: 8, 4;
+}
+
+.radar-overlay-vrm-secondary {
+  stroke-width: 1.2;
+  stroke-dasharray: 4, 3;
+}
+
+/* EBL/VRM UI Panel - Exact Layout Match */
+.vm-bottom-corner-floating {
+  position: absolute;
+  right: calc(100% + 20px);
+  /* Move outside to the left of the right bar, with added padding */
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.9);
+  transform-origin: bottom right;
+  z-index: 1000;
+}
+
+/* 4-Row CSS Grid */
+.vm-ebl-vrm-grid {
+  display: grid;
+  grid-template-columns: 60px 50px 50px 25px;
+  /* Middle columns narrowed */
+  gap: 1px;
+  /* Serves as the subtle 1px border */
+  border: 1px solid #555;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6); /* Moved shadow here */
+}
+
+.vm-ebl-vrm-cell {
+  display: flex;
+  align-items: center;
+  background: #2b2b3b;
+  /* Dark grey for value cells */
+}
+
+/* Labels */
+.vm-ebl-label {
+  justify-content: center;
+  background: #aa7cd1;
+  /* Solid purple background */
+  color: #fff;
+  font-family: inherit;
+  /* Use app font */
+  font-size: 0.8rem;
+  padding: 4px 0;
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.vm-ebl-label:not(.on) {
+  opacity: 0.8;
+  background: #8b5aa8;
+  /* Solid dark purple */
+}
+
+/* Common values */
+.vm-ebl-val-primary,
+.vm-ebl-val-secondary,
+.vm-vrm-val {
+  font-family: inherit;
+  /* Use app font */
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0 4px;
+  justify-content: flex-start;
+  /* Align left */
+  cursor: pointer;
+}
+
+.vm-ebl-val-secondary {
+  color: #ccc;
+  font-size: 0.8rem;
+  border: 1px solid #666;
+  /* Nested box border */
+  margin: 3px;
+  padding: 0 2px;
+  justify-content: flex-start;
+}
+
+/* VRM Values span 2 columns */
+.vm-vrm-val {
+  grid-column: 2 / span 2;
+}
+
+/* Input state */
+.is-editing {
+  background: #3a3a4a;
+  box-shadow: inset 0 0 0 1px #00ffff;
+}
+
+.vm-ebl-inner-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+}
+
+/* T Flag */
+.vm-ebl-flag {
+  justify-content: center;
+  background: #aa7cd1;
+  /* Solid purple background */
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.8rem;
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.4);
+}
+
+.vm-empty-cell {
+  background: #333;
+  /* Matches grid gap or base color */
+}
+

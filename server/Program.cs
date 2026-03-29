@@ -2,7 +2,7 @@ using VisionMasterH.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 const string ClientCorsPolicy = "ClientApplication";
-var clientOrigins = new[] { "http://localhost:3000", "http://localhost:5173" };
+var clientOrigins = new[] { "http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:5173" };
 
 builder.WebHost.UseUrls("http://localhost:5099");
 

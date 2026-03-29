@@ -64,6 +64,14 @@ export const RadarDisplay: React.FC<RadarDisplayProps> = ({
         ebl2Deg={radarControls.ebl2Deg}
         vrm1Nm={radarControls.vrm1Nm}
         vrm2Nm={radarControls.vrm2Nm}
+        ebl1On={radarControls.ebl1On}
+        ebl2On={radarControls.ebl2On}
+        vrm1On={radarControls.vrm1On}
+        vrm2On={radarControls.vrm2On}
+        ebl2Mode={radarControls.ebl2Mode}
+        vrm2Mode={radarControls.vrm2Mode}
+        ebl2Origin={radarControls.ebl2Origin}
+        ebl2EndPoint={radarControls.ebl2EndPoint}
       />
     </div>
   );

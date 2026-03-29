@@ -409,7 +409,7 @@
   width: 100%;
 }.vm-bottom-corner-floating {
   position: absolute;
-  right: calc(100% + 10px);
+  right: calc(100% + 25px);
   left: auto;
   bottom: 0px;
   width: clamp(140px, 13vw, 180px);
@@ -432,12 +432,21 @@
 .vm-ebl-flag,
 .vm-ebl-flag-empty {
   background: #6b57aa;
-  border: 1px solid #8d85b4;
+  border: 1px outset #8d85b4;
   color: #ebe7fc;
   font-family: var(--font-family-mono);
   font-size: clamp(0.52rem, 0.54vw, 0.6rem);
   padding: 0 clamp(1px, 0.15vw, 2px);
   min-height: clamp(18px, 2.2vh, 22px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.vm-ebl-label.on,
+.vm-ebl-label:active {
+  background: #4a3c77;
+  border-style: inset;
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .vm-ebl-value,

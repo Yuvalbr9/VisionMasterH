@@ -9,6 +9,7 @@ import {
   RadarOrientationMode,
   RadarOwnShipState,
   RadarTargetState,
+  EblVrmMode,
 } from '../../types';
 import {
   calculateGeoBearingDeg,
@@ -50,6 +51,14 @@ interface RadarMapProps {
   ebl2Deg?: number;
   vrm1Nm?: number;
   vrm2Nm?: number;
+  ebl1On?: boolean;
+  ebl2On?: boolean;
+  vrm1On?: boolean;
+  vrm2On?: boolean;
+  ebl2Mode?: EblVrmMode;
+  vrm2Mode?: EblVrmMode;
+  ebl2Origin?: RadarGeoPosition;
+  ebl2EndPoint?: RadarGeoPosition;
 }
 
 export const RadarMap: React.FC<RadarMapProps> = ({
@@ -64,6 +73,14 @@ export const RadarMap: React.FC<RadarMapProps> = ({
   ebl2Deg = 90,
   vrm1Nm = 0,
   vrm2Nm = 0,
+  ebl1On = true,
+  ebl2On = false,
+  vrm1On = true,
+  vrm2On = false,
+  ebl2Mode = 'carried-origin',
+  vrm2Mode = 'carried-origin',
+  ebl2Origin,
+  ebl2EndPoint,
 }) => {
   const overlayClipPathId = React.useId().replace(/:/g, '-');
   const mapRef = React.useRef<L.Map | null>(null);
@@ -78,6 +95,7 @@ export const RadarMap: React.FC<RadarMapProps> = ({
   const [acquiredTargetId, setAcquiredTargetId] = React.useState<string | null>(null);
   const [manualEbl1Deg, setManualEbl1Deg] = React.useState<number | null>(null);
   const [manualVrmNm, setManualVrmNm] = React.useState<number | null>(null);
+  
   const [penPoints, setPenPoints] = React.useState<RadarAnnotationPoint[]>([]);
   const [goToPoint, setGoToPoint] = React.useState<RadarAnnotationPoint | null>(null);
   const {
@@ -129,6 +147,41 @@ export const RadarMap: React.FC<RadarMapProps> = ({
   const resolvedEbl1Deg = manualEbl1Deg ?? ebl1Deg;
   const resolvedVrm1Nm = clampVrmRangeNm(manualVrmNm ?? vrm1Nm);
   const resolvedVrm2Nm = clampVrmRangeNm(vrm2Nm);
+
+  // EBL2/VRM2 Advanced Modes Calculation
+  const ebl2State = React.useMemo(() => {
+    let originLat = simulatedOwnShip.latitude;
+    let originLon = simulatedOwnShip.longitude;
+    let bearingDeg = ebl2Deg;
+    let rangeNm = resolvedVrm2Nm;
+
+    if (ebl2Mode === 'dropped-origin' && ebl2Origin) {
+      originLat = ebl2Origin.latitude;
+      originLon = ebl2Origin.longitude;
+    } else if (ebl2Mode === 'dropped-end' && ebl2EndPoint) {
+      bearingDeg = calculateGeoBearingDeg(simulatedOwnShip, ebl2EndPoint);
+      rangeNm = metersToNauticalMiles(calculateGeoDistanceMeters(simulatedOwnShip, ebl2EndPoint));
+    } else if (ebl2Mode === 'carried-end' && ebl2EndPoint) {
+        // Technically carried end is fixed relative to ship center
+        // but often implemented as offset. For now assuming ebl2Deg/vrm2Nm are relative.
+    }
+
+    return { originLat, originLon, bearingDeg, rangeNm };
+  }, [ebl2Mode, ebl2Origin, ebl2EndPoint, simulatedOwnShip, ebl2Deg, resolvedVrm2Nm]);
+
+  // Convert geographic origin to SVG coordinates
+  const ebl2SvgOrigin = React.useMemo(() => {
+    if (!mapRef.current) return { x: overlayCenterX, y: overlayCenterY };
+    const point = mapRef.current.latLngToContainerPoint([ebl2State.originLat, ebl2State.originLon]);
+    return point;
+  }, [ebl2State.originLat, ebl2State.originLon, overlayCenterX, overlayCenterY]);
+
+  const ebl2OverlayOrigin = React.useMemo(() => {
+      // We need coordinates relative to the overlay SVG
+      // Since overlay is absolute and same size as frame, we can use container point
+      return ebl2SvgOrigin;
+  }, [ebl2SvgOrigin]);
+
 
   const handleTargetSelect = React.useCallback((targetId: string) => {
     setAcquiredTargetId(targetId);
@@ -278,6 +331,7 @@ export const RadarMap: React.FC<RadarMapProps> = ({
     }
   }, [acquireTargetFromMenu, handleCenterOff, handleDrawPen, positionEblAndVrm]);
 
+
   return (
     <div className="radar-map-shell">
       <div
@@ -368,22 +422,6 @@ export const RadarMap: React.FC<RadarMapProps> = ({
                 centerY={overlayCenterY}
                 radius={overlayRadius}
               />
-              {resolvedVrm1Nm > 0 && resolvedVrm1Nm <= rangeNm && (
-                <circle
-                  className="radar-overlay-vrm radar-overlay-vrm-primary"
-                  cx={overlayCenterX}
-                  cy={overlayCenterY}
-                  r={overlayRadius * (resolvedVrm1Nm / rangeNm)}
-                />
-              )}
-              {resolvedVrm2Nm > 0 && resolvedVrm2Nm <= rangeNm && (
-                <circle
-                  className="radar-overlay-vrm radar-overlay-vrm-secondary"
-                  cx={overlayCenterX}
-                  cy={overlayCenterY}
-                  r={overlayRadius * (resolvedVrm2Nm / rangeNm)}
-                />
-              )}
               <HeadingLine
                 centerX={overlayCenterX}
                 centerY={overlayCenterY}
@@ -392,24 +430,44 @@ export const RadarMap: React.FC<RadarMapProps> = ({
                 headingDeg={simulatedOwnShip.headingDeg}
                 orientationMode={orientationMode}
               />
-              <EBL
-                centerX={overlayCenterX}
-                centerY={overlayCenterY}
-                radius={overlayRadius}
-                angleDeg={resolvedEbl1Deg}
-                headingDeg={simulatedOwnShip.headingDeg}
-                orientationMode={orientationMode}
-                variant="primary"
-              />
-              <EBL
-                centerX={overlayCenterX}
-                centerY={overlayCenterY}
-                radius={overlayRadius}
-                angleDeg={ebl2Deg}
-                headingDeg={simulatedOwnShip.headingDeg}
-                orientationMode={orientationMode}
-                variant="secondary"
-              />
+              {ebl1On && (
+                <EBL
+                  centerX={overlayCenterX}
+                  centerY={overlayCenterY}
+                  radius={overlayRadius}
+                  angleDeg={resolvedEbl1Deg}
+                  headingDeg={simulatedOwnShip.headingDeg}
+                  orientationMode={orientationMode}
+                  variant="primary"
+                />
+              )}
+              {ebl2On && (
+                <EBL
+                  centerX={ebl2OverlayOrigin.x}
+                  centerY={ebl2OverlayOrigin.y}
+                  radius={overlayRadius}
+                  angleDeg={ebl2State.bearingDeg}
+                  headingDeg={simulatedOwnShip.headingDeg}
+                  orientationMode={orientationMode}
+                  variant="secondary"
+                />
+              )}
+              {vrm1On && resolvedVrm1Nm > 0 && resolvedVrm1Nm <= rangeNm * 1.5 && (
+                <circle
+                  className="radar-overlay-vrm radar-overlay-vrm-primary"
+                  cx={overlayCenterX}
+                  cy={overlayCenterY}
+                  r={overlayRadius * (resolvedVrm1Nm / rangeNm)}
+                />
+              )}
+              {vrm2On && ebl2State.rangeNm > 0 && (
+                <circle
+                  className="radar-overlay-vrm radar-overlay-vrm-secondary"
+                  cx={ebl2OverlayOrigin.x}
+                  cy={ebl2OverlayOrigin.y}
+                  r={overlayRadius * (ebl2State.rangeNm / rangeNm)}
+                />
+              )}
             </g>
           </svg>
         )}

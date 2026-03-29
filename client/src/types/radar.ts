@@ -1,3 +1,5 @@
+export type EblVrmMode = 'carried-origin' | 'dropped-origin' | 'dropped-end' | 'carried-end';
+
 export interface RadarControlState {
   northUp: boolean;
   selectedRangeNm: number;
@@ -9,6 +11,14 @@ export interface RadarControlState {
   ebl2Deg: number;
   vrm1Nm: number;
   vrm2Nm: number;
+  ebl1On: boolean;
+  ebl2On: boolean;
+  vrm1On: boolean;
+  vrm2On: boolean;
+  ebl2Mode: EblVrmMode;
+  vrm2Mode: EblVrmMode;
+  ebl2Origin?: { latitude: number; longitude: number };
+  ebl2EndPoint?: { latitude: number; longitude: number };
 }
 
 export interface ARPATarget {

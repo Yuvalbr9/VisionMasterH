@@ -11,6 +11,7 @@ interface EBLProps {
   headingDeg: number;
   orientationMode: RadarOrientationMode;
   variant: 'primary' | 'secondary';
+  onMouseDown?: (event: React.MouseEvent) => void;
 }
 
 export const EBL: React.FC<EBLProps> = ({
@@ -21,6 +22,7 @@ export const EBL: React.FC<EBLProps> = ({
   headingDeg,
   orientationMode,
   variant,
+  onMouseDown,
 }) => {
   const displayedBearing = toRadarMapDisplayBearing(angleDeg, orientationMode, headingDeg);
   const endPoint = getRadarSvgPoint(centerX, centerY, radius - 4, displayedBearing);
@@ -33,6 +35,7 @@ export const EBL: React.FC<EBLProps> = ({
         y1={centerY}
         x2={endPoint.x}
         y2={endPoint.y}
+        onMouseDown={onMouseDown}
       />
     </g>
   );

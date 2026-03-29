@@ -1,3 +1,4 @@
+THIS IS A SYNTAX ERROR TO TEST IF CONFIG IS LOADED;
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -8,9 +9,10 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': {
-        target: backendOrigin,
+      '^/api': {
+        target: 'http://127.0.0.1:5099',
         changeOrigin: true,
+        secure: false,
       },
     },
   },
